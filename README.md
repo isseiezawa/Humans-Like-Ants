@@ -49,6 +49,8 @@
 ![スクリーンショット 2022-11-08 8 36 09](https://user-images.githubusercontent.com/89014751/200830371-d06c4909-9c6d-44dd-8765-ee49f3bde50a.png)
 [figma](https://www.figma.com/file/H14i8wenDR4Jobtjkjgiol/Humans-Like-Ants?node-id=0%3A1)
 
+## ER図
+![ER図](https://user-images.githubusercontent.com/89014751/201778223-e8d932a0-3791-4375-a5c2-cbe0236c2083.png)
 
 ## 🐜 スケジュール 🐜
 - 設計（README作成・画面遷移図作成・ER図作成）：11/4 〆切
