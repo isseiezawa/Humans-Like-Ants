@@ -3,3 +3,6 @@
 require:
   - rubocop-rails
   - rubocop-rspec
+# Missing top-level class documentation comment.の推奨を非表示
+Documentation:
+  Enabled: false

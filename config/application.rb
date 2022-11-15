@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails'
@@ -43,7 +45,7 @@ module HumansLikeAnts
       g.skip_routes true
       g.helper false
       g.test_framework :rspec,
-        view_specs: false
+                       view_specs: false
     end
   end
 end
