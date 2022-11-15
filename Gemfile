@@ -51,6 +51,15 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+
+  # test
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+
+  # lint check
+  gem 'rubocop', require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
 end
 
 group :development do
@@ -64,3 +73,8 @@ group :development do
   # gem "spring"
 end
 
+group :test do
+  gem 'capybara'
+  gem 'faker'
+  gem 'webdrivers'
+end
