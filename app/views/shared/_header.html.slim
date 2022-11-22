@@ -1,0 +1,30 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  .container-fluid
+    a.navbar-brand[href="#"]
+      | Humans Like Ants
+    button.navbar-toggler[type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"]
+      span.navbar-toggler-icon
+    #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
+      ul.navbar-nav
+        li.nav-item
+          a.nav-link.active[aria-current="page" href="#"]
+            | Home
+        li.nav-item
+          a.nav-link[href="#"]
+            | Features
+        li.nav-item
+          a.nav-link[href="#"]
+            | Pricing
+        li.nav-item.dropdown
+          a#navbarDropdownMenuLink.nav-link.dropdown-toggle[href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"]
+            |  Dropdown link 
+          ul.dropdown-menu[aria-labelledby="navbarDropdownMenuLink"]
+            li
+              a.dropdown-item[href="#"]
+                | 東京
+            li
+              a.dropdown-item[href="#"]
+                | 千葉
+            li
+              a.dropdown-item[href="#"]
+                | 神奈川
