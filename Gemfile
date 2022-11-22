@@ -53,6 +53,8 @@ gem 'bootsnap', require: false
 gem 'html2slim'
 gem 'slim-rails'
 
+gem 'bootstrap', '~> 5.2.2'
+
 gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 
 group :development, :test do
