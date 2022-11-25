@@ -1,0 +1,25 @@
+header
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    .container-fluid
+      a.navbar-brand[href="#"]
+        | Humans Like Ants
+      button.navbar-toggler[type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"]
+        span.navbar-toggler-icon
+      #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
+        ul.navbar-nav
+          li.nav-item
+            = link_to '新規登録', '#', class: 'nav-link'
+          li.nav-item
+            = link_to 'ログイン', '#', class: 'nav-link'
+          li.nav-item
+            = link_to 'プロフィール', '#', class: 'nav-link'
+          li.nav-item.dropdown
+            = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false'
+              | 地域選択
+            ul.dropdown-menu[aria-labelledby="navbarDropdownMenuLink"]
+              li
+                = link_to '東京', '#', class: 'dropdown-item'
+              li
+                = link_to '千葉', '#', class: 'dropdown-item'
+              li
+                = link_to '神奈川', '#', class: 'dropdown-item'
