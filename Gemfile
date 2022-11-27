@@ -62,6 +62,9 @@ gem 'sorcery'
 # 国際化
 gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 
+# スキーマ情報記述
+gem 'annotate'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
