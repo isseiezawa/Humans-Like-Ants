@@ -7,9 +7,9 @@
 #  id                :bigint           not null, primary key
 #  crypted_password  :string(255)
 #  email             :string(255)      not null
-#  gender            :integer          default(0), not null
+#  gender            :integer          default("unselected"), not null
 #  name              :string(255)      not null
-#  role              :integer          default(0), not null
+#  role              :integer          default("general"), not null
 #  salt              :string(255)
 #  self_introduction :text(65535)
 #  created_at        :datetime         not null
