@@ -50,11 +50,16 @@ gem 'bootsnap', require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# テンプレートエンジン
 gem 'html2slim'
 gem 'slim-rails'
 
 gem 'bootstrap', '~> 5.2.2'
 
+# 認証
+gem 'sorcery'
+
+# 国際化
 gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 
 group :development, :test do
