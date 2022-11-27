@@ -61,6 +61,7 @@ gem 'sorcery'
 
 # 国際化
 gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
+gem 'enum_help'
 
 # スキーマ情報記述
 gem 'annotate'
