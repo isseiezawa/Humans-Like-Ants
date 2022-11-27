@@ -60,8 +60,8 @@ gem 'bootstrap', '~> 5.2.2'
 gem 'sorcery'
 
 # 国際化
-gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 gem 'enum_help'
+gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 
 # スキーマ情報記述
 gem 'annotate'
