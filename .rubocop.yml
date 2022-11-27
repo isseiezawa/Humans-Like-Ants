@@ -6,3 +6,8 @@ require:
 # Missing top-level class documentation comment.の推奨を非表示
 Documentation:
   Enabled: false
+# Method has too many linesの警告をなくす
+Metrics/MethodLength:
+  Exclude:
+    - 'db/**/*'
+    - 'spec/**/*'
