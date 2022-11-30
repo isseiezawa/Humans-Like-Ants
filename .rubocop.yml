@@ -21,3 +21,6 @@ Metrics/BlockLength:
 Layout/HashAlignment:
   Exclude:
     - 'lib/**/*'
+# Line is too long.の警告無効
+Layout/LineLength:
+  Enabled: false
