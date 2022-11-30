@@ -9,7 +9,10 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
   body
-    == render 'shared/header'
+    - if logged_in?
+      == render 'shared/header'
+    - else
+      == render 'shared/before_login_header'
     == render 'shared/flash_message'
     == yield
     == render 'shared/footer'
