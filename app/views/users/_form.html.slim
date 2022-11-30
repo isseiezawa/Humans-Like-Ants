@@ -8,7 +8,6 @@
     = form.label :name, User.human_attribute_name(:name), class: 'form-label'
     = form.text_field :name, class: 'form-control'
   .mb-3.col-8
-    = User.human_attribute_name(:email)
     = form.label :email, User.human_attribute_name(:email), class: 'form-label'
     = form.email_field :email, class: 'form-control'
   .mb-3.col-8
@@ -18,3 +17,4 @@
     = form.label :password_confirmation, class: 'form-label'
     = form.password_field :password_confirmation, class: 'form-control'
   .mb-3.col-6
+    = form.submit (t 'defaults.register'), class: 'btn btn-success'
