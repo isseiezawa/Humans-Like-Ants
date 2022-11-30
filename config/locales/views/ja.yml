@@ -1,6 +1,8 @@
 ja:
   defaults:
     register: '登録'
+    login: 'ログイン'
+    logout: 'ログアウト'
   users:
     new:
       title: 'ユーザー登録'
@@ -12,3 +14,11 @@ ja:
       fail: 'ユーザー情報の更新に失敗しました'
     destroy:
       success: 'ユーザーを削除しました'
+  user_sessions:
+    new:
+      title: 'ログイン'
+    create:
+      success: 'ログインに成功しました'
+      fail: 'ログインに失敗しました'
+    destroy:
+      success: 'ログアウトしました'

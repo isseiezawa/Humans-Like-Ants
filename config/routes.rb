@@ -4,6 +4,9 @@
 #
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
 #                                     root GET    /                                                                                                 static_pages#top
+#                                    login GET    /login(.:format)                                                                                  user_sessions#new
+#                                          POST   /login(.:format)                                                                                  user_sessions#create
+#                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
 #                                edit_user GET    /users/:id/edit(.:format)                                                                         users#edit
@@ -44,5 +47,10 @@
 
 Rails.application.routes.draw do
   root 'static_pages#top'
+
+  get 'login', to: 'user_sessions#new'
+  post 'login', to: 'user_sessions#create'
+  delete 'logout', to: 'user_sessions#destroy'
+
   resources :users, only: %i[show new edit create update destroy]
 end
