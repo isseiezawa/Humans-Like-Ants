@@ -3,6 +3,7 @@ ja:
     register: '登録'
     login: 'ログイン'
     logout: 'ログアウト'
+    not_authenticated: 'ログインしてください'
   users:
     new:
       title: 'ユーザー登録'

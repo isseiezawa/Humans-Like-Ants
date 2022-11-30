@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController
+  skip_before_action :require_login
+
   def new; end
 
   def create
@@ -8,12 +10,12 @@ class UserSessionsController < ApplicationController
       redirect_back_or_to root_path, success: (t '.success')
     else
       flash.now[:danger] = (t '.fail')
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     logout
-    redirect_to :users, success: (t '.fail')
+    redirect_to :users, success: (t '.success')
   end
 end

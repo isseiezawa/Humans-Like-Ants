@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  skip_before_action :require_login, only: %i[ new create ]
 
   def show; end
 
@@ -16,7 +17,7 @@ class UsersController < ApplicationController
         redirect_to user_url(@user), success: (t '.success')
       else
         flash.now[:danger] = (t '.fail')
-        render :new, status: :unprocessable_entity # バリデーションエラーの場合に返す
+        render :new, status: :unprocessable_entity # バリデーションエラーの場合に返す(Rails7必須)
       end
   end
 
