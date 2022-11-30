@@ -2,16 +2,16 @@ ja:
   activerecord:
     models:
       user: 'ユーザー'
-  attributes:
-    user:
-      id: 'ID'
-      name: '名前'
-      email: 'メールアドレス'
-      password: 'パスワード'
-      password_confirmation: 'パスワード確認'
-      gender: '性別'
-      role: '管理者権限'
-      twitter_id: 'ツイッターID'
+    attributes:
+      user:
+        id: 'ID'
+        name: '名前'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード確認'
+        gender: '性別'
+        role: '管理者権限'
+        twitter_id: 'ツイッターID'
   enums:
     user:
       gender:
