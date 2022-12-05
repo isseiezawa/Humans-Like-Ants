@@ -24,3 +24,9 @@ Layout/HashAlignment:
 # Line is too long.の警告無効
 Layout/LineLength:
   Enabled: false
+# Example has too many expectationsの警告無効
+RSpec/MultipleExpectations:
+  Enabled: false
+# Context description should match /^when\b/, /^with\b/, or /^without\b/の警告無効
+RSpec/ContextWording:
+  Enabled: false
