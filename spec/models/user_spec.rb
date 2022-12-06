@@ -61,12 +61,6 @@ RSpec.describe User, type: :model do
     end
 
     context 'self_introduction入力時' do
-      it '空欄時にエラーが発生すること' do
-        user_without_self_introduction = build(:user, self_introduction: '')
-        expect(user_without_self_introduction).to be_invalid
-        expect(user_without_self_introduction.errors[:self_introduction]).to eq ['を入力してください']
-      end
-
       it '161文字以上の場合エラーが発生すること' do
         self_introduction_with_more_than_161_charactors = build(:user, self_introduction: 'a' * 161)
         expect(self_introduction_with_more_than_161_charactors).to be_invalid
