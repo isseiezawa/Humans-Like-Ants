@@ -65,4 +65,7 @@ RSpec.configure do |config|
 
   # FactoryBot使用
   config.include FactoryBot::Syntax::Methods
+
+  # request specでのSorceryの使用
+  config.include Sorcery::TestHelpers::Rails::Request, type: :request
 end

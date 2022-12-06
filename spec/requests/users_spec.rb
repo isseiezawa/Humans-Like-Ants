@@ -13,110 +13,144 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/users', type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # User. As you add validations to User, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
-  end
-
-  let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+  before do
+    @user = create(:user)
+    login_user(@user, 'password', login_path)
   end
 
   describe 'GET /show' do
-    it 'renders a successful response' do
-      user = User.create! valid_attributes
-      get user_url(user)
-      expect(response).to be_successful
+    context 'ユーザーが存在する場合' do
+      it 'リクエストが成功すること' do
+        get user_url @user
+        expect(response.status).to eq 200 # success
+      end
+
+      it 'ユーザー名が表示されていること' do
+        get user_url @user
+        expect(response.body).to include 'test-name'
+      end
+    end
+
+    context 'ユーザーが存在しない場合' do
+      it 'エラーが発生すること' do
+        expect{ get user_url 1 }.to raise_error ActiveRecord::RecordNotFound
+      end
     end
   end
 
   describe 'GET /new' do
-    it 'renders a successful response' do
+    it 'リクエストが成功すること' do
       get new_user_url
-      expect(response).to be_successful
+      expect(response.status).to eq 200
     end
   end
 
   describe 'GET /edit' do
-    it 'renders a successful response' do
-      user = User.create! valid_attributes
-      get edit_user_url(user)
-      expect(response).to be_successful
+    context 'ユーザーが存在する場合' do
+      it 'リクエストが成功すること' do
+        get edit_user_url @user
+        expect(response.status).to eq 200
+      end
+
+      it 'ユーザー名が表示されていること' do
+        get edit_user_url @user
+        expect(response.body).to include 'test-name'
+      end
+    end
+
+    context 'ユーザーが存在しない場合' do
+      it 'リクエストが失敗すること' do
+        expect{ get edit_user_url 1 }.to raise_error ActiveRecord::RecordNotFound
+      end
     end
   end
 
   describe 'POST /create' do
-    context 'with valid parameters' do
-      it 'creates a new User' do
+    context 'パラメータが正常な場合' do
+      it 'リクエストが成功すること' do
+        post users_url, params: { user: attributes_for(:user) }
+        expect(response.status).to eq 302 # redirect
+      end
+
+      it 'ユーザーが登録されることr' do
         expect do
-          post users_url, params: { user: valid_attributes }
+          post users_url, params: { user: attributes_for(:user) }
         end.to change(User, :count).by(1)
       end
 
-      it 'redirects to the created user' do
-        post users_url, params: { user: valid_attributes }
-        expect(response).to redirect_to(user_url(User.last))
+      it 'リダイレクトされること' do
+        post users_url, params: { user: attributes_for(:user) }
+        expect(response).to redirect_to User.last # user_url(User.last)
       end
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new User' do
+    context 'パラメータが不正な場合' do
+      it 'バリデーションエラーのレスポンスが返ってくること' do
+        post users_url, params: { user: attributes_for(:user, :invalid) }
+        expect(response.status).to eq 422 # :unprocessable_entity, validation error
+      end
+
+      it 'ユーザー登録がされないこと' do
         expect do
-          post users_url, params: { user: invalid_attributes }
+          post users_url, params: { user: attributes_for(:user, :invalid) }
         end.to change(User, :count).by(0)
       end
 
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post users_url, params: { user: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+      it 'エラーが表示されること' do
+        post users_url, params: { user: attributes_for(:user, :invalid) }
+        expect(response.body).to include 'ユーザー登録に失敗しました'
       end
     end
   end
 
   describe 'PATCH /update' do
-    context 'with valid parameters' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+    context 'パラメータが正常な場合' do
+      it 'リクエストが成功すること' do
+        put user_url @user, params: { user: attributes_for(:user, :another_name) }
+        expect(response.status).to eq 302
       end
 
-      it 'updates the requested user' do
-        user = User.create! valid_attributes
-        patch user_url(user), params: { user: new_attributes }
-        user.reload
-        skip('Add assertions for updated state')
+      it 'ユーザー名が更新されること' do
+        expect do
+          put user_url @user, params: { user: attributes_for(:user, :another_name) }
+        end.to change{ User.find(@user.id).name }.from('test-name').to('another-test-name')
       end
 
-      it 'redirects to the user' do
-        user = User.create! valid_attributes
-        patch user_url(user), params: { user: new_attributes }
-        user.reload
-        expect(response).to redirect_to(user_url(user))
+      it 'リダイレクトすること' do
+        patch user_url @user, params: { user: attributes_for(:user, :another_name) }
+        expect(response).to redirect_to User.last
       end
     end
 
-    context 'with invalid parameters' do
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        user = User.create! valid_attributes
-        patch user_url(user), params: { user: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+    context 'パラメータが不正な場合' do
+      it 'バリデーションエラーのレスポンスが返ってくること' do
+        put user_url @user, params: { user: attributes_for(:user, :invalid) }
+        expect(response.status).to eq 422
+      end
+
+      it 'ユーザー名が変更されないこと' do
+        expect do
+          put user_url @user, params: { user: attributes_for(:user, :invalid) }
+        end.to_not change(User.find(@user.id), :name)
+      end
+
+      it 'エラーが表示されること' do
+        put user_url @user, params: { user: attributes_for(:user, :invalid) }
+        expect(response.body).to include 'ユーザー情報の更新に失敗しました'
       end
     end
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested user' do
-      user = User.create! valid_attributes
+    it 'リクエストが成功すること' do
       expect do
-        delete user_url(user)
+        delete user_url @user
       end.to change(User, :count).by(-1)
     end
 
-    it 'redirects to the users list' do
-      user = User.create! valid_attributes
-      delete user_url(user)
-      expect(response).to redirect_to(users_url)
+    it 'トップページにリダイレクトされること' do
+      delete user_url @user
+      expect(response).to redirect_to root_url
     end
   end
 end

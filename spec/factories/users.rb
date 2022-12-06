@@ -22,12 +22,20 @@
 #
 FactoryBot.define do
   factory :user do
-    name { 'name' }
+    name { 'test-name' }
     sequence(:email) { |n| "test-#{n}@example.com" }
     password { 'password' }
     password_confirmation { 'password' }
     self_introduction { 'hello' }
     gender { :unselected }
     role { :general }
+
+    trait :invalid do
+      name { nil }
+    end
+
+    trait :another_name do
+      name { 'another-test-name' }
+    end
   end
 end
