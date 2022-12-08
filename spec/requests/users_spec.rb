@@ -13,20 +13,19 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/users', type: :request do
-  before do
-    @user = create(:user)
-    login_user(@user, 'password', login_path)
-  end
+  let(:user) { create(:user) }
+
+  before { login_user(user, 'password', login_path) }
 
   describe 'GET /show' do
     context 'ユーザーが存在する場合' do
       it 'リクエストが成功すること' do
-        get user_url @user
+        get user_url user
         expect(response.status).to eq 200 # success
       end
 
       it 'ユーザー名が表示されていること' do
-        get user_url @user
+        get user_url user
         expect(response.body).to include 'test-name'
       end
     end
@@ -48,12 +47,12 @@ RSpec.describe '/users', type: :request do
   describe 'GET /edit' do
     context 'ユーザーが存在する場合' do
       it 'リクエストが成功すること' do
-        get edit_user_url @user
+        get edit_user_url user
         expect(response.status).to eq 200
       end
 
       it 'ユーザー名が表示されていること' do
-        get edit_user_url @user
+        get edit_user_url user
         expect(response.body).to include 'test-name'
       end
     end
@@ -80,7 +79,7 @@ RSpec.describe '/users', type: :request do
 
       it 'リダイレクトされること' do
         post users_url, params: { user: attributes_for(:user) }
-        expect(response).to redirect_to User.last # user_url(User.last)
+        expect(response).to redirect_to login_path
       end
     end
 
@@ -106,36 +105,36 @@ RSpec.describe '/users', type: :request do
   describe 'PATCH /update' do
     context 'パラメータが正常な場合' do
       it 'リクエストが成功すること' do
-        put user_url @user, params: { user: attributes_for(:user, :another_name) }
+        put user_url user, params: { user: attributes_for(:user, :another_name) }
         expect(response.status).to eq 302
       end
 
       it 'ユーザー名が更新されること' do
         expect do
-          put user_url @user, params: { user: attributes_for(:user, :another_name) }
-        end.to change{ User.find(@user.id).name }.from('test-name').to('another-test-name')
+          put user_url user, params: { user: attributes_for(:user, :another_name) }
+        end.to change{ User.find(user.id).name }.from(user.name).to('another-test-name')
       end
 
       it 'リダイレクトすること' do
-        patch user_url @user, params: { user: attributes_for(:user, :another_name) }
-        expect(response).to redirect_to User.last
+        patch user_url user, params: { user: attributes_for(:user, :another_name) }
+        expect(response).to redirect_to user
       end
     end
 
     context 'パラメータが不正な場合' do
       it 'バリデーションエラーのレスポンスが返ってくること' do
-        put user_url @user, params: { user: attributes_for(:user, :invalid) }
+        put user_url user, params: { user: attributes_for(:user, :invalid) }
         expect(response.status).to eq 422
       end
 
       it 'ユーザー名が変更されないこと' do
         expect do
-          put user_url @user, params: { user: attributes_for(:user, :invalid) }
-        end.to_not change(User.find(@user.id), :name)
+          put user_url user, params: { user: attributes_for(:user, :invalid) }
+        end.to_not change(User.find(user.id), :name)
       end
 
       it 'エラーが表示されること' do
-        put user_url @user, params: { user: attributes_for(:user, :invalid) }
+        put user_url user, params: { user: attributes_for(:user, :invalid) }
         expect(response.body).to include 'ユーザー情報の更新に失敗しました'
       end
     end
@@ -144,12 +143,12 @@ RSpec.describe '/users', type: :request do
   describe 'DELETE /destroy' do
     it 'リクエストが成功すること' do
       expect do
-        delete user_url @user
+        delete user_url user
       end.to change(User, :count).by(-1)
     end
 
     it 'トップページにリダイレクトされること' do
-      delete user_url @user
+      delete user_url user
       expect(response).to redirect_to root_url
     end
   end
