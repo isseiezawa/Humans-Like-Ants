@@ -32,7 +32,7 @@ RSpec.describe '/users', type: :request do
 
     context 'ユーザーが存在しない場合' do
       it 'エラーが発生すること' do
-        expect{ get user_url 1 }.to raise_error ActiveRecord::RecordNotFound
+        expect { get user_url 1 }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe '/users', type: :request do
 
     context 'ユーザーが存在しない場合' do
       it 'リクエストが失敗すること' do
-        expect{ get edit_user_url 1 }.to raise_error ActiveRecord::RecordNotFound
+        expect { get edit_user_url 1 }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end
@@ -112,7 +112,7 @@ RSpec.describe '/users', type: :request do
       it 'ユーザー名が更新されること' do
         expect do
           put user_url user, params: { user: attributes_for(:user, :another_name) }
-        end.to change{ User.find(user.id).name }.from(user.name).to('another-test-name')
+        end.to change { User.find(user.id).name }.from(user.name).to('another-test-name')
       end
 
       it 'リダイレクトすること' do
@@ -130,7 +130,7 @@ RSpec.describe '/users', type: :request do
       it 'ユーザー名が変更されないこと' do
         expect do
           put user_url user, params: { user: attributes_for(:user, :invalid) }
-        end.to_not change(User.find(user.id), :name)
+        end.not_to change(User.find(user.id), :name)
       end
 
       it 'エラーが表示されること' do
