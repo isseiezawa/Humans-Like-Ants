@@ -3,7 +3,7 @@
     = form.label :email, User.human_attribute_name(:email), class: 'form-label'
     = form.email_field :email, class: 'form-control'
   .mb-3.col-8
-    = form.label :password, class: 'form-label'
+    = form.label :password, User.human_attribute_name(:password), class: 'form-label'
     = form.password_field :password, class: 'form-control'
   .mb-3.col-6
     = form.submit (t 'defaults.login'), class: 'btn btn-success'
