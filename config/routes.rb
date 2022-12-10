@@ -14,6 +14,7 @@
 #                                          PATCH  /users/:id(.:format)                                                                              users#update
 #                                          PUT    /users/:id(.:format)                                                                              users#update
 #                                          DELETE /users/:id(.:format)                                                                              users#destroy
+#                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -53,4 +54,5 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   resources :users, only: %i[show new edit create update destroy]
+  resources :worlds, only: %i[index]
 end
