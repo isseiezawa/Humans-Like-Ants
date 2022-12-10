@@ -3,6 +3,37 @@
 require:
   - rubocop-rails
   - rubocop-rspec
+# Missing frozen string literal comment.無効
+Style/FrozenStringLiteralComment:
+  Enabled: false
 # Missing top-level class documentation comment.の推奨を非表示
 Documentation:
+  Enabled: false
+# Method has too many linesの警告を無効
+Metrics/MethodLength:
+  Exclude:
+    - 'db/**/*'
+    - 'spec/**/*'
+Metrics/BlockLength:
+  Exclude:
+    - 'lib/**/*'
+# Align the keys of a hash literal if they span more than one lineの警告無効
+Layout/HashAlignment:
+  Exclude:
+    - 'lib/**/*'
+# Line is too long.の警告無効
+Layout/LineLength:
+  Enabled: false
+
+# Example has too many expectationsの警告無効
+RSpec/MultipleExpectations:
+  Enabled: false
+# Context description should match /^when\b/, /^with\b/, or /^without\b/の警告無効
+RSpec/ContextWording:
+  Enabled: false
+# Example has too many lines.の警告無効
+RSpec/ExampleLength:
+  Enabled: false
+# Maximum example group nesting exceededの警告無効
+RSpec/NestedGroups:
   Enabled: false

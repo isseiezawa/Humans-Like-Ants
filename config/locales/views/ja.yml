@@ -1,0 +1,25 @@
+ja:
+  defaults:
+    register: '登録'
+    login: 'ログイン'
+    logout: 'ログアウト'
+    not_authenticated: 'ログインしてください'
+  users:
+    new:
+      title: 'ユーザー登録'
+    create:
+      success: 'ユーザー登録が完了しました'
+      fail: 'ユーザー登録に失敗しました'
+    update:
+      success: 'ユーザー情報を更新しました'
+      fail: 'ユーザー情報の更新に失敗しました'
+    destroy:
+      success: 'ユーザーを削除しました'
+  user_sessions:
+    new:
+      title: 'ログイン'
+    create:
+      success: 'ログインに成功しました'
+      fail: 'ログインに失敗しました'
+    destroy:
+      success: 'ログアウトしました'
