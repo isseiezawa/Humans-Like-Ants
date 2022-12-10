@@ -5,5 +5,6 @@ class CreateWorlds < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+    add_index :worlds, :place, unique: true
   end
 end
