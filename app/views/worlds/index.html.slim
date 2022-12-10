@@ -1,2 +1,4 @@
-h1 Worlds#index
-p Find me in app/views/worlds/index.html.slim
+h2 = t('.title')
+.container-fluid.row.row-cols-3
+  - @worlds.each do |world|
+    == render partial: 'place', locals: { world: world }
