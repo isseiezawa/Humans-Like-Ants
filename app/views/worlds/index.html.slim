@@ -1,5 +1,6 @@
 h2 = t('.title')
-div = content_tag :canvas, '', data: { controller: 'world-map' }
+= content_tag :div, '', data: { controller: 'world-map' }
+  #japan-map-container.container-fluid.set-size
 .container-fluid.row.row-cols-3
   - @worlds.each do |world|
     == render partial: 'place', locals: { world: world }
