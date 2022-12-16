@@ -1,6 +1,6 @@
 h2 = t('.title')
-= content_tag :div, '', data: { controller: 'world-map' }
-  #japan-map-container.container-fluid.set-size
+= content_tag :div, '', class: 'container-fluid set-size', data: { controller: 'world-map' }
+  #japan-map-container.w-100.h-100
 .container-fluid.row.row-cols-3
   - @worlds.each do |world|
     == render partial: 'place', locals: { world: world }
