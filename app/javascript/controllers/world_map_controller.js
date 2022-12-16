@@ -19,8 +19,6 @@ export default class extends Controller {
           height = element.clientHeight
     const scale = 1500
 
-    console.log(element)
-
     // ***** three.js setting *****
 
     // シーンの追加
@@ -45,12 +43,17 @@ export default class extends Controller {
       camera,
       renderer.domElement
     )
+    controls.autoRotate = true
+
+    controls.domElement.addEventListener('click', () => {
+      controls.autoRotate = false
+    })
 
     scene.add(camera)
 
     // ライトの追加
-    const light = new THREE.DirectionalLight(0xffffff)
-    light.position.set(1, -4, 1).normalize();
+    const light = new THREE.DirectionalLight(0x006600)
+    light.position.set(1, 2, 1).normalize();
 
     scene.add(light)
 
@@ -119,10 +122,18 @@ export default class extends Controller {
     // ***** japanを中心に持ってくる処理 *****
     const box3 = new THREE.Box3()
     box3.setFromObject(japan)
+
+    // japanの位置がずれている為、position取得
     const centerX = (box3.max.x - box3.min.x) / 2 + box3.min.x
     const centerY = (box3.max.y - box3.min.y) / 2 + box3.min.y
     const centerZ = (box3.max.z - box3.min.z) / 2 + box3.min.z
-    japan.position.set(-centerX, -centerY, -centerZ)
+
+    // オブジェクトの位置、回転を更新
+    const mat = new THREE.Matrix4()
+    mat.makeTranslation(-centerX, -centerY, -centerZ) // XYZ軸で移動する量(回転軸にしたい頂点が原点にくるように平行移動)
+    japan.applyMatrix4(mat)
+    mat.makeRotationFromEuler(new THREE.Euler( Math.PI / 1.2, 0, 0, 'XYZ' )) // X軸を回転軸としてで回転
+    japan.applyMatrix4(mat)
 
     animate()
 
