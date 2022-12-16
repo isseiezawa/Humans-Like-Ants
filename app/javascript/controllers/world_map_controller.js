@@ -23,7 +23,6 @@ export default class extends Controller {
 
     // シーンの追加
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color( 0x00ffff );
 
     // レンダリング
     const renderer = new THREE.WebGLRenderer()
@@ -134,6 +133,34 @@ export default class extends Controller {
     japan.applyMatrix4(mat)
     mat.makeRotationFromEuler(new THREE.Euler( Math.PI / 1.2, 0, 0, 'XYZ' )) // X軸を回転軸としてで回転
     japan.applyMatrix4(mat)
+
+    // ***** 星(パーティクル)追加 *****
+
+    const amount = 300
+    const space = 3000
+
+    // 頂点情報
+    const vertices = []
+    for(let i = 0; i < amount; i++) {
+      const x = space * (Math.random() - 0.5)
+      const y = space * (Math.random() - 0.5)
+      const z = space * (Math.random() - 0.5)
+
+      vertices.push(x, y, z)
+    }
+
+    const starGeometry = new THREE.BufferGeometry()
+    // ジオメトリに属性を設定
+    starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
+
+    const starMaterial = new THREE.PointsMaterial({
+      size: 10,
+      color: 0xffffff
+    })
+
+    const starMesh = new THREE.Points(starGeometry, starMaterial)
+
+    scene.add(starMesh)
 
     animate()
 
