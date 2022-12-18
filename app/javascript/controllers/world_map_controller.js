@@ -106,11 +106,7 @@ export default class extends Controller {
     const japan = new THREE.Group()
 
     for(let j = 0; j < places.length; j++) {
-      const placeColor = places[j].data.name ? 0x00ff00 : 0x4169e1
-
-      const placeMaterial = new THREE.MeshPhongMaterial({
-        color: placeColor
-      })
+      const placeMaterial = new THREE.MeshPhongMaterial()
       const placeGeometry = new THREE.ExtrudeGeometry( places[j].mesh[0], extrudeSettings ) // シェイプから押し出されたジオメトリを作成
       const placeMesh = new THREE.Mesh(placeGeometry, placeMaterial)
 
@@ -157,6 +153,18 @@ export default class extends Controller {
 
     const raycaster = new THREE.Raycaster()
 
+    // ***** 地域選択処理 *****
+
+    let intersectionPlace
+    let selectPlace
+
+    element.addEventListener('click', handleClick)
+
+    function handleClick() {
+      selectPlace = intersectionPlace
+    }
+
+
     // ***** 星(パーティクル)追加 *****
 
     const amount = 300
@@ -198,8 +206,17 @@ export default class extends Controller {
 
       const intersects = raycaster.intersectObjects(japan.children)
 
-      if(intersects.length > 0) {
-      }
+      if(intersects.length == 0) { intersectionPlace = null }
+      japan.children.map((mesh) => {
+        if(intersects.length > 0 && mesh == intersects[0].object && mesh.name) {
+          mesh.material.color.setHex( 0xff0000 )
+          intersectionPlace = intersects[0].object
+        } else if(intersects.length == 0 && selectPlace == mesh){
+          selectPlace.material.color.setHex( 0xff0000 )
+        } else {
+          mesh.material.color.setHex( 0x00ff00 )
+        }
+      })
     }
   }
 }
