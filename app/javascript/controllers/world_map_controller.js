@@ -93,10 +93,6 @@ export default class extends Controller {
 
     // ***** shape to mesh *****
 
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x00ff00
-    })
-
     const extrudeSettings = {
       steps: 2,
       depth: 2,
@@ -110,15 +106,23 @@ export default class extends Controller {
     const japan = new THREE.Group()
 
     for(let j = 0; j < places.length; j++) {
-      const geometry = new THREE.ExtrudeGeometry( places[j].mesh[0], extrudeSettings ) // シェイプから押し出されたジオメトリを作成
-      const mesh = new THREE.Mesh(geometry, material)
+      const placeColor = places[j].data.name ? 0x00ff00 : 0x4169e1
 
-      japan.add(mesh)
+      const placeMaterial = new THREE.MeshPhongMaterial({
+        color: placeColor
+      })
+      const placeGeometry = new THREE.ExtrudeGeometry( places[j].mesh[0], extrudeSettings ) // シェイプから押し出されたジオメトリを作成
+      const placeMesh = new THREE.Mesh(placeGeometry, placeMaterial)
+
+      placeMesh.name = places[j].data.name
+
+      japan.add(placeMesh)
     }
 
     scene.add(japan)
 
     // ***** japanを中心に持ってくる処理 *****
+
     const box3 = new THREE.Box3()
     box3.setFromObject(japan)
 
@@ -133,6 +137,25 @@ export default class extends Controller {
     japan.applyMatrix4(mat)
     mat.makeRotationFromEuler(new THREE.Euler( Math.PI / 1.2, 0, 0, 'XYZ' )) // X軸を回転軸としてで回転
     japan.applyMatrix4(mat)
+
+    // ***** オブジェクトとの交差を調べる  *****
+
+    // カーソルの座標用のベクトル作成
+    const cursor = new THREE.Vector2()
+
+    element.addEventListener('mousemove', handleMouseMove)
+
+    function handleMouseMove(event) {
+      // canvas上のXY座標
+      const cursorX = event.clientX - element.offsetLeft
+      const cursorY = event.clientY - element.offsetTop
+
+      // -1〜+1の範囲で現在のマウス座標を登録
+      cursor.x = ( cursorX / width ) * 2 - 1
+      cursor.y = -( cursorY / height ) * 2 + 1
+    }
+
+    const raycaster = new THREE.Raycaster()
 
     // ***** 星(パーティクル)追加 *****
 
@@ -169,6 +192,14 @@ export default class extends Controller {
       renderer.render( scene, camera )
 
       controls.update()
+
+      // マウス位置からまっすぐに伸びる光線ベクトルを生成
+      raycaster.setFromCamera(cursor, camera)
+
+      const intersects = raycaster.intersectObjects(japan.children)
+
+      if(intersects.length > 0) {
+      }
     }
   }
 }
