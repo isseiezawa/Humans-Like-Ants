@@ -16,10 +16,6 @@ export default class extends Controller {
 
   async init() {
     const element = document.getElementById('japan-map-container')
-    // 描画範囲
-    const width = element.clientWidth,
-          height = element.clientHeight
-    const scale = 1500
 
     // ***** three.js setting *****
 
@@ -28,16 +24,10 @@ export default class extends Controller {
 
     // レンダリング
     const renderer = new THREE.WebGLRenderer()
-    renderer.setSize(width, height)
     element.appendChild(renderer.domElement)
 
     // カメラの設定
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      width / height,
-      0.1,
-      10000
-    )
+    const camera = new THREE.PerspectiveCamera(75)
     camera.position.set(0, 0, 400)
 
     const controls = new OrbitControls(
@@ -62,7 +52,27 @@ export default class extends Controller {
     const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
     scene.add(ambientLight);
 
+    // ***** 画面のリサイズ処理 *****
+
+    onResize()
+
+    window.addEventListener('resize', onResize)
+
+    function onResize() {
+      // デバイスのピクセル比を設定しキャンバスのぼやけを防ぐ為の処理
+      renderer.setPixelRatio(window.devicePixelRatio)
+      renderer.setSize(element.clientWidth, element.clientHeight)
+        // カメラのアスペクト比を正す
+      camera.aspect = element.clientWidth / element.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+
     // ***** d3.js geoJson to shape *****
+
+    // 描画範囲
+    const width = element.clientWidth,
+          height = element.clientHeight
+    const scale = 1500
 
     const geoJson = '/assets/japan.geo.json'
     let geoData = []
