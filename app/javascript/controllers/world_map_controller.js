@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { OrbitControls } from "three/OrbitControls"
+import { FontLoader } from "three/FontLoader"
+import { TextGeometry } from "three/TextGeometry"
 import * as d3 from "d3"
 import { transformSVGPathExposed } from "../plugins/d3-threeD"
 
@@ -111,6 +113,7 @@ export default class extends Controller {
       const placeMesh = new THREE.Mesh(placeGeometry, placeMaterial)
 
       placeMesh.name = places[j].data.name
+      placeMesh.userData.name_ja = places[j].data.name_ja
 
       japan.add(placeMesh)
     }
@@ -149,6 +152,12 @@ export default class extends Controller {
       // -1〜+1の範囲で現在のマウス座標を登録
       cursor.x = ( cursorX / width ) * 2 - 1
       cursor.y = -( cursorY / height ) * 2 + 1
+
+      if(intersectionPlace) {
+        createText(intersectionPlace.userData.name_ja)
+      } else if(selectPlace) {
+        createText(selectPlace.userData.name_ja)
+      }
     }
 
     const raycaster = new THREE.Raycaster()
@@ -164,6 +173,12 @@ export default class extends Controller {
       selectPlace = intersectionPlace
     }
 
+    // ***** 文字作成雛形 *****
+
+    const fontLoader = new FontLoader()
+    const font = await fontLoader.loadAsync('/assets/japanese_font.json')
+    const textMaterial = new THREE.MeshNormalMaterial()
+    let textGeometry, textMesh
 
     // ***** 星(パーティクル)追加 *****
 
@@ -217,6 +232,28 @@ export default class extends Controller {
           mesh.material.color.setHex( 0x00ff00 )
         }
       })
+    }
+
+    function createText(text) {
+      const sceneLast = scene.children[scene.children.length -1]
+
+      if(sceneLast.isMesh == true) {
+        scene.remove(sceneLast)
+        sceneLast.material.dispose();
+        sceneLast.geometry.dispose();
+      }
+
+      textGeometry = new TextGeometry(text, {
+        font: font,
+        size: 50,
+        height: 30
+      })
+
+      textGeometry.center()
+
+      textMesh = new THREE.Mesh(textGeometry, textMaterial)
+    
+      scene.add(textMesh)
     }
   }
 }
