@@ -145,13 +145,19 @@ export default class extends Controller {
     element.addEventListener('mousemove', handleMouseMove)
 
     function handleMouseMove(event) {
+      // 要素の寸法とビューポートに対する相対位置に関する情報を返す
+      const rect = element.getBoundingClientRect()
+
       // canvas上のXY座標
-      const cursorX = event.clientX - element.offsetLeft
-      const cursorY = event.clientY - element.offsetTop
+      const cursorX = event.clientX - rect.left
+      const cursorY = event.clientY - rect.top
+
+      const rectWidth = rect.right - rect.left
+      const rectHeight = rect.bottom - rect.top
 
       // -1〜+1の範囲で現在のマウス座標を登録
-      cursor.x = ( cursorX / width ) * 2 - 1
-      cursor.y = -( cursorY / height ) * 2 + 1
+      cursor.x = ( cursorX / rectWidth ) * 2 - 1
+      cursor.y = -( cursorY / rectHeight ) * 2 + 1
 
       if(intersectionPlace) {
         createText(intersectionPlace.userData.name_ja)
