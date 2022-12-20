@@ -124,8 +124,17 @@ export default class extends Controller {
 
       placeMesh.name = places[j].data.name
       placeMesh.userData.name_ja = places[j].data.name_ja
-
+      
       japan.add(placeMesh)
+
+      // 県の境界線を表示する為の処理
+      const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x006600
+      })
+      const edge = new THREE.EdgesGeometry(placeGeometry)
+      const line = new THREE.LineSegments(edge, lineMaterial)
+
+      japan.add(line)
     }
 
     scene.add(japan)
@@ -237,13 +246,18 @@ export default class extends Controller {
 
       const intersects = raycaster.intersectObjects(japan.children)
 
+      // ***** マウスホバー時、placeが選択された際の色変更処理 *****
+
       if(intersects.length == 0) { intersectionPlace = null }
-      japan.children.map((mesh) => {
+
+      japan.children.forEach((mesh) => {
         if(intersects.length > 0 && mesh == intersects[0].object && mesh.name) {
           mesh.material.color.setHex( 0xff0000 )
           intersectionPlace = intersects[0].object
         } else if(intersects.length == 0 && selectPlace == mesh){
           selectPlace.material.color.setHex( 0xff0000 )
+        } else if(mesh.isLineSegments == true) {
+          return // lineには変更をかけない
         } else {
           mesh.material.color.setHex( 0x00ff00 )
         }
