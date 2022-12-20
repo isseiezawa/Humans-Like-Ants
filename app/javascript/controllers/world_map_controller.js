@@ -177,12 +177,6 @@ export default class extends Controller {
       // -1〜+1の範囲で現在のマウス座標を登録
       cursor.x = ( cursorX / rectWidth ) * 2 - 1
       cursor.y = -( cursorY / rectHeight ) * 2 + 1
-
-      if(intersectionPlace) {
-        createText(intersectionPlace.userData.name_ja)
-      } else if(selectPlace) {
-        createText(selectPlace.userData.name_ja)
-      }
     }
 
     const raycaster = new THREE.Raycaster()
@@ -262,6 +256,14 @@ export default class extends Controller {
           mesh.material.color.setHex( 0x00ff00 )
         }
       })
+
+      if(intersectionPlace) {
+        createText(intersectionPlace.userData.name_ja)
+        changeElementBgColor(intersectionPlace.name)
+      } else if(selectPlace) {
+        createText(selectPlace.userData.name_ja)
+        changeElementBgColor(selectPlace.name)
+      }
     }
 
     function createText(text) {
@@ -284,6 +286,15 @@ export default class extends Controller {
       textMesh = new THREE.Mesh(textGeometry, textMaterial)
     
       scene.add(textMesh)
+    }
+
+    function changeElementBgColor(placeName) {
+      const removeRedElements = document.getElementsByClassName('bg-danger')
+      for(let i = 0; 0 < removeRedElements.length; i++) {
+        removeRedElements[i].classList.remove('bg-danger')
+      }
+      const addRedElement = document.getElementById(`place-name-${placeName.toLowerCase()}`)
+      addRedElement.classList.add('bg-danger')
     }
   }
 }
