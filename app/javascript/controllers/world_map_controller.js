@@ -189,6 +189,10 @@ export default class extends Controller {
     element.addEventListener('click', handleClick)
 
     function handleClick() {
+      // 2回同じ箇所が押された場合の処理
+      if(intersectionPlace == selectPlace && selectPlace) {
+        location.href = `${location.href}/${selectPlace.name.toLowerCase()}`
+      }
       selectPlace = intersectionPlace
     }
 
