@@ -8,16 +8,16 @@ header
       #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
         ul.navbar-nav
           li.nav-item
-            = link_to (t 'users.new.title'), new_user_path, class: 'nav-link'
+            = link_to t('users.new.title'), new_user_path, class: 'nav-link', data: { turbo: false }
           li.nav-item
-            = link_to (t 'user_sessions.new.title'), login_path, class: 'nav-link'
+            = link_to t('user_sessions.new.title'), login_path, class: 'nav-link', data: { turbo: false }
           li.nav-item.dropdown
-            = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false'
-              | 地域選択
+            = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false', data: { turbo: false }
+              = t('worlds.index.title')
             ul.dropdown-menu[aria-labelledby="navbarDropdownMenuLink"]
               li
-                = link_to '東京', '#', class: 'dropdown-item'
+                = link_to '東京', '#', class: 'dropdown-item', data: { turbo: false }
               li
-                = link_to '千葉', '#', class: 'dropdown-item'
+                = link_to '千葉', '#', class: 'dropdown-item', data: { turbo: false }
               li
-                = link_to '神奈川', '#', class: 'dropdown-item'
+                = link_to '神奈川', '#', class: 'dropdown-item', data: { turbo: false }
