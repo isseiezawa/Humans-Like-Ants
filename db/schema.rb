@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_27_095207) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_22_215022) do
+  create_table "tweets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "world_id", null: false
+    t.text "post", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tweets_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -25,4 +34,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_095207) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "tweets", "users"
 end
