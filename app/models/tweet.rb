@@ -18,6 +18,8 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Tweet < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
   belongs_to :user
-  belongs_to :world
+  belongs_to_active_hash :world
 end
