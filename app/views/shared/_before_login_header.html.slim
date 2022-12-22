@@ -8,9 +8,9 @@ header
       #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
         ul.navbar-nav
           li.nav-item
-            = link_to (t 'users.new.title'), new_user_path, class: 'nav-link', data: { turbo: false }
+            = link_to t('users.new.title'), new_user_path, class: 'nav-link', data: { turbo: false }
           li.nav-item
-            = link_to (t 'user_sessions.new.title'), login_path, class: 'nav-link', data: { turbo: false }
+            = link_to t('user_sessions.new.title'), login_path, class: 'nav-link', data: { turbo: false }
           li.nav-item.dropdown
             = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false', data: { turbo: false }
               | 地域選択

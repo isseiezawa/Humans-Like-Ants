@@ -14,18 +14,18 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to login_url, success: (t '.success')
+      redirect_to login_url, success: t('.success')
     else
-      flash.now[:danger] = (t '.fail')
+      flash.now[:danger] = t('.fail')
       render :new, status: :unprocessable_entity # バリデーションエラーの場合に返す(Rails7必須)
     end
   end
 
   def update
     if @user.update(user_params)
-      redirect_to user_url(@user), success: (t '.success')
+      redirect_to user_url(@user), success: t('.success')
     else
-      flash.now[:danger] = (t '.fail')
+      flash.now[:danger] = t('.fail')
       render :edit, status: :unprocessable_entity
     end
   end
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
 
-    redirect_to root_url, success: (t '.success')
+    redirect_to root_url, success: t('.success')
   end
 
   private

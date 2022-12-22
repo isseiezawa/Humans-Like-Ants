@@ -9,6 +9,6 @@ class ApplicationController < ActionController::Base
 
   # require_loginで実行するメソッド
   def not_authenticated
-    redirect_to login_path, warning: (t 'defaults.not_authenticated')
+    redirect_to login_path, warning: t('defaults.not_authenticated')
   end
 end
