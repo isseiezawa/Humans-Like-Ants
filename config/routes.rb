@@ -55,5 +55,5 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   resources :users, only: %i[show new edit create update destroy]
-  resources :worlds, only: %i[show index], :param => 'place_name'
+  resources :worlds, only: %i[show index], param: 'place_name'
 end
