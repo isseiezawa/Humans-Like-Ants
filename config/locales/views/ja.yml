@@ -26,3 +26,9 @@ ja:
   worlds:
     index:
       title: '地域選択'
+  tweets:
+    create:
+      success: '投稿しました'
+      failure: '投稿に失敗しました'
+    destroy:
+      success: '投稿を削除しました'
