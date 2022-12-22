@@ -10,7 +10,7 @@ header
           li.nav-item
             = link_to 'プロフィール', '#', class: 'nav-link', data: { turbo: false }
           li.nav-item
-            = link_to t('defaults.logout'), logout_path, class: 'nav-link', data: { turbo_method: :delete }, data: { turbo: false }
+            = link_to t('defaults.logout'), logout_path, class: 'nav-link', data: { turbo_method: :delete }
           li.nav-item.dropdown
             = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false', data: { turbo: false }
               | 地域選択
