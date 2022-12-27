@@ -10,12 +10,14 @@ import { transformSVGPathExposed } from "../plugins/d3-threeD"
 
 // Connects to data-controller="world-map"
 export default class extends Controller {
+  static targets = ['japanMapContainer']
+
   connect() {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
   async init() {
-    const element = document.getElementById('japan-map-container')
+    const element = this.japanMapContainerTarget
 
     // ***** three.js setting *****
 
