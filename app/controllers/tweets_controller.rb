@@ -2,19 +2,22 @@ class TweetsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def create
-    tweet = Tweet.new(tweet_params)
+    @tweet = current_user.tweets.build(tweet_params)
+    @world = World.find(@tweet.world_id)
 
-    if tweet.save
-      render json: { status: :ok, message: t('.success'), data: tweet }
-    else
-      render json: { status: :unprocessable_entity, message: t('.failure'), data: tweet.errors }
+    respond_to do |format|
+      if @tweet.save
+        format.html { redirect_to world_path(@world.place) }
+        format.turbo_stream { render 'posting_success' }
+      else
+        format.html { render 'worlds/show', status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
-    tweet = Tweet.find(params[:id])
-
-    tweet.destroy!
+    @tweet = Tweet.find(params[:id])
+    @tweet.destroy!
 
     render json: { status: :ok, message: t('.success') }
   end
@@ -22,6 +25,6 @@ class TweetsController < ApplicationController
   private
 
   def tweet_params
-    params.require(:tweet).permit(:user_id, :world_id, :post)
+    params.require(:tweet).permit(:post, :world_id)
   end
 end

@@ -1,0 +1,12 @@
+.container-fluid.bg-light
+  = form_with url: tweets_path, scope: :tweet, class: 'row text-center justify-content-center' do |form|
+    = form.hidden_field :world_id, value: world.id, class: 'form-control'
+    .mb-3.col-8
+      - if @tweet
+        - @tweet.errors.each do |error|
+          .text-danger
+            = error.full_message
+      = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label'
+      = form.text_field :post, class: 'form-control'
+    .mb-3.col-6
+      = form.submit t('defaults.give_birth'), class: 'btn btn-success'

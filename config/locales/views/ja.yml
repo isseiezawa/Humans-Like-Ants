@@ -1,6 +1,7 @@
 ja:
   defaults:
     register: '登録'
+    give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
     not_authenticated: 'ログインしてください'
@@ -29,6 +30,8 @@ ja:
   tweets:
     create:
       success: '投稿しました'
-      failure: '投稿に失敗しました'
+      fail: '投稿に失敗しました'
     destroy:
       success: '投稿を削除しました'
+    posting_success:
+      success_message: '投稿に成功しました'
