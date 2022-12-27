@@ -1,3 +1,6 @@
 h2.text-center
   = @world.place_ja
   =< "(#{@world.place})"
+/ id属性tweet-from
+= turbo_frame_tag 'tweet-form' do
+  == render 'tweets/form', world: @world

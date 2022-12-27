@@ -1,6 +1,7 @@
 ja:
   defaults:
     register: '登録'
+    give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
     not_authenticated: 'ログインしてください'
@@ -26,3 +27,11 @@ ja:
   worlds:
     index:
       title: '地域選択'
+  tweets:
+    create:
+      success: '投稿しました'
+      fail: '投稿に失敗しました'
+    destroy:
+      success: '投稿を削除しました'
+    posting_success:
+      success_message: '投稿に成功しました'

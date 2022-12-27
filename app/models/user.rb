@@ -34,4 +34,6 @@ class User < ApplicationRecord
 
   enum gender: { unselected: 0, man: 1, woman: 2 }
   enum role: { general: 0, admin: 1 }
+
+  has_many :tweets, dependent: :destroy
 end

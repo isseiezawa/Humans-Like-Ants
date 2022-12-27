@@ -16,6 +16,8 @@
 #                                          DELETE /users/:id(.:format)                                                                              users#destroy
 #                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
 #                                    world GET    /worlds/:place_name(.:format)                                                                     worlds#show
+#                                   tweets POST   /tweets(.:format)                                                                                 tweets#create
+#                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -56,4 +58,5 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[show new edit create update destroy]
   resources :worlds, only: %i[show index], param: 'place_name'
+  resources :tweets, only: %i[create destroy]
 end
