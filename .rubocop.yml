@@ -24,6 +24,9 @@ Layout/HashAlignment:
 # Line is too long.の警告無効
 Layout/LineLength:
   Enabled: false
+# Assignment Branch Condition size for change is too high.の警告無効
+Metrics/AbcSize:
+  Enabled: false
 
 # Example has too many expectationsの警告無効
 RSpec/MultipleExpectations:
