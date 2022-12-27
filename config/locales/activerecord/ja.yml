@@ -14,6 +14,7 @@ ja:
         twitter_id: 'ツイッターID'
       tweet:
         post: 'つぶやき'
+        image: '画像'
   enums:
     user:
       gender:

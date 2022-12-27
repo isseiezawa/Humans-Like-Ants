@@ -23,6 +23,8 @@ class Tweet < ApplicationRecord
   belongs_to :user
   belongs_to_active_hash :world
 
+  has_one_attached :image
+
   validates :user, presence: true
   validates :world, presence: true
   validates :post, presence: true, length: { maximum: 200 }
