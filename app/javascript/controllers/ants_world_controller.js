@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
+import { FBXLoader } from "three/FBXLoader"
 
 // Connects to data-controller="ants-world"
 export default class extends Controller {
@@ -13,6 +14,9 @@ export default class extends Controller {
 
     const width = element.offsetWidth
     const height = element.offsetHeight
+
+    // 時間を追跡するためのオブジェクト
+    const clock = new THREE.Clock()
 
     // シーン作成
     const scene = new THREE.Scene()
@@ -44,12 +48,46 @@ export default class extends Controller {
     directionalLight.position.set(1, 1, 1).normalize()
     scene.add(ambientLight, directionalLight)
 
+    // ***** モデル作成 *****
+
+    let mixer
+    const mixerGroup = new THREE.AnimationObjectGroup()
+
+    const modelFile = '/assets/cartoon_ant/cartoon_ant.fbx'
+    const modelFile2 = '/assets/cartoon_ant/cartoon_ant.fbx'
+    createFbxModel(modelFile)
+    createFbxModel(modelFile2)
+
     animate()
 
-    function animate() {
-      requestAnimationFrame(animate)
+    async function createFbxModel(fbxFile) {
+      const fbxLoader = new FBXLoader()
 
-      renderer.render(scene, camera)
+      const fbxModel = await fbxLoader.loadAsync(fbxFile)
+
+      if(fbxModel.animations.length) {
+        mixerGroup.add(fbxModel)
+        // AnimationMixerを作成しAnimationClipのリストを取得
+        mixer = new THREE.AnimationMixer(mixerGroup)
+
+        //Animation Actionを生成（クリップ（アニメーションデータ）を指定）
+        const action = mixer.clipAction(fbxModel.animations[0])
+
+        action.play()
+      }
+
+      scene.add(fbxModel)
     }
+
+function animate() {
+  requestAnimationFrame(animate)
+
+  renderer.render(scene, camera)
+
+  if(mixer) {
+    // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
+    mixer.update(clock.getDelta())
+  }
+}
   }
 }
