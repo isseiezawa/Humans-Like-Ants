@@ -54,9 +54,8 @@ export default class extends Controller {
     const mixerGroup = new THREE.AnimationObjectGroup()
 
     const modelFile = '/assets/cartoon_ant/cartoon_ant.fbx'
-    const modelFile2 = '/assets/cartoon_ant/cartoon_ant.fbx'
+
     createFbxModel(modelFile)
-    createFbxModel(modelFile2)
 
     animate()
 
@@ -79,15 +78,15 @@ export default class extends Controller {
       scene.add(fbxModel)
     }
 
-function animate() {
-  requestAnimationFrame(animate)
+    function animate() {
+      requestAnimationFrame(animate)
 
-  renderer.render(scene, camera)
+      renderer.render(scene, camera)
 
-  if(mixer) {
-    // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
-    mixer.update(clock.getDelta())
-  }
-}
+      if(mixer) {
+        // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
+        mixer.update(clock.getDelta())
+      }
+    }
   }
 }
