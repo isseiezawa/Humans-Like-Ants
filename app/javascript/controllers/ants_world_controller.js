@@ -53,7 +53,7 @@ export default class extends Controller {
     let mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
 
-    const modelFile = '/assets/cartoon_ant/cartoon_ant.fbx'
+    const modelFile = '/assets/ant/original_ant.fbx'
 
     createFbxModel(modelFile)
 
