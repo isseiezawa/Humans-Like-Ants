@@ -58,13 +58,13 @@ export default class extends Controller {
     const modelFile = '/assets/ant/original_ant.gltf'
     const grand = '/assets/grand/grand.gltf'
 
-    createGltfModel(modelFile)
-    createGltfModel(grand)
+    createGltfModel(modelFile, 1)
+    createGltfModel(grand, 50)
 
     animate()
 
 
-    async function createGltfModel(gltfFile) {
+    async function createGltfModel(gltfFile, size) {
       const gltfLoader = new GLTFLoader()
       const gltfModel = await gltfLoader.loadAsync(gltfFile)
 
@@ -77,6 +77,21 @@ export default class extends Controller {
 
         action.play()
       }
+
+      // 取得したモデルのサイズを均一にするための計算
+      const box3 = new THREE.Box3()
+      // 世界軸に沿った最小のバウンディングボックスを計算
+      box3.setFromObject( gltfModel.scene )
+      // 現物のサイズを出力
+      const width = box3.max.x - box3.min.x
+      const height = box3.max.y - box3.min.y
+      const length = box3.max.z - box3.min.z
+
+      // 最大値を取得(最大サイズを引数のsizeに)
+      const maxSize = Math.max(width, height, length)
+      const scaleFactor =  size / maxSize
+
+      gltfModel.scene.scale.set(scaleFactor, scaleFactor, scaleFactor)
 
       scene.add(gltfModel.scene)
     }
