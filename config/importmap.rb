@@ -13,7 +13,7 @@ pin 'three', to: 'https://ga.jspm.io/npm:three@0.146.0/build/three.module.js'
 pin 'three/OrbitControls', to: 'https://ga.jspm.io/npm:three@0.146.0/examples/jsm/controls/OrbitControls.js'
 pin 'three/FontLoader', to: "https://ga.jspm.io/npm:three@0.146.0/examples/jsm/loaders/FontLoader.js\n"
 pin 'three/TextGeometry', to: 'https://ga.jspm.io/npm:three@0.146.0/examples/jsm/geometries/TextGeometry.js'
-pin "three/FBXLoader", to: "https://ga.jspm.io/npm:three@0.146.0/examples/jsm/loaders/FBXLoader.js
+pin "three/GLTFLoader", to: "https://ga.jspm.io/npm:three@0.146.0/examples/jsm/loaders/GLTFLoader.js
 "
 pin 'd3', to: 'https://ga.jspm.io/npm:d3@7.7.0/src/index.js'
 pin 'd3-array', to: 'https://ga.jspm.io/npm:d3-array@3.2.0/src/index.js'

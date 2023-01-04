@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
-import { FBXLoader } from "three/FBXLoader"
+import { GLTFLoader } from "three/GLTFLoader"
 
 // Connects to data-controller="ants-world"
 export default class extends Controller {
@@ -27,6 +27,8 @@ export default class extends Controller {
 
     // レンダラー作成
     const renderer = new THREE.WebGLRenderer()
+    // GLTFLoaderを使用する為の設定
+    renderer.outputEncoding = THREE.sRGBEncoding
     element.appendChild(renderer.domElement)
 
     // ***** 画面のリサイズ処理 *****
@@ -53,29 +55,30 @@ export default class extends Controller {
     let mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
 
-    const modelFile = '/assets/ant/original_ant.fbx'
+    const modelFile = '/assets/ant/original_ant.gltf'
+    const grand = '/assets/grand/grand.gltf'
 
-    createFbxModel(modelFile)
+    createGltfModel(modelFile)
+    createGltfModel(grand)
 
     animate()
 
-    async function createFbxModel(fbxFile) {
-      const fbxLoader = new FBXLoader()
 
-      const fbxModel = await fbxLoader.loadAsync(fbxFile)
+    async function createGltfModel(gltfFile) {
+      const gltfLoader = new GLTFLoader()
+      const gltfModel = await gltfLoader.loadAsync(gltfFile)
 
-      if(fbxModel.animations.length) {
-        mixerGroup.add(fbxModel)
+      if(gltfModel.animations.length) {
+        mixerGroup.add(gltfModel.scene)
         // AnimationMixerを作成しAnimationClipのリストを取得
         mixer = new THREE.AnimationMixer(mixerGroup)
-
-        //Animation Actionを生成（クリップ（アニメーションデータ）を指定）
-        const action = mixer.clipAction(fbxModel.animations[0])
+        // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
+        const action = mixer.clipAction(gltfModel.animations[0])
 
         action.play()
       }
 
-      scene.add(fbxModel)
+      scene.add(gltfModel.scene)
     }
 
     function animate() {
