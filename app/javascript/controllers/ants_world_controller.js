@@ -75,6 +75,15 @@ export default class extends Controller {
     await createGltfModel(grand, 'ground', 20)
     await createGltfModel(modelFile, 'userModel', 1)
 
+    // ***** 空作成 *****
+
+    const textureLoader = new THREE.TextureLoader()
+    const skyTexture = await textureLoader.loadAsync('/assets/sky.jpeg')
+    const skyGeometry = new THREE.SphereGeometry(30, 30, 30)
+    const skyMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
+    const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial)
+    scene.add(skyMesh)
+
     animate()
 
     async function createGltfModel(gltfFile, name, size) {
