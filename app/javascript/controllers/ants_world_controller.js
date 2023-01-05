@@ -1,6 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
+import Stats from "stats"
 
 // Connects to data-controller="ants-world"
 export default class extends Controller {
@@ -31,6 +32,16 @@ export default class extends Controller {
     renderer.outputEncoding = THREE.sRGBEncoding
     element.appendChild(renderer.domElement)
 
+    // FPSを表示させる処理
+    const stats = Stats()
+    stats.showPanel(0)
+    Object.assign(stats.dom.style, {
+      'position': 'fixed',
+      'height': 'max-content',
+      'top': 'auto',
+      'bottom': '0'
+    });
+    element.appendChild(stats.dom)
     // ***** 画面のリサイズ処理 *****
 
     onResize()
@@ -117,6 +128,8 @@ export default class extends Controller {
 
     function animate() {
       requestAnimationFrame(animate)
+
+      stats.update()
 
       renderer.render(scene, camera)
 
