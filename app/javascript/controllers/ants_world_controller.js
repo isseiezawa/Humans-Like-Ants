@@ -9,7 +9,7 @@ export default class extends Controller {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
-  init() {
+  async init() {
     const element = this.antsWorldElementTarget
 
     const width = element.offsetWidth
@@ -52,19 +52,21 @@ export default class extends Controller {
 
     // ***** モデル作成 *****
 
-    let mixer
+    let groundModel,
+        userModels = [],
+        modelsPositionY = [],
+        mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
 
+    const grand = '/assets/ground/ground.gltf'
     const modelFile = '/assets/ant/original_ant.gltf'
-    const grand = '/assets/grand/grand.gltf'
 
-    createGltfModel(modelFile, 1)
-    createGltfModel(grand, 50)
+    await createGltfModel(grand, 'ground', 20)
+    await createGltfModel(modelFile, 'userModel', 1)
 
     animate()
 
-
-    async function createGltfModel(gltfFile, size) {
+    async function createGltfModel(gltfFile, name, size) {
       const gltfLoader = new GLTFLoader()
       const gltfModel = await gltfLoader.loadAsync(gltfFile)
 
@@ -78,6 +80,8 @@ export default class extends Controller {
         action.play()
       }
 
+      gltfModel.scene.name = name
+
       // 取得したモデルのサイズを均一にするための計算
       const box3 = new THREE.Box3()
       // 世界軸に沿った最小のバウンディングボックスを計算
@@ -86,12 +90,27 @@ export default class extends Controller {
       const width = box3.max.x - box3.min.x
       const height = box3.max.y - box3.min.y
       const length = box3.max.z - box3.min.z
-
+      
       // 最大値を取得(最大サイズを引数のsizeに)
       const maxSize = Math.max(width, height, length)
       const scaleFactor =  size / maxSize
+      
+      gltfModel.scene.scale.multiplyScalar(scaleFactor)
 
-      gltfModel.scene.scale.set(scaleFactor, scaleFactor, scaleFactor)
+      switch(name) {
+        case 'ground':
+          groundModel = gltfModel.scene
+          break
+        case 'userModel':
+          gltfModel.scene.position.setX(Math.random() * 6 - 3)
+          gltfModel.scene.position.setZ(Math.random() * 6 - 3)
+
+          // モデルの足元をy軸の0の上に配置する数値
+          const putHeight = scaleFactor * -box3.min.y
+          modelsPositionY.push(putHeight)
+          userModels.push(gltfModel.scene)
+          break
+      }
 
       scene.add(gltfModel.scene)
     }
@@ -104,6 +123,22 @@ export default class extends Controller {
       if(mixer) {
         // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
         mixer.update(clock.getDelta())
+      }
+
+      // ***** 当たり判定 *****
+
+      for(let i = 0; i < userModels.length; i++) {
+        const modelPositionUpY = new THREE.Vector3()
+        modelPositionUpY.copy(userModels[i].position)
+        modelPositionUpY.setY(50)
+
+        const modelRay = new THREE.Raycaster(modelPositionUpY, new THREE.Vector3(0, -1, 0))
+        const modelHitGround = modelRay.intersectObject(groundModel)
+
+        if(modelHitGround.length > 0) {
+          const positionY = modelsPositionY[i] + modelHitGround[0].point.y
+          userModels[i].position.setY(positionY)
+        }
       }
     }
   }
