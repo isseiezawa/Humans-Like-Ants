@@ -74,10 +74,10 @@ export default class extends Controller {
         // 移動方向
         direction = new THREE.Vector3()
 
-    const controles = new PointerLockControls(camera, renderer.domElement)
+    const controls = new PointerLockControls(camera, renderer.domElement)
 
     element.addEventListener('click', () => {
-      controles.lock()
+      controls.lock()
     })
 
     document.addEventListener('keydown', onKeyDown)
@@ -211,7 +211,7 @@ export default class extends Controller {
 
       renderer.render(scene, camera)
 
-      if(controles.isLocked) {
+      if(controls.isLocked) {
         direction.z = Number(moveForward) - Number(moveBackward)
         direction.x = Number(moveRight) - Number(moveLeft)
 
@@ -227,8 +227,8 @@ export default class extends Controller {
         }
 
         // 速度を元にカメラの前進後進を決める
-        controles.moveForward(-velocity.z * delta)
-        controles.moveRight(-velocity.x * delta)
+        controls.moveForward(-velocity.z * delta)
+        controls.moveRight(-velocity.x * delta)
 
         if(mixer) {
           // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
