@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
+// 一人称視点
+import { PointerLockControls } from "three/PointerLockControls"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
@@ -25,6 +27,7 @@ export default class extends Controller {
 
     // カメラ作成
     const camera = new THREE.PerspectiveCamera(75)
+    camera.far = 100
 
     // レンダラー作成
     const renderer = new THREE.WebGLRenderer()
@@ -60,6 +63,27 @@ export default class extends Controller {
     const directionalLight = new THREE.DirectionalLight(0xffffff);
     directionalLight.position.set(1, 1, 1).normalize()
     scene.add(ambientLight, directionalLight)
+
+    // ***** 一人称視点 *****
+
+    let moveForward = false,
+        moveBackward = false,
+        moveLeft = false,
+        moveRight = false,
+        // 移動速度
+        velocity = new THREE.Vector3(),
+        // 移動方向
+        direction = new THREE.Vector3()
+
+    const controles = new PointerLockControls(camera, renderer.domElement)
+
+    element.addEventListener('click', () => {
+      controles.lock()
+    })
+
+    document.addEventListener('keydown', onKeyDown)
+    document.addEventListener('keyup', onKeyUp)
+
 
     // ***** モデル作成 *****
 
@@ -124,7 +148,6 @@ export default class extends Controller {
         case 'userModel':
           gltfModel.scene.position.setX(Math.random() * 6 - 3)
           gltfModel.scene.position.setZ(Math.random() * 6 - 3)
-
           // モデルの足元をy軸の0の上に配置する数値
           const putHeight = scaleFactor * -box3.min.y
           modelsPositionY.push(putHeight)
@@ -135,16 +158,73 @@ export default class extends Controller {
       scene.add(gltfModel.scene)
     }
 
+
+    function onKeyDown(event) {
+      switch(event.code) {
+        case 'KeyW':
+          moveForward = true
+          break
+        case "KeyA":
+          moveLeft = true
+          break
+        case "KeyS":
+          moveBackward = true
+          break
+        case "KeyD":
+          moveRight = true
+          break
+      }
+    }
+
+    function onKeyUp(event) {
+      switch(event.code) {
+        case "KeyW":
+          moveForward = false
+          break
+        case "KeyA":
+          moveLeft = false
+          break
+        case "KeyS":
+          moveBackward = false
+          break
+        case "KeyD":
+          moveRight = false
+          break
+      }
+    }
+
     function animate() {
+      const delta = clock.getDelta()
+
       requestAnimationFrame(animate)
 
       stats.update()
 
       renderer.render(scene, camera)
 
+      if(controles.isLocked) {
+        direction.z = Number(moveForward) - Number(moveBackward)
+        direction.x = Number(moveRight) - Number(moveLeft)
+
+        // 減衰(速度の低下)
+        velocity.z -= velocity.z * 5.0 * delta
+        velocity.x -= velocity.x * 5.0 * delta
+
+        if(moveForward || moveBackward) {
+          velocity.z -= direction.z * 10 * delta
+        }
+        if(moveRight || moveLeft) {
+          velocity.x -= direction.x * 10 * delta
+        }
+
+        // 速度を元にカメラの前進後進を決める
+        controles.moveForward(-velocity.z * delta)
+        controles.moveRight(-velocity.x * delta)
+      }
+
       if(mixer) {
         // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
-        mixer.update(clock.getDelta())
+        mixer.update(delta)
       }
 
       // ***** 当たり判定 *****
