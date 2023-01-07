@@ -15,9 +15,6 @@ export default class extends Controller {
   async init() {
     const element = this.antsWorldElementTarget
 
-    const width = element.offsetWidth
-    const height = element.offsetHeight
-
     // 時間を追跡するためのオブジェクト
     const clock = new THREE.Clock()
 
