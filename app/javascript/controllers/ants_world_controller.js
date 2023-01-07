@@ -90,6 +90,7 @@ export default class extends Controller {
     let groundObject,
         groundScaleFactor,
         groundAttribute,
+        stoneObjects = [],
         mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
 
@@ -151,6 +152,7 @@ export default class extends Controller {
           groundAttribute = gltfModel.scene.children[0].geometry.attributes.position
           break
         case 'stone':
+          stoneObjects.push(gltfModel.scene)
           break
         case 'userModel':
           // 地面の頂点座標を一つ決める処理
@@ -243,10 +245,17 @@ export default class extends Controller {
         nowCameraPosition.setY(10)
         cameraRaycaster.set(nowCameraPosition, new THREE.Vector3(0, -1, 0))
 
+        // *** 地面接触 ***
         const hitGround = cameraRaycaster.intersectObject(groundObject)
-
         if(hitGround.length > 0) {
           camera.position.setY(0.6 + hitGround[0].point.y)
+        }
+
+        // *** 岩接触 ***
+        const hitStone = cameraRaycaster.intersectObjects(stoneObjects)
+        if(hitStone.length > 0) {
+          controls.moveForward(velocity.z * delta)
+          controls.moveRight(velocity.x * delta)
         }
       }
     }
