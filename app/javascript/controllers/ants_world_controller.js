@@ -24,6 +24,7 @@ export default class extends Controller {
 
     // カメラ作成
     const camera = new THREE.PerspectiveCamera(75)
+    camera.position.setY(1)
     camera.far = 100
 
     // レンダラー作成
@@ -82,10 +83,12 @@ export default class extends Controller {
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('keyup', onKeyUp)
 
+    const cameraRaycaster = new THREE.Raycaster()
 
     // ***** モデル作成 *****
 
-    let groundScaleFactor,
+    let groundObject,
+        groundScaleFactor,
         groundAttribute,
         mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
@@ -142,12 +145,13 @@ export default class extends Controller {
 
       switch(name) {
         case 'ground':
+          groundObject = gltfModel.scene
           // 地面の倍率と頂点座標を格納
           groundScaleFactor = scaleFactor
           groundAttribute = gltfModel.scene.children[0].geometry.attributes.position
           break
         case 'stone':
-            break
+          break
         case 'userModel':
           // 地面の頂点座標を一つ決める処理
           const randomIndex = Math.floor(Math.random() * groundAttribute.count)
@@ -225,15 +229,26 @@ export default class extends Controller {
         // 速度を元にカメラの前進後進を決める
         controles.moveForward(-velocity.z * delta)
         controles.moveRight(-velocity.x * delta)
+
+        if(mixer) {
+          // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
+          mixer.update(delta)
+        }
+
+        // ***** 当たり判定 *****
+
+        const nowCameraPosition = new THREE.Vector3()
+        nowCameraPosition.copy(camera.position)
+        // yのみ高さを指定するのは、判定のraycasterは下向きになっている為
+        nowCameraPosition.setY(10)
+        cameraRaycaster.set(nowCameraPosition, new THREE.Vector3(0, -1, 0))
+
+        const hitGround = cameraRaycaster.intersectObject(groundObject)
+
+        if(hitGround.length > 0) {
+          camera.position.setY(0.6 + hitGround[0].point.y)
+        }
       }
-
-      if(mixer) {
-        // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
-        mixer.update(delta)
-      }
-
-      // ***** 当たり判定 *****
-
     }
   }
 }
