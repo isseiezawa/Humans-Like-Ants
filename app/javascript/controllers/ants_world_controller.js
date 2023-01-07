@@ -87,16 +87,17 @@ export default class extends Controller {
 
     // ***** モデル作成 *****
 
-    let groundModel,
-        userModels = [],
-        modelsPositionY = [],
+    let groundScaleFactor,
+        groundAttribute,
         mixer
     const mixerGroup = new THREE.AnimationObjectGroup()
 
-    const grand = '/assets/ground/ground.gltf'
+    const ground = '/assets/ground/ground.gltf'
+    const stone = '/assets/stone/stone.gltf'
     const modelFile = '/assets/ant/original_ant.gltf'
 
-    await createGltfModel(grand, 'ground', 20)
+    await createGltfModel(ground, 'ground', 20)
+    await createGltfModel(stone, 'stone', 26)
     await createGltfModel(modelFile, 'userModel', 1)
 
     // ***** 空作成 *****
@@ -138,26 +139,32 @@ export default class extends Controller {
       // 最大値を取得(最大サイズを引数のsizeに)
       const maxSize = Math.max(width, height, length)
       const scaleFactor =  size / maxSize
-      
+
       gltfModel.scene.scale.multiplyScalar(scaleFactor)
 
       switch(name) {
         case 'ground':
-          groundModel = gltfModel.scene
+          // 地面の倍率と頂点座標を格納
+          groundScaleFactor = scaleFactor
+          groundAttribute = gltfModel.scene.children[0].geometry.attributes.position
           break
+        case 'stone':
+            break
         case 'userModel':
-          gltfModel.scene.position.setX(Math.random() * 6 - 3)
-          gltfModel.scene.position.setZ(Math.random() * 6 - 3)
-          // モデルの足元をy軸の0の上に配置する数値
+          // 地面の頂点座標を一つ決める処理
+          const randomIndex = Math.floor(Math.random() * groundAttribute.count)
+          const x = groundAttribute.getX(randomIndex) * groundScaleFactor
+          const y = groundAttribute.getY(randomIndex) * groundScaleFactor
+          const z = groundAttribute.getZ(randomIndex) * groundScaleFactor
+
+          // オブジェクトの中心から足元までの距離を求める処理
           const putHeight = scaleFactor * -box3.min.y
-          modelsPositionY.push(putHeight)
-          userModels.push(gltfModel.scene)
-          break
+
+          gltfModel.scene.position.set(x, y + putHeight, z)
       }
 
       scene.add(gltfModel.scene)
     }
-
 
     function onKeyDown(event) {
       switch(event.code) {
@@ -229,19 +236,6 @@ export default class extends Controller {
 
       // ***** 当たり判定 *****
 
-      for(let i = 0; i < userModels.length; i++) {
-        const modelPositionUpY = new THREE.Vector3()
-        modelPositionUpY.copy(userModels[i].position)
-        modelPositionUpY.setY(50)
-
-        const modelRay = new THREE.Raycaster(modelPositionUpY, new THREE.Vector3(0, -1, 0))
-        const modelHitGround = modelRay.intersectObject(groundModel)
-
-        if(modelHitGround.length > 0) {
-          const positionY = modelsPositionY[i] + modelHitGround[0].point.y
-          userModels[i].position.setY(positionY)
-        }
-      }
     }
   }
 }
