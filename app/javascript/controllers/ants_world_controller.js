@@ -45,6 +45,7 @@ export default class extends Controller {
       'bottom': '0'
     });
     element.appendChild(stats.dom)
+
     // ***** 画面のリサイズ処理 *****
 
     onResize()
@@ -53,8 +54,8 @@ export default class extends Controller {
 
     function onResize() {
       renderer.setPixelRatio(window.devicePixelRatio)
-      renderer.setSize(width, height)
-      camera.aspect = width / height
+      renderer.setSize(element.offsetWidth, element.offsetHeight)
+      camera.aspect = element.offsetWidth / element.offsetHeight
       camera.updateProjectionMatrix()
     }
 
