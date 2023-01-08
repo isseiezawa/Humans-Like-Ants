@@ -91,6 +91,8 @@ export default class extends Controller {
         groundScaleFactor,
         groundAttribute,
         stoneObjects = [],
+        modelObjects = [],
+        collisionModel,
         mixers = []
 
     const ground = '/assets/ground/ground.gltf'
@@ -155,6 +157,7 @@ export default class extends Controller {
           stoneObjects.push(gltfModel.scene)
           break
         case 'userModel':
+          modelObjects.push(gltfModel.scene)
           // 地面の頂点座標を一つ決める処理
           const randomIndex = Math.floor(Math.random() * groundAttribute.count)
           const x = groundAttribute.getX(randomIndex) * groundScaleFactor
@@ -165,6 +168,17 @@ export default class extends Controller {
           const putHeight = scaleFactor * -box3.min.y
 
           gltfModel.scene.position.set(x, y + putHeight, z)
+
+          // traverseで子孫のMeshにdataを格納する
+          gltfModel.scene.traverse((child) => {
+            if(child.isMesh) {
+              child.userData = {
+                id: 1,
+                user_name: 'issei',
+                text: 'hi'
+              }
+            }
+          })
       }
 
       scene.add(gltfModel.scene)
@@ -258,6 +272,23 @@ export default class extends Controller {
         if(hitStone.length > 0) {
           controls.moveForward(velocity.z * delta)
           controls.moveRight(velocity.x * delta)
+        }
+
+        // *** モデル接触 ***
+        const hitModel = cameraRaycaster.intersectObjects(modelObjects)
+        if(hitModel.length > 0) {
+          collisionModel = hitModel[0].object.parent
+        }
+
+        if(collisionModel) {
+          // 親をたどってグループ化されているObjectにlookAtを適用
+          if(collisionModel.name == 'userModel') {
+            collisionModel.lookAt(camera.position)
+          } else if(collisionModel.parent.name == 'userModel') {
+            collisionModel.parent.lookAt(camera.position)
+          } else if(collisionModel.parent.parent.name == 'userModel') {
+            collisionModel.parent.parent.lookAt(camera.position)
+          }
         }
       }
     }
