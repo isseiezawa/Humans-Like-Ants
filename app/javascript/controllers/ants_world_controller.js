@@ -91,8 +91,7 @@ export default class extends Controller {
         groundScaleFactor,
         groundAttribute,
         stoneObjects = [],
-        mixer
-    const mixerGroup = new THREE.AnimationObjectGroup()
+        mixers = []
 
     const ground = '/assets/ground/ground.gltf'
     const stone = '/assets/stone/stone.gltf'
@@ -118,13 +117,14 @@ export default class extends Controller {
       const gltfModel = await gltfLoader.loadAsync(gltfFile)
 
       if(gltfModel.animations.length) {
-        mixerGroup.add(gltfModel.scene)
         // AnimationMixerを作成しAnimationClipのリストを取得
-        mixer = new THREE.AnimationMixer(mixerGroup)
+        const mixer = new THREE.AnimationMixer(gltfModel.scene)
         // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
         const action = mixer.clipAction(gltfModel.animations[0])
 
         action.play()
+
+        mixers.push(mixer)
       }
 
       gltfModel.scene.name = name
@@ -232,9 +232,11 @@ export default class extends Controller {
         controls.moveForward(-velocity.z * delta)
         controls.moveRight(-velocity.x * delta)
 
-        if(mixer) {
+        if(mixers) {
           // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
-          mixer.update(delta)
+          for(const mixer of mixers) {
+            mixer.update(delta)
+          }
         }
 
         // ***** 当たり判定 *****
