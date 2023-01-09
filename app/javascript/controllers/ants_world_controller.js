@@ -91,6 +91,7 @@ export default class extends Controller {
 
     let groundObject,
         groundScaleFactor,
+        groundCenter,
         groundAttribute,
         stoneObjects = [],
         modelObjects = [],
@@ -134,12 +135,21 @@ export default class extends Controller {
         mixers.push(mixer)
       }
 
-      gltfModel.scene.name = name
-
       // 取得したモデルのサイズを均一にするための計算
       const box3 = new THREE.Box3()
       // 世界軸に沿った最小のバウンディングボックスを計算
       box3.setFromObject( gltfModel.scene )
+
+      // modelを原点の位置に移動
+      const modelCenter = box3.getCenter(new THREE.Vector3())
+      gltfModel.scene.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z)
+
+      // 原点(0, 0, 0)を持つgroupに挿入
+      const gltfModelGroup = new THREE.Group()
+      gltfModelGroup.add(gltfModel.scene)
+
+      gltfModelGroup.name = name
+
       // 現物のサイズを出力
       const width = box3.max.x - box3.min.x
       const height = box3.max.y - box3.min.y
@@ -149,30 +159,29 @@ export default class extends Controller {
       const maxSize = Math.max(width, height, length)
       const scaleFactor =  size / maxSize
 
-      gltfModel.scene.scale.multiplyScalar(scaleFactor)
+      gltfModelGroup.scale.multiplyScalar(scaleFactor)
 
       switch(name) {
         case 'ground':
-          groundObject = gltfModel.scene
+          groundObject = gltfModelGroup
           // 地面の倍率と頂点座標を格納
           groundScaleFactor = scaleFactor
+          groundCenter = modelCenter
           groundAttribute = gltfModel.scene.children[0].geometry.attributes.position
           break
         case 'stone':
-          stoneObjects.push(gltfModel.scene)
+          stoneObjects.push(gltfModelGroup)
           break
         case 'userModel':
-          modelObjects.push(gltfModel.scene)
           // 地面の頂点座標を一つ決める処理
           const randomIndex = Math.floor(Math.random() * groundAttribute.count)
-          const x = groundAttribute.getX(randomIndex) * groundScaleFactor
-          const y = groundAttribute.getY(randomIndex) * groundScaleFactor
-          const z = groundAttribute.getZ(randomIndex) * groundScaleFactor
+          const x = (groundAttribute.getX(randomIndex) + -groundCenter.x) * groundScaleFactor
+          const y = (groundAttribute.getY(randomIndex) + -groundCenter.y) * groundScaleFactor
+          const z = (groundAttribute.getZ(randomIndex) + -groundCenter.z) * groundScaleFactor
 
           // オブジェクトの中心から足元までの距離を求める処理
-          const putHeight = scaleFactor * -box3.min.y
-
-          gltfModel.scene.position.set(x, y + putHeight, z)
+          const putHeight = scaleFactor * ( modelCenter.y -box3.min.y )
+          gltfModelGroup.position.set(x, y + putHeight, z)
 
           // traverseで子孫のMeshにdataを格納する
           gltfModel.scene.traverse((child) => {
@@ -185,9 +194,10 @@ export default class extends Controller {
               }
             }
           })
-      }
-
-      scene.add(gltfModel.scene)
+          modelObjects.push(gltfModelGroup)
+          break
+        }
+      scene.add(gltfModelGroup)
     }
 
     function onKeyDown(event) {
@@ -285,7 +295,8 @@ export default class extends Controller {
         // *** モデル接触 ***
         const hitModel = cameraRaycaster.intersectObjects(modelObjects)
         if(hitModel.length > 0) {
-          collisionModel = hitModel[0].object.parent
+          // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+          collisionModel = hitModel[0].object.parent.parent
           const userData = hitModel[0].object.userData
           textBoard.setContents(
             userData.text,
