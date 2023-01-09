@@ -83,6 +83,29 @@ class TextBoard {
       this.textBlock
     )
   }
+
+  setContents(text = 'Hello!', userName = '蟻', imageUrl = null) {
+    // 文字を表示
+    this.container.visible = true
+    this.text.set({
+      content: text
+    })
+    this.name.set({
+      content: userName
+    })
+
+    if (imageUrl) {
+      this.imageBlock.visible = true
+      const loader = new THREE.TextureLoader()
+      loader.load(imageUrl, (texture) => {
+        this.imageBlock.set({
+          backgroundTexture: texture
+        })
+      })
+    } else {
+      this.imageBlock.visible = false
+    }
+  }
 }
 
 export { TextBoard }

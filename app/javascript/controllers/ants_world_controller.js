@@ -179,8 +179,9 @@ export default class extends Controller {
             if(child.isMesh) {
               child.userData = {
                 id: 1,
-                user_name: 'issei',
-                text: 'hi'
+                imageUrl: '/assets/sky.jpeg',
+                text: 'hi',
+                userName: 'issei'
               }
             }
           })
@@ -285,6 +286,12 @@ export default class extends Controller {
         const hitModel = cameraRaycaster.intersectObjects(modelObjects)
         if(hitModel.length > 0) {
           collisionModel = hitModel[0].object.parent
+          const userData = hitModel[0].object.userData
+          textBoard.setContents(
+            userData.text,
+            userData.userName,
+            userData.imageUrl
+          )
         }
 
         if(collisionModel) {
