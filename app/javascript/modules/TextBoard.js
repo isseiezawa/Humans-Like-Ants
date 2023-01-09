@@ -106,6 +106,25 @@ class TextBoard {
       this.imageBlock.visible = false
     }
   }
+
+  setTextPosition(camera, collisionObjectPosition) {
+    const vec = new THREE.Vector3()
+    // subVectors(a: vector, b: vector)-> ベクトルa-bを実行
+    vec.subVectors(camera.position, collisionObjectPosition)
+
+    // multiplyScalar(s: Float)-> ベクトルをスカラーで乗算
+    const vec2 = vec.multiplyScalar(0.5)
+
+    // addVectors(a: Vector3, b: Vector3)-> ベクトルa+bを実行
+    vec.addVectors(collisionObjectPosition, vec2)
+
+    // 文字盤の位置座標に計算したベクトルをセット
+    this.container.position.copy(vec)
+
+    this.container.lookAt(camera.position)
+    // 文字盤はこっちに向いているので、カメラの動きをコピーすれば反転して寄ってくるようになる
+    this.container.rotation.copy(camera.rotation)
+  }
 }
 
 export { TextBoard }

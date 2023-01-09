@@ -298,10 +298,13 @@ export default class extends Controller {
           // 親をたどってグループ化されているObjectにlookAtを適用
           if(collisionModel.name == 'userModel') {
             collisionModel.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.position)
           } else if(collisionModel.parent.name == 'userModel') {
             collisionModel.parent.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.parent.position)
           } else if(collisionModel.parent.parent.name == 'userModel') {
             collisionModel.parent.parent.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.parent.parent.position)
           }
         }
       }
