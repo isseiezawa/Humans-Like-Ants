@@ -3,6 +3,8 @@ import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 // 一人称視点
 import { PointerLockControls } from "three/PointerLockControls"
+import { TextBoard } from "../modules/TextBoard"
+import * as ThreeMeshUI from "three-mesh-ui"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
@@ -102,6 +104,9 @@ export default class extends Controller {
     await createGltfModel(ground, 'ground', 20)
     await createGltfModel(stone, 'stone', 26)
     await createGltfModel(modelFile, 'userModel', 1)
+
+    const textBoard  = new TextBoard()
+    scene.add(textBoard.container)
 
     // ***** 空作成 *****
 
@@ -222,6 +227,8 @@ export default class extends Controller {
       const delta = clock.getDelta()
 
       requestAnimationFrame(animate)
+
+      ThreeMeshUI.update()
 
       stats.update()
 
