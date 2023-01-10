@@ -110,6 +110,16 @@ export default class extends Controller {
     const textBoard  = new TextBoard()
     scene.add(textBoard.container)
 
+    // ***** Like Bullet(いいね発射) *****
+
+    let bulletDirection = new THREE.Vector3(),
+        likeBullet
+
+    const bulletRaycaster = new THREE.Raycaster()
+    bulletRaycaster.far = 0.2
+
+    element.addEventListener('dblclick', shooting)
+
     // ***** 空作成 *****
 
     const textureLoader = new THREE.TextureLoader()
@@ -206,13 +216,13 @@ export default class extends Controller {
         case 'KeyW':
           moveForward = true
           break
-        case "KeyA":
+        case 'KeyA':
           moveLeft = true
           break
-        case "KeyS":
+        case 'KeyS':
           moveBackward = true
           break
-        case "KeyD":
+        case 'KeyD':
           moveRight = true
           break
       }
@@ -220,19 +230,35 @@ export default class extends Controller {
 
     function onKeyUp(event) {
       switch(event.code) {
-        case "KeyW":
+        case 'KeyW':
           moveForward = false
           break
-        case "KeyA":
+        case 'KeyA':
           moveLeft = false
           break
-        case "KeyS":
+        case 'KeyS':
           moveBackward = false
           break
-        case "KeyD":
+        case 'KeyD':
           moveRight = false
           break
       }
+    }
+
+    function shooting() {
+      if(likeBullet) {
+        // 二つ発射されていたら一個目削除
+        likeBullet.material.dispose()
+        likeBullet.geometry.dispose()
+        scene.remove(likeBullet)
+      }
+
+      likeBullet = new Heart()
+      likeBullet.position.copy(camera.position)
+      likeBullet.rotation.copy(camera.rotation)
+      scene.add(likeBullet)
+
+      camera.getWorldDirection(bulletDirection)
     }
 
     function animate() {
@@ -317,6 +343,23 @@ export default class extends Controller {
           } else if(collisionModel.parent.parent.name == 'userModel') {
             collisionModel.parent.parent.lookAt(camera.position)
             textBoard.setTextPosition(camera, collisionModel.parent.parent.position)
+          }
+        }
+
+        // *** Like Bullet ***
+        if(likeBullet) {
+          likeBullet.position.x += bulletDirection.x * delta
+          likeBullet.position.y += bulletDirection.y * delta
+          likeBullet.position.z += bulletDirection.z * delta
+          likeBullet.rotation.z += delta * 2
+
+          bulletRaycaster.set(likeBullet.position, new THREE.Vector3(0, -1, 0))
+          const bulletHitModel = bulletRaycaster.intersectObjects(modelObjects)
+          if(bulletHitModel.length > 0) {
+            // material, geometryはWebGLRendererにキャッシュされる為削除
+            likeBullet.material.dispose()
+            likeBullet.geometry.dispose()
+            scene.remove(likeBullet)
           }
         }
       }
