@@ -3,8 +3,9 @@ import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 // 一人称視点
 import { PointerLockControls } from "three/PointerLockControls"
-import { TextBoard } from "../modules/TextBoard"
 import * as ThreeMeshUI from "three-mesh-ui"
+import { TextBoard } from "../modules/TextBoard"
+import { Heart } from "../modules/Heart"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
