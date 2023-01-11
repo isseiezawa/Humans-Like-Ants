@@ -95,7 +95,8 @@ export default class extends Controller {
         groundCenter,
         groundAttribute,
         stoneObjects = [],
-        modelObjects = [],
+        gltfModelGroups = [],
+        gltfModels = [],
         collisionModel,
         mixers = []
 
@@ -205,7 +206,9 @@ export default class extends Controller {
               }
             }
           })
-          modelObjects.push(gltfModelGroup)
+          gltfModelGroups.push(gltfModelGroup)
+          // animation切り替え用
+          gltfModels.push(gltfModel)
           break
         }
       scene.add(gltfModelGroup)
@@ -259,6 +262,22 @@ export default class extends Controller {
       scene.add(likeBullet)
 
       camera.getWorldDirection(bulletDirection)
+    }
+
+    function switchAnimation(hitModelScene) {
+      // 配列の要素を全削除する (インデックス0以降のすべての要素を削除)
+      mixers.splice(0)
+      for(let i = 0; i < gltfModels.length; i++) {
+        if(gltfModels[i].animations.length) {
+          const mixer = new THREE.AnimationMixer(gltfModels[i].scene)
+          const clipNumber = gltfModels[i].scene == hitModelScene ? 1 : 0
+          const action = mixer.clipAction(gltfModels[i].animations[clipNumber])
+
+          action.play()
+
+          mixers.push(mixer)
+        }
+      }
     }
 
     function animate() {
@@ -320,7 +339,7 @@ export default class extends Controller {
         }
 
         // *** モデル接触 ***
-        const hitModel = cameraRaycaster.intersectObjects(modelObjects)
+        const hitModel = cameraRaycaster.intersectObjects(gltfModelGroups)
         if(hitModel.length > 0) {
           // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
           collisionModel = hitModel[0].object.parent.parent
@@ -354,12 +373,24 @@ export default class extends Controller {
           likeBullet.rotation.z += delta * 2
 
           bulletRaycaster.set(likeBullet.position, new THREE.Vector3(0, -1, 0))
-          const bulletHitModel = bulletRaycaster.intersectObjects(modelObjects)
-          if(bulletHitModel.length > 0) {
+          const bulletHitMesh = bulletRaycaster.intersectObjects(gltfModelGroups)
+          if(bulletHitMesh.length > 0) {
             // material, geometryはWebGLRendererにキャッシュされる為削除
             likeBullet.material.dispose()
             likeBullet.geometry.dispose()
             scene.remove(likeBullet)
+
+            // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+            const bulletHitObject = bulletHitMesh[0].object.parent.parent
+
+            // gltfModel.sceneを格納
+            if(bulletHitObject.name == 'userModel') {
+              switchAnimation(bulletHitObject.children)
+            } else if(bulletHitObject.parent.name == 'userModel') {
+              switchAnimation(bulletHitObject)
+            } else if(bulletHitObject.parent.parent.name == 'userModel') {
+              switchAnimation(bulletHitObject.parent)
+            }
           }
         }
       }
