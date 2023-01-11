@@ -21,6 +21,9 @@ export default class extends Controller {
     // 時間を追跡するためのオブジェクト
     const clock = new THREE.Clock()
 
+    // raycasterがヒットした際の待機時間監視(60fps = 1秒間に60画描写)
+    let waitFrame = 60
+
     // シーン作成
     const scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xF0F8FF );
@@ -285,6 +288,8 @@ export default class extends Controller {
 
       requestAnimationFrame(animate)
 
+      waitFrame++
+
       ThreeMeshUI.update()
 
       stats.update()
@@ -339,16 +344,19 @@ export default class extends Controller {
         }
 
         // *** モデル接触 ***
-        const hitModel = cameraRaycaster.intersectObjects(gltfModelGroups)
-        if(hitModel.length > 0) {
-          // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
-          collisionModel = hitModel[0].object.parent.parent
-          const userData = hitModel[0].object.userData
-          textBoard.setContents(
-            userData.text,
-            userData.userName,
-            userData.imageUrl
-          )
+        if(waitFrame > 60) {
+          const hitModel = cameraRaycaster.intersectObjects(gltfModelGroups)
+          if(hitModel.length > 0) {
+            // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+            collisionModel = hitModel[0].object.parent.parent
+            const userData = hitModel[0].object.userData
+            textBoard.setContents(
+              userData.text,
+              userData.userName,
+              userData.imageUrl
+            )
+            waitFrame = 0
+          }
         }
 
         if(collisionModel) {
@@ -372,24 +380,27 @@ export default class extends Controller {
           likeBullet.position.z += bulletDirection.z * delta
           likeBullet.rotation.z += delta * 2
 
-          bulletRaycaster.set(likeBullet.position, new THREE.Vector3(0, -1, 0))
-          const bulletHitMesh = bulletRaycaster.intersectObjects(gltfModelGroups)
-          if(bulletHitMesh.length > 0) {
-            // material, geometryはWebGLRendererにキャッシュされる為削除
-            likeBullet.material.dispose()
-            likeBullet.geometry.dispose()
-            scene.remove(likeBullet)
+          if(waitFrame > 60) {
+            bulletRaycaster.set(likeBullet.position, new THREE.Vector3(0, -1, 0))
+            const bulletHitMesh = bulletRaycaster.intersectObjects(gltfModelGroups)
+            if(bulletHitMesh.length > 0) {
+              // material, geometryはWebGLRendererにキャッシュされる為削除
+              likeBullet.material.dispose()
+              likeBullet.geometry.dispose()
+              scene.remove(likeBullet)
 
-            // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
-            const bulletHitObject = bulletHitMesh[0].object.parent.parent
+              // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+              const bulletHitObject = bulletHitMesh[0].object.parent.parent
 
-            // gltfModel.sceneを格納
-            if(bulletHitObject.name == 'userModel') {
-              switchAnimation(bulletHitObject.children)
-            } else if(bulletHitObject.parent.name == 'userModel') {
-              switchAnimation(bulletHitObject)
-            } else if(bulletHitObject.parent.parent.name == 'userModel') {
-              switchAnimation(bulletHitObject.parent)
+              // gltfModel.sceneを格納
+              if(bulletHitObject.name == 'userModel') {
+                switchAnimation(bulletHitObject.children)
+              } else if(bulletHitObject.parent.name == 'userModel') {
+                switchAnimation(bulletHitObject)
+              } else if(bulletHitObject.parent.parent.name == 'userModel') {
+                switchAnimation(bulletHitObject.parent)
+              }
+              waitFrame = 0
             }
           }
         }
