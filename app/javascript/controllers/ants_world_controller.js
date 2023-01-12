@@ -3,6 +3,10 @@ import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 // 一人称視点
 import { PointerLockControls } from "three/PointerLockControls"
+import * as ThreeMeshUI from "three-mesh-ui"
+import { TextBoard } from "../modules/TextBoard"
+import { Heart } from "../modules/Heart"
+import { TWEEN } from "tween"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
@@ -15,11 +19,11 @@ export default class extends Controller {
   async init() {
     const element = this.antsWorldElementTarget
 
-    const width = element.offsetWidth
-    const height = element.offsetHeight
-
     // 時間を追跡するためのオブジェクト
     const clock = new THREE.Clock()
+
+    // raycasterがヒットした際の待機時間監視(60fps = 1秒間に60画描写)
+    let waitFrame = 60
 
     // シーン作成
     const scene = new THREE.Scene()
@@ -27,6 +31,7 @@ export default class extends Controller {
 
     // カメラ作成
     const camera = new THREE.PerspectiveCamera(75)
+    camera.position.setY(1)
     camera.far = 100
 
     // レンダラー作成
@@ -76,22 +81,28 @@ export default class extends Controller {
         // 移動方向
         direction = new THREE.Vector3()
 
-    const controles = new PointerLockControls(camera, renderer.domElement)
+    const controls = new PointerLockControls(camera, renderer.domElement)
 
     element.addEventListener('click', () => {
-      controles.lock()
+      controls.lock()
     })
 
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('keyup', onKeyUp)
 
+    const cameraRaycaster = new THREE.Raycaster()
 
     // ***** モデル作成 *****
 
-    let groundScaleFactor,
+    let groundObject,
+        groundScaleFactor,
+        groundCenter,
         groundAttribute,
-        mixer
-    const mixerGroup = new THREE.AnimationObjectGroup()
+        stoneObjects = [],
+        gltfModelGroups = [],
+        gltfModels = [],
+        collisionModel,
+        mixers = []
 
     const ground = '/assets/ground/ground.gltf'
     const stone = '/assets/stone/stone.gltf'
@@ -100,6 +111,19 @@ export default class extends Controller {
     await createGltfModel(ground, 'ground', 20)
     await createGltfModel(stone, 'stone', 26)
     await createGltfModel(modelFile, 'userModel', 1)
+
+    const textBoard  = new TextBoard()
+    scene.add(textBoard.container)
+
+    // ***** Like Bullet(いいね発射) *****
+
+    let bulletDirection = new THREE.Vector3(),
+        likeBullet
+
+    const bulletRaycaster = new THREE.Raycaster()
+    bulletRaycaster.far = 0.2
+
+    element.addEventListener('dblclick', shooting)
 
     // ***** 空作成 *****
 
@@ -114,24 +138,39 @@ export default class extends Controller {
 
     async function createGltfModel(gltfFile, name, size) {
       const gltfLoader = new GLTFLoader()
-      const gltfModel = await gltfLoader.loadAsync(gltfFile)
+      const gltfModel = await gltfLoader.loadAsync(
+                                                    gltfFile,
+                                                    (xhr) => {
+                                                      console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
+                                                    }
+                                                  )
 
       if(gltfModel.animations.length) {
-        mixerGroup.add(gltfModel.scene)
         // AnimationMixerを作成しAnimationClipのリストを取得
-        mixer = new THREE.AnimationMixer(mixerGroup)
+        const mixer = new THREE.AnimationMixer(gltfModel.scene)
         // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
         const action = mixer.clipAction(gltfModel.animations[0])
 
         action.play()
-      }
 
-      gltfModel.scene.name = name
+        mixers.push(mixer)
+      }
 
       // 取得したモデルのサイズを均一にするための計算
       const box3 = new THREE.Box3()
       // 世界軸に沿った最小のバウンディングボックスを計算
       box3.setFromObject( gltfModel.scene )
+
+      // modelを原点の位置に移動
+      const modelCenter = box3.getCenter(new THREE.Vector3())
+      gltfModel.scene.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z)
+
+      // 原点(0, 0, 0)を持つgroupに挿入
+      const gltfModelGroup = new THREE.Group()
+      gltfModelGroup.add(gltfModel.scene)
+
+      gltfModelGroup.name = name
+
       // 現物のサイズを出力
       const width = box3.max.x - box3.min.x
       const height = box3.max.y - box3.min.y
@@ -141,30 +180,47 @@ export default class extends Controller {
       const maxSize = Math.max(width, height, length)
       const scaleFactor =  size / maxSize
 
-      gltfModel.scene.scale.multiplyScalar(scaleFactor)
+      gltfModelGroup.scale.multiplyScalar(scaleFactor)
 
       switch(name) {
         case 'ground':
+          groundObject = gltfModelGroup
           // 地面の倍率と頂点座標を格納
           groundScaleFactor = scaleFactor
+          groundCenter = modelCenter
           groundAttribute = gltfModel.scene.children[0].geometry.attributes.position
           break
         case 'stone':
-            break
+          stoneObjects.push(gltfModelGroup)
+          break
         case 'userModel':
           // 地面の頂点座標を一つ決める処理
           const randomIndex = Math.floor(Math.random() * groundAttribute.count)
-          const x = groundAttribute.getX(randomIndex) * groundScaleFactor
-          const y = groundAttribute.getY(randomIndex) * groundScaleFactor
-          const z = groundAttribute.getZ(randomIndex) * groundScaleFactor
+          const x = (groundAttribute.getX(randomIndex) + -groundCenter.x) * groundScaleFactor
+          const y = (groundAttribute.getY(randomIndex) + -groundCenter.y) * groundScaleFactor
+          const z = (groundAttribute.getZ(randomIndex) + -groundCenter.z) * groundScaleFactor
 
           // オブジェクトの中心から足元までの距離を求める処理
-          const putHeight = scaleFactor * -box3.min.y
+          const putHeight = scaleFactor * ( modelCenter.y -box3.min.y )
+          gltfModelGroup.position.set(x, y + putHeight, z)
 
-          gltfModel.scene.position.set(x, y + putHeight, z)
-      }
-
-      scene.add(gltfModel.scene)
+          // traverseで子孫のMeshにdataを格納する
+          gltfModel.scene.traverse((child) => {
+            if(child.isMesh) {
+              child.userData = {
+                id: 1,
+                imageUrl: '/assets/sky.jpeg',
+                text: 'hi',
+                userName: 'issei'
+              }
+            }
+          })
+          gltfModelGroups.push(gltfModelGroup)
+          // animation切り替え用
+          gltfModels.push(gltfModel)
+          break
+        }
+      scene.add(gltfModelGroup)
     }
 
     function onKeyDown(event) {
@@ -172,13 +228,13 @@ export default class extends Controller {
         case 'KeyW':
           moveForward = true
           break
-        case "KeyA":
+        case 'KeyA':
           moveLeft = true
           break
-        case "KeyS":
+        case 'KeyS':
           moveBackward = true
           break
-        case "KeyD":
+        case 'KeyD':
           moveRight = true
           break
       }
@@ -186,19 +242,66 @@ export default class extends Controller {
 
     function onKeyUp(event) {
       switch(event.code) {
-        case "KeyW":
+        case 'KeyW':
           moveForward = false
           break
-        case "KeyA":
+        case 'KeyA':
           moveLeft = false
           break
-        case "KeyS":
+        case 'KeyS':
           moveBackward = false
           break
-        case "KeyD":
+        case 'KeyD':
           moveRight = false
           break
       }
+    }
+
+    function shooting() {
+      if(likeBullet) {
+        // 二つ発射されていたら一個目削除
+        likeBullet.material.dispose()
+        likeBullet.geometry.dispose()
+        scene.remove(likeBullet)
+      }
+
+      likeBullet = new Heart()
+      likeBullet.position.copy(camera.position)
+      likeBullet.rotation.copy(camera.rotation)
+      scene.add(likeBullet)
+
+      camera.getWorldDirection(bulletDirection)
+    }
+
+    function switchAnimation(hitModelScene) {
+      // 配列の要素を全削除する (インデックス0以降のすべての要素を削除)
+      mixers.splice(0)
+      for(let i = 0; i < gltfModels.length; i++) {
+        if(gltfModels[i].animations.length) {
+          const mixer = new THREE.AnimationMixer(gltfModels[i].scene)
+          const clipNumber = gltfModels[i].scene == hitModelScene ? 1 : 0
+          const action = mixer.clipAction(gltfModels[i].animations[clipNumber])
+
+          action.play()
+
+          mixers.push(mixer)
+        }
+      }
+    }
+
+    function collision() {
+      // 前のTweenの処理を中断して、その位置から新しいTweenを実行する
+      TWEEN.removeAll()
+
+      // ベクトルの大きさが1の方向ベクトル取得
+      const cameraDirection = camera.getWorldDirection(new THREE.Vector3())
+      const backX = camera.position.x - cameraDirection.x
+      const backZ = camera.position.z - cameraDirection.z
+
+      new TWEEN.Tween(camera.position)
+                .to({x: backX, y: camera.position.y, z: backZ}, 1000)
+                .easing(TWEEN.Easing.Back.Out)
+                .start()
     }
 
     function animate() {
@@ -206,11 +309,16 @@ export default class extends Controller {
 
       requestAnimationFrame(animate)
 
+      waitFrame++
+
+      ThreeMeshUI.update()
+
+      TWEEN.update()
       stats.update()
 
       renderer.render(scene, camera)
 
-      if(controles.isLocked) {
+      if(controls.isLocked) {
         direction.z = Number(moveForward) - Number(moveBackward)
         direction.x = Number(moveRight) - Number(moveLeft)
 
@@ -226,17 +334,101 @@ export default class extends Controller {
         }
 
         // 速度を元にカメラの前進後進を決める
-        controles.moveForward(-velocity.z * delta)
-        controles.moveRight(-velocity.x * delta)
+        controls.moveForward(-velocity.z * delta)
+        controls.moveRight(-velocity.x * delta)
+
+        if(mixers) {
+          // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
+          for(const mixer of mixers) {
+            mixer.update(delta)
+          }
+        }
+
+        // ***** 当たり判定 *****
+
+        const nowCameraPosition = new THREE.Vector3()
+        nowCameraPosition.copy(camera.position)
+        // yのみ高さを指定するのは、判定のraycasterは下向きになっている為
+        nowCameraPosition.setY(10)
+        cameraRaycaster.set(nowCameraPosition, new THREE.Vector3(0, -1, 0))
+
+        // *** 地面接触 ***
+        const hitGround = cameraRaycaster.intersectObject(groundObject)
+        if(hitGround.length > 0) {
+          camera.position.setY(0.6 + hitGround[0].point.y)
+        }
+
+        // *** 岩接触 ***
+        const hitStone = cameraRaycaster.intersectObjects(stoneObjects)
+        if(hitStone.length > 0) {
+          controls.moveForward(velocity.z * delta)
+          controls.moveRight(velocity.x * delta)
+          collision()
+        }
+
+        // *** モデル接触 ***
+        if(waitFrame > 60) {
+          const hitModel = cameraRaycaster.intersectObjects(gltfModelGroups)
+          if(hitModel.length > 0) {
+            // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+            collisionModel = hitModel[0].object.parent.parent
+            const userData = hitModel[0].object.userData
+            textBoard.setContents(
+              userData.text,
+              userData.userName,
+              userData.imageUrl
+            )
+            collision()
+            waitFrame = 0
+          }
+        }
+
+        if(collisionModel) {
+          // 親をたどってグループ化されているObjectにlookAtを適用
+          if(collisionModel.name == 'userModel') {
+            collisionModel.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.position)
+          } else if(collisionModel.parent.name == 'userModel') {
+            collisionModel.parent.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.parent.position)
+          } else if(collisionModel.parent.parent.name == 'userModel') {
+            collisionModel.parent.parent.lookAt(camera.position)
+            textBoard.setTextPosition(camera, collisionModel.parent.parent.position)
+          }
+        }
+
+        // *** Like Bullet ***
+        if(likeBullet) {
+          likeBullet.position.x += bulletDirection.x * delta
+          likeBullet.position.y += bulletDirection.y * delta
+          likeBullet.position.z += bulletDirection.z * delta
+          likeBullet.rotation.z += delta * 2
+
+          if(waitFrame > 60) {
+            bulletRaycaster.set(likeBullet.position, new THREE.Vector3(0, -1, 0))
+            const bulletHitMesh = bulletRaycaster.intersectObjects(gltfModelGroups)
+            if(bulletHitMesh.length > 0) {
+              // material, geometryはWebGLRendererにキャッシュされる為削除
+              likeBullet.material.dispose()
+              likeBullet.geometry.dispose()
+              scene.remove(likeBullet)
+
+              // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
+              const bulletHitObject = bulletHitMesh[0].object.parent.parent
+
+              // gltfModel.sceneを格納
+              if(bulletHitObject.name == 'userModel') {
+                switchAnimation(bulletHitObject.children)
+              } else if(bulletHitObject.parent.name == 'userModel') {
+                switchAnimation(bulletHitObject)
+              } else if(bulletHitObject.parent.parent.name == 'userModel') {
+                switchAnimation(bulletHitObject.parent)
+              }
+              waitFrame = 0
+            }
+          }
+        }
       }
-
-      if(mixer) {
-        // getDelta()->.oldTimeが設定されてから経過した秒数を取得し、.oldTimeを現在の時刻に設定
-        mixer.update(delta)
-      }
-
-      // ***** 当たり判定 *****
-
     }
   }
 }
