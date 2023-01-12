@@ -302,7 +302,6 @@ export default class extends Controller {
                 .to({x: backX, y: camera.position.y, z: backZ}, 1000)
                 .easing(TWEEN.Easing.Back.Out)
                 .start()
-
     }
 
     function animate() {
