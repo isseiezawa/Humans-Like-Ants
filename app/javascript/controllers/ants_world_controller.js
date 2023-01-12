@@ -6,6 +6,7 @@ import { PointerLockControls } from "three/PointerLockControls"
 import * as ThreeMeshUI from "three-mesh-ui"
 import { TextBoard } from "../modules/TextBoard"
 import { Heart } from "../modules/Heart"
+import { TWEEN } from "tween"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
@@ -143,7 +144,6 @@ export default class extends Controller {
                                                       console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
                                                     }
                                                   )
-
 
       if(gltfModel.animations.length) {
         // AnimationMixerを作成しAnimationClipのリストを取得
@@ -289,6 +289,22 @@ export default class extends Controller {
       }
     }
 
+    function collision() {
+      // 前のTweenの処理を中断して、その位置から新しいTweenを実行する
+      TWEEN.removeAll()
+
+      // ベクトルの大きさが1の方向ベクトル取得
+      const cameraDirection = camera.getWorldDirection(new THREE.Vector3())
+      const backX = camera.position.x - cameraDirection.x
+      const backZ = camera.position.z - cameraDirection.z
+
+      new TWEEN.Tween(camera.position)
+                .to({x: backX, y: camera.position.y, z: backZ}, 1000)
+                .easing(TWEEN.Easing.Back.Out)
+                .start()
+
+    }
+
     function animate() {
       const delta = clock.getDelta()
 
@@ -298,6 +314,7 @@ export default class extends Controller {
 
       ThreeMeshUI.update()
 
+      TWEEN.update()
       stats.update()
 
       renderer.render(scene, camera)
@@ -347,6 +364,7 @@ export default class extends Controller {
         if(hitStone.length > 0) {
           controls.moveForward(velocity.z * delta)
           controls.moveRight(velocity.x * delta)
+          collision()
         }
 
         // *** モデル接触 ***
@@ -361,6 +379,7 @@ export default class extends Controller {
               userData.userName,
               userData.imageUrl
             )
+            collision()
             waitFrame = 0
           }
         }
