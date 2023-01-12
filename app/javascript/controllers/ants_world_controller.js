@@ -137,7 +137,13 @@ export default class extends Controller {
 
     async function createGltfModel(gltfFile, name, size) {
       const gltfLoader = new GLTFLoader()
-      const gltfModel = await gltfLoader.loadAsync(gltfFile)
+      const gltfModel = await gltfLoader.loadAsync(
+                                                    gltfFile,
+                                                    (xhr) => {
+                                                      console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
+                                                    }
+                                                  )
+
 
       if(gltfModel.animations.length) {
         // AnimationMixerを作成しAnimationClipのリストを取得
