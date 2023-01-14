@@ -14,16 +14,13 @@ export default class extends Controller {
   static targets = ['antsWorldElement']
 
   connect() {
-    this.tweetData = JSON.parse(this.antsWorldElementTarget.dataset.json)
     window.addEventListener('DOMContentLoaded', this.init())
-  }
-
-  changeTweetData() {
-    this.tweetData = JSON.parse(this.antsWorldElementTarget.dataset.json)
   }
 
   async init() {
     const element = this.antsWorldElementTarget
+
+    const tweetData = JSON.parse(this.antsWorldElementTarget.dataset.json)
 
     // 時間を追跡するためのオブジェクト
     const clock = new THREE.Clock()
@@ -117,8 +114,8 @@ export default class extends Controller {
     await createGltfModel(ground, 'ground', 20)
     await createGltfModel(stone, 'stone', 26)
 
-    for(let i = 0; i < this.tweetData.length; i++) {
-      await createGltfModel(modelFile, 'userModel', 1, this.tweetData[i])
+    for(let i = 0; i < tweetData.length; i++) {
+      await createGltfModel(modelFile, 'userModel', 1, tweetData[i])
     }
 
     const textBoard  = new TextBoard()

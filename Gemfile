@@ -69,6 +69,9 @@ gem 'annotate'
 # 初期値データ管理
 gem 'seed-fu'
 
+# pagination
+gem 'kaminari', '~> 1.1'
+
 gem 'active_hash'
 
 group :development, :test do

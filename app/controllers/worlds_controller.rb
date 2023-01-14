@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
 
   def show
     @tweet = Tweet.new
-    @tweets = @world.tweets.joins(:user).select(:post, :name).limit(5)
+    @tweets = @world.tweets.joins(:user).select(:post, :name).page(params[:page]).per(3)
   end
 
   def index
