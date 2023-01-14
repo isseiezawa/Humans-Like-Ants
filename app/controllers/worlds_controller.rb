@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
 
   def show
     @tweet = Tweet.new
-    @tweets = @world.tweets.to_json(only: [:post], include: {user: {only: :name}})
+    @tweets = @world.tweets.joins(:user).select(:post, :name).limit(5)
   end
 
   def index
