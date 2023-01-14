@@ -14,10 +14,10 @@
 #                                          PATCH  /users/:id(.:format)                                                                              users#update
 #                                          PUT    /users/:id(.:format)                                                                              users#update
 #                                          DELETE /users/:id(.:format)                                                                              users#destroy
+#                             world_tweets POST   /worlds/:world_place_name/tweets(.:format)                                                        tweets#create
+#                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
 #                                    world GET    /worlds/:place_name(.:format)                                                                     worlds#show
-#                                   tweets POST   /tweets(.:format)                                                                                 tweets#create
-#                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   resources :users, only: %i[show new edit create update destroy]
-  resources :worlds, only: %i[show index], param: 'place_name'
-  resources :tweets, only: %i[create destroy]
+  resources :worlds, only: %i[show index], param: 'place_name' do
+    resources :tweets, only: %i[create destroy], shallow: true
+  end
 end

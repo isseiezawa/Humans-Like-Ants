@@ -2,8 +2,9 @@ class TweetsController < ApplicationController
   protect_from_forgery with: :null_session
 
   def create
+    @world = World.find_by(place: params[:world_place_name])
     @tweet = current_user.tweets.build(tweet_params)
-    @world = World.find(@tweet.world_id)
+    @tweet.world_id = @world.id
 
     respond_to do |format|
       if @tweet.save
@@ -25,6 +26,6 @@ class TweetsController < ApplicationController
   private
 
   def tweet_params
-    params.require(:tweet).permit(:post, :world_id, :image)
+    params.require(:tweet).permit(:post, :image)
   end
 end

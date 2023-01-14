@@ -4,4 +4,4 @@ h2.text-center
 = content_tag :div, '', class: 'set-size', data: { controller: 'ants-world', ants_world_target: 'antsWorldElement' }
 / id属性tweet-from
 = turbo_frame_tag 'tweet-form' do
-  == render 'tweets/form', world: @world
+  == render 'tweets/form', { world: @world, tweet: @tweet }

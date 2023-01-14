@@ -1,9 +1,5 @@
 = form_with model: @user, class: 'row text-center justify-content-center' do |form|
-  - if @user.errors.any?
-    div style="color: red"
-      ul
-        - @user.errors.each do |error|
-          li = error.full_message
+  == render 'shared/error_messages', object: form.object
   .mb-3.col-8
     = form.label :name, User.human_attribute_name(:name), class: 'form-label'
     = form.text_field :name, class: 'form-control'

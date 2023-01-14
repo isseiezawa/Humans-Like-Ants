@@ -1,17 +1,12 @@
 .container-fluid.bg-light
-  = form_with url: tweets_path, scope: :tweet, data: { controller: 'validate', validate_character_count_value: 200 }, class: 'row text-center justify-content-center' do |form|
-    = form.hidden_field :world_id, value: world.id, class: 'form-control'
-    .mb-3.col-8
-      - if @tweet
-        - @tweet.errors.each do |error|
-          .text-danger
-            = error.full_message
+  = form_with model: tweet, url: world_tweets_path(world.place), data: { controller: 'validate', validate_character_count_value: 200 }, class: 'row text-center justify-content-center' do |form|
+    == render 'shared/error_messages', object: form.object
+    .mb-3.col-6
       = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label'
       = form.text_field :post, data: { validate_target: 'post', action: 'input->validate#postForm' }, class: 'form-control'
       .small data-validate-target='postLength'
-      = form.label :post, Tweet.human_attribute_name(:image)
+      = form.label :image, Tweet.human_attribute_name(:image)
       div data-controller='preview'
-        = form.file_field :post, data: { preview_target: 'image', action: 'change->preview#setImage' }, accept: 'image/*', class: 'form-control'
+        = form.file_field :image, data: { preview_target: 'image', action: 'change->preview#setImage' }, accept: 'image/*', class: 'form-control'
         = image_tag 'preview', data: { preview_target: 'preview' }, class: 'pt-3 pb-1 w-50'
-    .mb-3.col-6
       = form.submit t('defaults.give_birth'), class: 'btn btn-success', data: { validate_target: 'formButton' }
