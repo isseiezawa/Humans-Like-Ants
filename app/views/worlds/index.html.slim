@@ -1,5 +1,7 @@
-h2.text-center = t('.title')
-= content_tag :div, '', class: 'container-fluid set-size', data: { controller: 'world-map', world_map_target: 'japanMapContainer' }
-.container-fluid.row.row-cols-3
+h1.text-center.mt-3.mb-3
+  span
+    = t('.title')
+= content_tag :div, '', class: 'set-size', data: { controller: 'world-map', world_map_target: 'japanMapContainer' }
+.row.row-cols-3
   - @worlds.each do |world|
     == render 'place', world: world

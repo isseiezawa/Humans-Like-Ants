@@ -1,4 +1,4 @@
-.container-fluid.bg-light
+.form.bg-light.rounded
   = form_with model: tweet, url: world_tweets_path(world.place), data: { controller: 'validate', validate_character_count_value: 200 }, class: 'row text-center justify-content-center' do |form|
     == render 'shared/error_messages', object: form.object
     .mb-3.col-6

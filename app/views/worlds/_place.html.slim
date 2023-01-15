@@ -1,8 +1,7 @@
-.col.border class="#{'bg-light' if world.id % 2 != 0}"
-  .row.text-center id="place-name-#{world.place}"
-    .col
+.col.border class="#{world.id % 2 != 0 ? 'bg-light' : 'bg-white'}"
+  .d-flex.flex-column.text-center id="place-name-#{world.place}"
+    div
       = link_to world.place_ja, world_path(world.place), data: { turbo: false }
-    .col
+    div
       | ( #{world.place} )
-    .col
-      | 10匹
+    .p 10匹
