@@ -2,12 +2,17 @@ h1.text-center.mt-3.mb-3
   span
     = @world.place_ja
     =< "(#{@world.place})"
-= content_tag :div,
-              '',
-              class: 'set-size',
-              data: { controller: 'ants-world',
-                      ants_world_target: 'antsWorldElement',
-                      json: "#{JSON.generate @tweets.map(&:tweet_to_hash) if @tweets.present?}" }
+- if @tweets.present?
+  = content_tag :div,
+                '',
+                class: 'set-size',
+                data: { controller: 'ants-world',
+                        ants_world_target: 'antsWorldElement',
+                        json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
+- else
+  .text-center
+    = image_tag 'ant_gif'
+    .small = t('.no_ants')
 .d-flex.justify-content-around
   = link_to_previous_page @tweets,
                           t('defaults.back_button',

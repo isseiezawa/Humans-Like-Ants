@@ -36,6 +36,8 @@ ja:
       success: "%{item}の編集に成功しました"
       fail: "%{item}の編集に失敗しました"
   worlds:
+    show:
+      no_ants: 'アリンコがいません。投稿しましょう！'
     index:
       title: '地域選択'
   tweets:
