@@ -28,4 +28,14 @@ class Tweet < ApplicationRecord
   validates :user, presence: true
   validates :world, presence: true
   validates :post, presence: true, length: { maximum: 200 }
+
+  def tweet_to_hash
+    # to_json文字列、as_json文字列キーを持つハッシュ
+    image.attached? ? as_json(methods: [:image_url], only: [:post], include: {user: {only: :name}}) : as_json(only: [:post], include: {user: {only: :name}})
+  end
+
+  def image_url
+    # コントローラやビューのコンテキストの外でリンクを作成する為url_forではいけない
+    Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+  end
 end

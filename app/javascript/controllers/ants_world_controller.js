@@ -12,12 +12,15 @@ import Stats from "stats"
 // Connects to data-controller="ants-world"
 export default class extends Controller {
   static targets = ['antsWorldElement']
+
   connect() {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
   async init() {
     const element = this.antsWorldElementTarget
+
+    const tweetData = JSON.parse(this.antsWorldElementTarget.dataset.json)
 
     // 時間を追跡するためのオブジェクト
     const clock = new THREE.Clock()
@@ -110,7 +113,10 @@ export default class extends Controller {
 
     await createGltfModel(ground, 'ground', 20)
     await createGltfModel(stone, 'stone', 26)
-    await createGltfModel(modelFile, 'userModel', 1)
+
+    for(let i = 0; i < tweetData.length; i++) {
+      await createGltfModel(modelFile, 'userModel', 1, tweetData[i])
+    }
 
     const textBoard  = new TextBoard()
     scene.add(textBoard.container)
@@ -136,7 +142,7 @@ export default class extends Controller {
 
     animate()
 
-    async function createGltfModel(gltfFile, name, size) {
+    async function createGltfModel(gltfFile, name, size, data) {
       const gltfLoader = new GLTFLoader()
       const gltfModel = await gltfLoader.loadAsync(
                                                     gltfFile,
@@ -208,10 +214,9 @@ export default class extends Controller {
           gltfModel.scene.traverse((child) => {
             if(child.isMesh) {
               child.userData = {
-                id: 1,
-                imageUrl: '/assets/sky.jpeg',
-                text: 'hi',
-                userName: 'issei'
+                imageUrl: data.image_url,
+                text: data.post,
+                userName: data.user.name
               }
             }
           })
