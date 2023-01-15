@@ -4,4 +4,5 @@
       = link_to world.place_ja, world_path(world.place), data: { turbo: false }
     div
       | ( #{world.place} )
-    .p 10匹
+    div
+      = t('defaults.ants_count', amount: world.tweets.length)

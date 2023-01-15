@@ -8,6 +8,7 @@ ja:
     not_authenticated: 'ログインしてください'
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
+    ants_count: "%{amount}匹"
   users:
     new:
       title: 'ユーザー登録'
