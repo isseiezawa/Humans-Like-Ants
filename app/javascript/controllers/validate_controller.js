@@ -38,7 +38,7 @@ export default class extends Controller {
 
   allowedCharacters() {
     // 許可された文字チェック
-    const allowString = /^[a-zA-Z0-9０-９\u3040-\u309f\u30a0-\u30ff\uFF5E\!\！\?\？\+\―\*\(\)\（\）\'\"\&\%\$\s。、ㇰヶㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺャㇻㇼㇽㇾㇿヮ蟻好嬉喜友晴一運営]+$/
+    const allowString = /^[a-zA-Z0-9０-９\u3040-\u309f\u30a0-\u30ff\uFF5E!\！\?\？\+\―\*\(\)\（\）\'\"\&\%\$\s。、ㇰヶㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺャㇻㇼㇽㇾㇿヮ蟻好嬉喜友晴一運営]+$/
     const exceptSpace = /\S+/
     const inputValue = this.inputTarget.value
 

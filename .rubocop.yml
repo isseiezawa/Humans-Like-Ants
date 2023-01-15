@@ -24,9 +24,15 @@ Layout/HashAlignment:
 # Line is too long.の警告無効
 Layout/LineLength:
   Enabled: false
+# Method has too many lines.の警告無効
+Metrics/MethodLength:
+  Enabled: false
 # Assignment Branch Condition size for change is too high.の警告無効
 Metrics/AbcSize:
   Enabled: false
+Style/RedundantRegexpEscape:
+  Exclude:
+    - 'lib/**/*'
 
 # Example has too many expectationsの警告無効
 RSpec/MultipleExpectations:
