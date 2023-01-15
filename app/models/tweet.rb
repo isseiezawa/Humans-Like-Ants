@@ -27,7 +27,7 @@ class Tweet < ApplicationRecord
 
   validates :user, presence: true
   validates :world, presence: true
-  validates :post, presence: true, length: { maximum: 200 }
+  validates :post, presence: true, length: { maximum: 200 }, allowed_characters: true
 
   def tweet_to_hash
     # to_json文字列、as_json文字列キーを持つハッシュ

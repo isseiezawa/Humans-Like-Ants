@@ -1,5 +1,8 @@
 ja:
   activerecord:
+    errors:
+      messages:
+        unauthorized_characters: 'に許可されていない文字が含まれています'
     models:
       user: 'ユーザー'
     attributes:
