@@ -9,11 +9,11 @@
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
-#                                edit_user GET    /users/:id/edit(.:format)                                                                         users#edit
 #                                     user GET    /users/:id(.:format)                                                                              users#show
-#                                          PATCH  /users/:id(.:format)                                                                              users#update
-#                                          PUT    /users/:id(.:format)                                                                              users#update
-#                                          DELETE /users/:id(.:format)                                                                              users#destroy
+#                             edit_profile GET    /profile/edit(.:format)                                                                           profiles#edit
+#                                  profile GET    /profile(.:format)                                                                                profiles#show
+#                                          PATCH  /profile(.:format)                                                                                profiles#update
+#                                          PUT    /profile(.:format)                                                                                profiles#update
 #                             world_tweets POST   /worlds/:world_place_name/tweets(.:format)                                                        tweets#create
 #                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
@@ -56,7 +56,8 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
-  resources :users, only: %i[show new edit create update destroy]
+  resources :users, only: %i[show new create]
+  resource :profile, only: %i[show edit update]
   resources :worlds, only: %i[show index], param: 'place_name' do
     resources :tweets, only: %i[create destroy], shallow: true
   end

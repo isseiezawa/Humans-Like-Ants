@@ -8,7 +8,7 @@ header
       #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
         ul.navbar-nav
           li.nav-item
-            = link_to 'プロフィール', '#', class: 'nav-link', data: { turbo: false }
+            = link_to t('profiles.show.title'), profile_path, class: 'nav-link', data: { turbo: false }
           li.nav-item
             = link_to t('defaults.logout'), logout_path, class: 'nav-link', data: { turbo_method: :delete }
           li.nav-item.dropdown
