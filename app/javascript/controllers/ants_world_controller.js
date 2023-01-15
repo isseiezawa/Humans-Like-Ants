@@ -214,9 +214,9 @@ export default class extends Controller {
           gltfModel.scene.traverse((child) => {
             if(child.isMesh) {
               child.userData = {
-                imageUrl: '/assets/sky.jpeg',
+                imageUrl: data.image_url,
                 text: data.post,
-                userName: data.name
+                userName: data.user.name
               }
             }
           })

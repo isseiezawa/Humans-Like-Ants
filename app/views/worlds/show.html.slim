@@ -6,7 +6,7 @@ h2.text-center
               class: 'set-size',
               data: { controller: 'ants-world',
                       ants_world_target: 'antsWorldElement',
-                      json: "#{@tweets.to_json if @tweets.present?}" }
+                      json: "#{JSON.generate @tweets.map(&:tweet_to_hash) if @tweets.present?}" }
 .d-flex.justify-content-around
   = link_to_previous_page @tweets,
                           t('defaults.back_button',
