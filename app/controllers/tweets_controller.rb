@@ -5,7 +5,7 @@ class TweetsController < ApplicationController
     @world = World.find_by(place: params[:world_place_name])
     @tweet = current_user.tweets.build(tweet_params)
     @tweet.world_id = @world.id
-
+    @tweets = @world.tweets.includes(:user).order(id: :desc).page(params[:page]).per(3)
     respond_to do |format|
       if @tweet.save
         format.html { redirect_to world_path(@world.place) }

@@ -28,7 +28,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
 
   validates :email, presence: true, uniqueness: true
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 50 }, allowed_characters: true
   validates :self_introduction, length: { maximum: 160 }
   validates :twitter_id, length: { maximum: 50 }
 

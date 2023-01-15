@@ -36,6 +36,8 @@ module HumansLikeAnts
     config.active_record.default_timezone = :local
     # 訳文の探索場所を指示
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.{rb,yml}').to_s]
+    # validatorsをRailsに読み込ませる
+    config.autoload_paths += %W[#{config.root}/lib/validators]
 
     # config.eager_load_paths << Rails.root.join("extras")
 
