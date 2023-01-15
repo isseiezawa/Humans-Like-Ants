@@ -3,10 +3,11 @@
     == render 'shared/error_messages', object: form.object
     .mb-3.col-6
       = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label'
-      = form.text_field :post, data: { validate_target: 'post', action: 'input->validate#postForm' }, class: 'form-control'
-      .small data-validate-target='postLength'
+      .small.text-danger data-validate-target='error'
+      = form.text_field :post, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+      .small data-validate-target='inputLength'
       = form.label :image, Tweet.human_attribute_name(:image)
       div data-controller='preview'
         = form.file_field :image, data: { preview_target: 'image', action: 'change->preview#setImage' }, accept: 'image/*', class: 'form-control'
         = image_tag 'preview', data: { preview_target: 'preview' }, class: 'pt-3 pb-1 w-50'
-      = form.submit t('defaults.give_birth'), class: 'btn btn-success', data: { validate_target: 'formButton' }
+      = form.submit t('defaults.give_birth'), data: { validate_target: 'formButton' }, class: 'btn btn-success'
