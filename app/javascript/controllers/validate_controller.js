@@ -16,9 +16,24 @@ export default class extends Controller {
                   }
 
   initialize() {
-    this.inputflag = false
-    this.inputLengthflag = false
-    this.emailflag = false
+    // this.has[Name]Targetスコープ内に一致するターゲットがあるかどうかを示すブール値
+    if(this.hasInputTarget) {
+      if(this.inputTarget.value) {
+        this.inputflag = true
+        this.inputLengthflag = true
+      } else {
+        this.inputflag = false
+        this.inputLengthflag = false
+      }
+    }
+
+    if(this.hasEmailTarget) {
+      if(this.emailTarget.value) {
+        this.emailflag = true
+      } else {
+        this.emailflag = false
+      }
+    }
   }
 
   inputForm() {
@@ -87,6 +102,13 @@ export default class extends Controller {
         break
       case 'userSession':
         if(this.emailflag) {
+          this.submitButtonTarget.disabled = false
+        } else {
+          this.submitButtonTarget.disabled = true
+        }
+        break
+      case 'userEdit':
+        if(this.inputflag && this.inputLengthflag && this.emailflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true
