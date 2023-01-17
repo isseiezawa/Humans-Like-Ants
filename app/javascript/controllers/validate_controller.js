@@ -4,12 +4,17 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = [
                     'input',
-                    'email',
                     'inputLength',
-                    'submitButton',
                     'inputError',
-                    'emailError'
+                    'email',
+                    'emailError',
+                    'password',
+                    'passwordLength',
+                    'passwordConfirmation',
+                    'passwordConfirmationError',
+                    'submitButton'
                   ]
+
   static values = {
                     formType: String,
                     characterCount: Number
@@ -32,6 +37,22 @@ export default class extends Controller {
         this.emailflag = true
       } else {
         this.emailflag = false
+      }
+    }
+
+    if(this.hasPasswordTarget) {
+      if(this.passwordTarget.value) {
+        this.passwordflag = true
+      } else {
+        this.passwordflag = false
+      }
+    }
+
+    if(this.hasPasswordConfirmationTarget) {
+      if(this.passwordConfirmationTarget.value) {
+        this.passwordConfirmationflag = true
+      } else {
+        this.passwordConfirmationflag = false
       }
     }
   }
@@ -91,10 +112,49 @@ export default class extends Controller {
     }
   }
 
+  validatePassword() {
+    const passwordLength = this.passwordTarget.value.length
+
+    this.passwordLengthTarget.textContent = `7 < ${passwordLength}`
+
+    if(passwordLength < 8 || passwordLength == 0) {
+      this.passwordLengthTarget.classList.add('text-danger')
+      this.passwordflag = false
+    } else {
+      this.passwordLengthTarget.classList.remove('text-danger')
+      this.passwordflag = true
+    }
+
+    if(this.hasPasswordConfirmationTarget) {
+      const passwordValue = this.passwordTarget.value
+      const passwordConfirmationValue = this.passwordConfirmationTarget.value
+      if(passwordValue == passwordConfirmationValue) {
+        this.passwordConfirmationErrorTarget.textContent = ''
+        this.passwordConfirmationflag = true
+      } else {
+        this.passwordConfirmationflag = false
+        this.passwordConfirmationErrorTarget.textContent = 'パスワードと一致しません'
+      }
+    }
+  }
+
+  validatePasswordConfirmation() {
+    const passwordValue = this.passwordTarget.value
+    const passwordConfirmationValue = this.passwordConfirmationTarget.value
+
+    if(passwordValue == passwordConfirmationValue) {
+      this.passwordConfirmationErrorTarget.textContent = ''
+      this.passwordConfirmationflag = true
+    } else {
+      this.passwordConfirmationErrorTarget.textContent = 'パスワードと一致しません'
+      this.passwordConfirmationflag = false
+    }
+  }
+
   submitButtonChange() {
     switch (this.formTypeValue) {
       case 'userCreate':
-        if(this.inputflag && this.inputLengthflag && this.emailflag) {
+        if(this.inputflag && this.inputLengthflag && this.emailflag && this.passwordflag && this.passwordConfirmationflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true
