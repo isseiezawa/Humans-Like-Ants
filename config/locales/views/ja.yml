@@ -1,5 +1,6 @@
 ja:
   defaults:
+    edit: '編集'
     register: '登録'
     give_birth: '産む'
     login: 'ログイン'
@@ -7,6 +8,7 @@ ja:
     not_authenticated: 'ログインしてください'
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
+    ants_count: "%{amount}匹"
   users:
     new:
       title: 'ユーザー登録'
@@ -26,7 +28,17 @@ ja:
       fail: 'ログインに失敗しました'
     destroy:
       success: 'ログアウトしました'
+  profiles:
+    show:
+      title: 'プロフィール'
+    edit:
+      title: 'プロフィール編集'
+    update:
+      success: "%{item}の編集に成功しました"
+      fail: "%{item}の編集に失敗しました"
   worlds:
+    show:
+      no_ants: 'アリンコがいません。投稿しましょう！'
     index:
       title: '地域選択'
   tweets:

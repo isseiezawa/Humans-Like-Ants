@@ -1,23 +1,29 @@
-h2.text-center
-  = @world.place_ja
-  =< "(#{@world.place})"
-= content_tag :div,
-              '',
-              class: 'set-size',
-              data: { controller: 'ants-world',
-                      ants_world_target: 'antsWorldElement',
-                      json: "#{JSON.generate @tweets.map(&:tweet_to_hash) if @tweets.present?}" }
+h1.text-center.mt-3.mb-3
+  span
+    = @world.place_ja
+    =< "(#{@world.place})"
+- if @tweets.present?
+  = content_tag :div,
+                '',
+                class: 'set-size',
+                data: { controller: 'ants-world',
+                        ants_world_target: 'antsWorldElement',
+                        json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
+- else
+  .text-center
+    = image_tag 'ant_gif'
+    .small = t('.no_ants')
 .d-flex.justify-content-around
   = link_to_previous_page @tweets,
                           t('defaults.back_button',
                           amount: @world.tweets_length(@tweets.prev_page)),
                           data: { turbo: false },
-                          class: 'mt-1 mb-1 btn btn-outline-success'
+                          class: 'mt-3 mb-1 btn btn-success'
   = link_to_next_page @tweets,
                       t('defaults.next_button',
                       amount: @world.tweets_length(@tweets.next_page)),
                       data: { turbo: false },
-                      class: 'mt-1 mb-1 btn btn-outline-success'
+                      class: 'mt-3 mb-1 btn btn-success'
 / id属性tweet-from
 = turbo_frame_tag 'tweet-form' do
   == render 'tweets/form', { world: @world, tweet: @tweet }

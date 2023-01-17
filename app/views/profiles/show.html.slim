@@ -1,0 +1,24 @@
+.container.mt-3
+  .row
+    .col-md-10.offset-md-1
+      h1.text-center.mb-5
+        span
+          = t('.title')
+      table.table.table-success.table-striped.table-hover
+        tr
+          th.row
+            = t(User.human_attribute_name(:name))
+          td
+            = current_user.name
+        tr
+          th.row
+            = t(User.human_attribute_name(:email))
+          td
+            = current_user.email
+        tr
+          th.row
+            = t(User.human_attribute_name(:avatar))
+          td
+      = link_to t('defaults.edit'),
+                edit_profile_path,
+                class: 'd-block btn btn-success w-25 mx-auto mb-3'

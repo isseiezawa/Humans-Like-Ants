@@ -1,18 +1,23 @@
-= form_with model: @user, data: { controller: 'validate', validate_character_count_value: 50 }, class: 'row text-center justify-content-center' do |form|
-  == render 'shared/error_messages', object: form.object
-  .mb-3.col-8
-    = form.label :name, User.human_attribute_name(:name), class: 'form-label'
-    .small.text-danger data-validate-target='error'
-    = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
-    .small data-validate-target='inputLength'
-  .mb-3.col-8
-    = form.label :email, User.human_attribute_name(:email), class: 'form-label'
-    = form.email_field :email, class: 'form-control'
-  .mb-3.col-8
-    = form.label :password, class: 'form-label'
-    = form.password_field :password, class: 'form-control'
-  .mb-3.col-8
-    = form.label :password_confirmation, class: 'form-label'
-    = form.password_field :password_confirmation, class: 'form-control'
-  .mb-3.col-6
-    = form.submit t('defaults.register'), data: { validate_target: 'formButton' }, class: 'btn btn-success'
+.container
+  .shadow.p-3.mb-5.bg-body.rounded
+    = form_with model: @user, data: { controller: 'validate', validate_form_type_value: 'userCreate' ,validate_character_count_value: 50, action: 'input->validate#submitButtonChange' }, class: 'row text-center justify-content-center' do |form|
+      == render 'shared/error_messages', object: form.object
+      .mb-3.col-8
+        = form.label :name, User.human_attribute_name(:name), class: 'form-label'
+        .small.text-danger data-validate-target='inputError'
+        = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+        .small data-validate-target='inputLength'
+      .mb-3.col-8
+        = form.label :email, User.human_attribute_name(:email), class: 'form-label'
+        .small.text-danger  data-validate-target='emailError'
+        = form.email_field :email, data: { validate_target: 'email', action: 'input->validate#validateEmail' }, class: 'form-control'
+      .mb-3.col-8
+        = form.label :password, class: 'form-label'
+        = form.password_field :password, data: { validate_target: 'password', action: 'input->validate#validatePassword' }, class: 'form-control'
+        .small data-validate-target='passwordLength'
+      .mb-3.col-8
+        = form.label :password_confirmation, class: 'form-label'
+        .small.text-danger  data-validate-target='passwordConfirmationError'
+        = form.password_field :password_confirmation, data: { validate_target: 'passwordConfirmation', action: 'input->validate#validatePasswordConfirmation' }, class: 'form-control'
+      .mb-3.col-6
+        = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success', disabled: true

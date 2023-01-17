@@ -1,0 +1,17 @@
+.container.mt-3
+  .row
+    .col-md-10.offset-md-1
+      h1.text-center.mt-3.mb-3
+        span
+          = t('.title')
+      .form
+        = form_with model: @user, url: profile_path, data: { controller: 'validate', validate_character_count_value: 50, validate_form_type_value: 'userEdit', action: 'input->validate#submitButtonChange' }, class: 'row text-center justify-content-center' do |form|
+          = render 'shared/error_messages', object: form.object
+          = form.label :name, User.human_attribute_name(:name)
+          .small.text-danger data-validate-target='inputError'
+          = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+          .small data-validate-target='inputLength'
+          = form.label :email, User.human_attribute_name(:email)
+          .small.text-danger  data-validate-target='emailError'
+          = form.email_field :email, data: { validate_target: 'email', action: 'input->validate#validateEmail' }, class: 'form-control'
+          = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success mt-2 w-25'
