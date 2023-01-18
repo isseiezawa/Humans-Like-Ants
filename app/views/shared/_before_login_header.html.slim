@@ -1,22 +1,22 @@
 header
   nav.navbar.navbar-expand-lg.navbar-light.bg-success.bg-gradient
     .container-fluid
-      = link_to 'Humans Like Ants', root_path, class: "navbar-brand", data: { turbo: false }
+      = link_to 'Humans Like Ants', root_path, class: "navbar-brand"
       button.navbar-toggler[type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"]
         span.navbar-toggler-icon
       #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
         ul.navbar-nav
           li.nav-item
-            = link_to t('users.new.title'), new_user_path, class: 'nav-link', data: { turbo: false }
+            = link_to t('users.new.title'), new_user_path, class: 'nav-link'
           li.nav-item
-            = link_to t('user_sessions.new.title'), login_path, class: 'nav-link', data: { turbo: false }
+            = link_to t('user_sessions.new.title'), login_path, class: 'nav-link'
           li.nav-item.dropdown
-            = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false', data: { turbo: false }
+            = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false'
               = t('worlds.index.title')
             ul.dropdown-menu[aria-labelledby="navbarDropdownMenuLink"]
               li
-                = link_to '東京', '#', class: 'dropdown-item', data: { turbo: false }
+                = link_to '東京', '#', class: 'dropdown-item'
               li
-                = link_to '千葉', '#', class: 'dropdown-item', data: { turbo: false }
+                = link_to '千葉', '#', class: 'dropdown-item'
               li
-                = link_to '神奈川', '#', class: 'dropdown-item', data: { turbo: false }
+                = link_to '神奈川', '#', class: 'dropdown-item'
