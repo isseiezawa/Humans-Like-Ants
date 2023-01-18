@@ -16,6 +16,42 @@ export default class extends Controller {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
+  disconnect() {
+    // キャッシュが残ってしまうrenderer scene削除
+    this.renderer.dispose()
+
+    const cleanMaterial = material => {
+      material.dispose()
+
+      // dispose textures
+      for (const key of Object.keys(material)) {
+        const value = material[key]
+        if (value && typeof value === 'object' && 'minFilter' in value) {
+          value.dispose()
+        }
+      }
+    }
+
+    this.scene.traverse(object => {
+      if (!object.isMesh) return
+      
+      console.log('dispose geometry!')
+      object.geometry.dispose()
+
+      if (object.material.isMaterial) {
+        cleanMaterial(object.material)
+      } else {
+        // an array of materials
+        for (const material of object.material) cleanMaterial(material)
+      }
+    })
+
+    // canvasを取り除く
+    while(this.element.firstChild){
+      this.element.removeChild(this.element.firstChild)
+    }
+  }
+
   async init() {
     // ***** three.js setting *****
 
