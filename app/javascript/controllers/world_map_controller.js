@@ -34,8 +34,7 @@ export default class extends Controller {
 
     this.scene.traverse(object => {
       if (!object.isMesh) return
-      
-      console.log('dispose geometry!')
+
       object.geometry.dispose()
 
       if (object.material.isMaterial) {
@@ -46,6 +45,9 @@ export default class extends Controller {
       }
     })
 
+    // アニメーションの中止
+    cancelAnimationFrame(this.requestID)
+
     // canvasを取り除く
     while(this.element.firstChild){
       this.element.removeChild(this.element.firstChild)
@@ -54,6 +56,9 @@ export default class extends Controller {
 
   async init() {
     // ***** three.js setting *****
+
+    // requestAnimationFrameの戻り値のIDを格納
+    this.requestID
 
     // シーンの追加
     this.scene = new THREE.Scene()
@@ -301,7 +306,7 @@ export default class extends Controller {
   }
 
   animate() {
-    requestAnimationFrame(this.animate.bind(this))
+    this.requestID = requestAnimationFrame(this.animate.bind(this))
     this.renderer.render( this.scene, this.camera )
 
     this.controls.update()
