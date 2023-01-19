@@ -95,9 +95,18 @@ export default class extends Controller {
 
     // ***** 画面のリサイズ処理 *****
 
-    this.onResize()
+    const onResize = () => {
+      // デバイスのピクセル比を設定しキャンバスのぼやけを防ぐ為の処理
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setSize(this.element.clientWidth, this.element.clientHeight)
+        // カメラのアスペクト比を正す
+      this.camera.aspect = this.element.clientWidth / this.element.clientHeight;
+      this.camera.updateProjectionMatrix();
+    }
 
-    window.addEventListener('resize', this.onResize)
+    onResize()
+
+    window.addEventListener('resize', onResize)
 
     // ***** d3.js geoJson to shape *****
 
@@ -294,15 +303,6 @@ export default class extends Controller {
     }
     const addRedElement = document.getElementById(`place-name-${placeName.toLowerCase()}`)
     addRedElement.classList.add('bg-danger')
-  }
-
-  onResize() {
-    // デバイスのピクセル比を設定しキャンバスのぼやけを防ぐ為の処理
-    this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setSize(this.element.clientWidth, this.element.clientHeight)
-      // カメラのアスペクト比を正す
-    this.camera.aspect = this.element.clientWidth / this.element.clientHeight;
-    this.camera.updateProjectionMatrix();
   }
 
   animate() {
