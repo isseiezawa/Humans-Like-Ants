@@ -16,64 +16,103 @@ export default class extends Controller {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
-  async init() {
-    const element = this.japanMapContainerTarget
+  disconnect() {
+    // キャッシュが残ってしまうrenderer scene削除
+    this.renderer.dispose()
 
-    // ***** three.js setting *****
+    const cleanMaterial = material => {
+      material.dispose()
 
-    // シーンの追加
-    const scene = new THREE.Scene()
+      // dispose textures
+      for (const key of Object.keys(material)) {
+        const value = material[key]
+        if (value && typeof value === 'object' && 'minFilter' in value) {
+          value.dispose()
+        }
+      }
+    }
 
-    // レンダリング
-    const renderer = new THREE.WebGLRenderer()
-    element.appendChild(renderer.domElement)
+    this.scene.traverse(object => {
+      if (!object.isMesh) return
 
-    // カメラの設定
-    const camera = new THREE.PerspectiveCamera(75)
-    camera.position.set(0, 0, 400)
+      object.geometry.dispose()
 
-    const controls = new OrbitControls(
-      camera,
-      renderer.domElement
-    )
-    controls.autoRotate = true
-
-    controls.domElement.addEventListener('click', () => {
-      controls.autoRotate = false
+      if (object.material.isMaterial) {
+        cleanMaterial(object.material)
+      } else {
+        // an array of materials
+        for (const material of object.material) cleanMaterial(material)
+      }
     })
 
-    scene.add(camera)
+    // アニメーションの中止
+    cancelAnimationFrame(this.requestID)
+
+    // canvasを取り除く
+    while(this.element.firstChild){
+      this.element.removeChild(this.element.firstChild)
+    }
+  }
+
+  async init() {
+    // ***** three.js setting *****
+
+    // requestAnimationFrameの戻り値のIDを格納
+    this.requestID
+
+    // シーンの追加
+    this.scene = new THREE.Scene()
+
+    // レンダリング
+    this.renderer = new THREE.WebGLRenderer()
+    this.element.appendChild(this.renderer.domElement)
+
+    // カメラの設定
+    this.camera = new THREE.PerspectiveCamera(75)
+    this.camera.position.set(0, 0, 400)
+
+    this.controls = new OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    )
+    this.controls.autoRotate = true
+
+    this.controls.domElement.addEventListener('click', () => {
+      this.controls.autoRotate = false
+    })
+
+    this.scene.add(this.camera)
 
     // ライトの追加
     const light = new THREE.DirectionalLight(0x006600)
     light.position.set(1, 2, 1).normalize();
 
-    scene.add(light)
+    this.scene.add(light)
 
     // 環境光源
     const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
-    scene.add(ambientLight);
+    this.scene.add(ambientLight);
 
     // ***** 画面のリサイズ処理 *****
+
+    const onResize = () => {
+      // デバイスのピクセル比を設定しキャンバスのぼやけを防ぐ為の処理
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setSize(this.element.clientWidth, this.element.clientHeight)
+        // カメラのアスペクト比を正す
+      this.camera.aspect = this.element.clientWidth / this.element.clientHeight;
+      this.camera.updateProjectionMatrix();
+    }
 
     onResize()
 
     window.addEventListener('resize', onResize)
 
-    function onResize() {
-      // デバイスのピクセル比を設定しキャンバスのぼやけを防ぐ為の処理
-      renderer.setPixelRatio(window.devicePixelRatio)
-      renderer.setSize(element.clientWidth, element.clientHeight)
-        // カメラのアスペクト比を正す
-      camera.aspect = element.clientWidth / element.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
     // ***** d3.js geoJson to shape *****
 
     // 描画範囲
-    const width = element.clientWidth,
-          height = element.clientHeight
+    const width = this.element.clientWidth,
+          height = this.element.clientHeight
     const scale = 1500
 
     const geoJson = '/assets/japan.geo.json'
@@ -117,7 +156,7 @@ export default class extends Controller {
       bevelSegments: 1
     };
 
-    const japan = new THREE.Group()
+    this.japan = new THREE.Group()
 
     for(let j = 0; j < places.length; j++) {
       const placeMaterial = new THREE.MeshPhongMaterial()
@@ -127,7 +166,7 @@ export default class extends Controller {
       placeMesh.name = places[j].data.name
       placeMesh.userData.name_ja = places[j].data.name_ja
       
-      japan.add(placeMesh)
+      this.japan.add(placeMesh)
 
       // 県の境界線を表示する為の処理
       const lineMaterial = new THREE.LineBasicMaterial({
@@ -136,15 +175,15 @@ export default class extends Controller {
       const edge = new THREE.EdgesGeometry(placeGeometry)
       const line = new THREE.LineSegments(edge, lineMaterial)
 
-      japan.add(line)
+      this.japan.add(line)
     }
 
-    scene.add(japan)
+    this.scene.add(this.japan)
 
     // ***** japanを中心に持ってくる処理 *****
 
     const box3 = new THREE.Box3()
-    box3.setFromObject(japan)
+    box3.setFromObject(this.japan)
 
     // japanの位置がずれている為、position取得
     const centerX = (box3.max.x - box3.min.x) / 2 + box3.min.x
@@ -154,20 +193,18 @@ export default class extends Controller {
     // オブジェクトの位置、回転を更新
     const mat = new THREE.Matrix4()
     mat.makeTranslation(-centerX, -centerY, -centerZ) // XYZ軸で移動する量(回転軸にしたい頂点が原点にくるように平行移動)
-    japan.applyMatrix4(mat)
+    this.japan.applyMatrix4(mat)
     mat.makeRotationFromEuler(new THREE.Euler( Math.PI / 1.2, 0, 0, 'XYZ' )) // X軸を回転軸としてで回転
-    japan.applyMatrix4(mat)
+    this.japan.applyMatrix4(mat)
 
     // ***** オブジェクトとの交差を調べる  *****
 
     // カーソルの座標用のベクトル作成
-    const cursor = new THREE.Vector2()
+    this.cursor = new THREE.Vector2()
 
-    element.addEventListener('mousemove', handleMouseMove)
-
-    function handleMouseMove(event) {
+    const handleMouseMove = (event) => {
       // 要素の寸法とビューポートに対する相対位置に関する情報を返す
-      const rect = element.getBoundingClientRect()
+      const rect = this.element.getBoundingClientRect()
 
       // canvas上のXY座標
       const cursorX = event.clientX - rect.left
@@ -177,33 +214,34 @@ export default class extends Controller {
       const rectHeight = rect.bottom - rect.top
 
       // -1〜+1の範囲で現在のマウス座標を登録
-      cursor.x = ( cursorX / rectWidth ) * 2 - 1
-      cursor.y = -( cursorY / rectHeight ) * 2 + 1
+      this.cursor.x = ( cursorX / rectWidth ) * 2 - 1
+      this.cursor.y = -( cursorY / rectHeight ) * 2 + 1
     }
 
-    const raycaster = new THREE.Raycaster()
+    this.element.addEventListener('mousemove', handleMouseMove)
+
+    this.raycaster = new THREE.Raycaster()
 
     // ***** 地域選択処理 *****
 
-    let intersectionPlace
-    let selectPlace
+    this.intersectionPlace
+    this.selectPlace
 
-    element.addEventListener('click', handleClick)
-
-    function handleClick() {
+    const handleClick = () => {
       // 2回同じ箇所が押された場合の処理
-      if(intersectionPlace == selectPlace && selectPlace) {
-        location.href = `${location.href}/${selectPlace.name.toLowerCase()}`
+      if(this.intersectionPlace == this.selectPlace && this.selectPlace) {
+        location.href = `${location.href}/${this.selectPlace.name.toLowerCase()}`
       }
-      selectPlace = intersectionPlace
+      this.selectPlace = this.intersectionPlace
     }
+
+    this.element.addEventListener('click', handleClick)
 
     // ***** 文字作成雛形 *****
 
     const fontLoader = new FontLoader()
-    const font = await fontLoader.loadAsync('/assets/japanese_font.json')
-    const textMaterial = new THREE.MeshNormalMaterial()
-    let textGeometry, textMesh
+    this.font = await fontLoader.loadAsync('/assets/japanese_font.json')
+    this.textMaterial = new THREE.MeshNormalMaterial()
 
     // ***** 星(パーティクル)追加 *****
 
@@ -231,76 +269,76 @@ export default class extends Controller {
 
     const starMesh = new THREE.Points(starGeometry, starMaterial)
 
-    scene.add(starMesh)
+    this.scene.add(starMesh)
 
-    animate()
+    this.animate()
+  }
 
-    function animate() {
-      requestAnimationFrame(animate)
-      renderer.render( scene, camera )
+  createText(text) {
+    const sceneLast = this.scene.children[this.scene.children.length -1]
 
-      controls.update()
-
-      // マウス位置からまっすぐに伸びる光線ベクトルを生成
-      raycaster.setFromCamera(cursor, camera)
-
-      const intersects = raycaster.intersectObjects(japan.children)
-
-      // ***** マウスホバー時、placeが選択された際の色変更処理 *****
-
-      if(intersects.length == 0) { intersectionPlace = null }
-
-      japan.children.forEach((mesh) => {
-        if(intersects.length > 0 && mesh == intersects[0].object && mesh.name) {
-          mesh.material.color.setHex( 0xff0000 )
-          intersectionPlace = intersects[0].object
-        } else if(intersects.length == 0 && selectPlace == mesh){
-          selectPlace.material.color.setHex( 0xff0000 )
-        } else if(mesh.isLineSegments == true) {
-          return // lineには変更をかけない
-        } else {
-          mesh.material.color.setHex( 0x00ff00 )
-        }
-      })
-
-      if(intersectionPlace) {
-        createText(intersectionPlace.userData.name_ja)
-        changeElementBgColor(intersectionPlace.name)
-      } else if(selectPlace) {
-        createText(selectPlace.userData.name_ja)
-        changeElementBgColor(selectPlace.name)
-      }
+    if(sceneLast.isMesh == true) {
+      this.scene.remove(sceneLast)
+      sceneLast.material.dispose();
+      sceneLast.geometry.dispose();
     }
 
-    function createText(text) {
-      const sceneLast = scene.children[scene.children.length -1]
+    const textGeometry = new TextGeometry(text, {
+      font: this.font,
+      size: 50,
+      height: 30
+    })
 
-      if(sceneLast.isMesh == true) {
-        scene.remove(sceneLast)
-        sceneLast.material.dispose();
-        sceneLast.geometry.dispose();
-      }
+    textGeometry.center()
 
-      textGeometry = new TextGeometry(text, {
-        font: font,
-        size: 50,
-        height: 30
-      })
+    const textMesh = new THREE.Mesh(textGeometry, this.textMaterial)
+  
+    this.scene.add(textMesh)
+  }
 
-      textGeometry.center()
-
-      textMesh = new THREE.Mesh(textGeometry, textMaterial)
-    
-      scene.add(textMesh)
+  changeElementBgColor(placeName) {
+    const removeRedElements = document.getElementsByClassName('bg-danger')
+    for(let i = 0; 0 < removeRedElements.length; i++) {
+      removeRedElements[i].classList.remove('bg-danger')
     }
+    const addRedElement = document.getElementById(`place-name-${placeName.toLowerCase()}`)
+    addRedElement.classList.add('bg-danger')
+  }
 
-    function changeElementBgColor(placeName) {
-      const removeRedElements = document.getElementsByClassName('bg-danger')
-      for(let i = 0; 0 < removeRedElements.length; i++) {
-        removeRedElements[i].classList.remove('bg-danger')
+  animate() {
+    this.requestID = requestAnimationFrame(this.animate.bind(this))
+    this.renderer.render( this.scene, this.camera )
+
+    this.controls.update()
+
+    // マウス位置からまっすぐに伸びる光線ベクトルを生成
+    this.raycaster.setFromCamera(this.cursor, this.camera)
+
+    const intersects = this.raycaster.intersectObjects(this.japan.children)
+
+    // ***** マウスホバー時、placeが選択された際の色変更処理 *****
+
+    if(intersects.length == 0) { this.intersectionPlace = null }
+
+    this.japan.children.forEach((mesh) => {
+      if(intersects.length > 0 && mesh == intersects[0].object && mesh.name) {
+        mesh.material.color.setHex( 0xff0000 )
+        this.intersectionPlace = intersects[0].object
+      } else if(intersects.length == 0 && this.selectPlace == mesh){
+        this.selectPlace.material.color.setHex( 0xff0000 )
+      } else if(mesh.isLineSegments == true) {
+        return // lineには変更をかけない
+      } else {
+        mesh.material.color.setHex( 0x00ff00 )
       }
-      const addRedElement = document.getElementById(`place-name-${placeName.toLowerCase()}`)
-      addRedElement.classList.add('bg-danger')
+    })
+
+    if(this.intersectionPlace) {
+      this.createText(this.intersectionPlace.userData.name_ja)
+      this.changeElementBgColor(this.intersectionPlace.name)
+    } else if(this.selectPlace) {
+      this.createText(this.selectPlace.userData.name_ja)
+      this.changeElementBgColor(this.selectPlace.name)
     }
   }
 }

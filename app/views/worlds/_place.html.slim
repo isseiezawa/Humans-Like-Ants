@@ -1,7 +1,7 @@
 .col.border class="#{world.id % 2 != 0 ? 'bg-light' : 'bg-white'}"
   .d-flex.flex-column.text-center id="place-name-#{world.place}"
     div
-      = link_to world.place_ja, world_path(world.place), data: { turbo: false }
+      = link_to world.place_ja, world_path(world.place)
     div
       | ( #{world.place} )
     div
