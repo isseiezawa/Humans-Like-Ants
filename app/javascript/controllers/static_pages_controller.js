@@ -56,7 +56,6 @@ export default class extends Controller {
 
     // シーン作成
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color( 0xF0F8FF );
 
     // カメラ作成
     this.camera = new THREE.PerspectiveCamera(75)
@@ -70,9 +69,14 @@ export default class extends Controller {
     this.element.appendChild(this.renderer.domElement)
 
         // 環境光源
-    const directionalLight = new THREE.DirectionalLight(0xffffff);
-    directionalLight.position.set(1, 1, 1).normalize()
-    this.scene.add(directionalLight)
+    this.light = new THREE.DirectionalLight(0xffff9e);
+    this.light.position.set(0, 3, 10)
+
+    this.lightGroup = new THREE.Group()
+    this.lightGroup.add(this.light)
+
+    this.scene.add(this.lightGroup)
+
 
     // ***** 画面のリサイズ処理 *****
 
@@ -106,6 +110,15 @@ export default class extends Controller {
 
     this.scene.add(gltfModel.scene)
 
+    // ***** 地面追加 *****
+
+    const geometry = new THREE.PlaneGeometry(100, 100)
+    const material = new THREE.MeshBasicMaterial({ color: 0xfffafa })
+    const plane = new THREE.Mesh(geometry, material)
+    plane.rotation.x = -Math.PI / 2
+    plane.position.y = -2.1
+    this.scene.add(plane)
+
     this.animate()
   }
 
@@ -117,5 +130,10 @@ export default class extends Controller {
     this.renderer.render(this.scene, this.camera)
 
     this.mixer.update(delta)
+
+    // ライトを原点方向に見つめさせる処理
+    this.light.lookAt(new THREE.Vector3(0, 0, 0))
+
+    this.lightGroup.rotation.y += 5 * delta
   }
 }
