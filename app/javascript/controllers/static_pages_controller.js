@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
+import { GLTFLoader } from "three/GLTFLoader"
 
 // Connects to data-controller="static-pages"
 export default class extends Controller {
@@ -7,55 +8,114 @@ export default class extends Controller {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
-  init() {
-    const elementWidth = this.element.offsetWidth
-    const elementHeight = this.element.offsetHeight
+
+  disconnect() {
+    // キャッシュが残ってしまうrenderer scene削除
+    this.renderer.dispose()
+
+    const cleanMaterial = material => {
+      material.dispose()
+
+      // dispose textures
+      for (const key of Object.keys(material)) {
+        const value = material[key]
+        if (value && typeof value === 'object' && 'minFilter' in value) {
+          value.dispose()
+        }
+      }
+    }
+
+    this.scene.traverse(object => {
+      if (!object.isMesh) return
+
+      object.geometry.dispose()
+
+      if (object.material.isMaterial) {
+        cleanMaterial(object.material)
+      } else {
+        // an array of materials
+        for (const material of object.material) cleanMaterial(material)
+      }
+    })
+
+    // アニメーションの中止
+    cancelAnimationFrame(this.requestID)
+
+    // canvasを取り除く
+    while(this.element.firstChild){
+      this.element.removeChild(this.element.firstChild)
+    }
+  }
+
+  async init() {
+    // requestAnimationFrameの戻り値のIDを格納
+    this.requestID
+
+    // 時間を追跡するためのオブジェクト
+    this.clock = new THREE.Clock()
 
     // シーン作成
-    const scene = new THREE.Scene()
-    scene.background = new THREE.Color( 0xF0F8FF );
+    this.scene = new THREE.Scene()
+    this.scene.background = new THREE.Color( 0xF0F8FF );
 
     // カメラ作成
-    const camera = new THREE.PerspectiveCamera(
-      75, // 視野角
-      elementWidth / elementHeight, //アスペクト比
-      0.1,
-      10000 // 描写距離
-    )
-    camera.position.set(0, 0, 1000);
+    this.camera = new THREE.PerspectiveCamera(75)
+    this.camera.position.setZ(10)
+    this.camera.far = 1000
 
     // レンダラー作成
-    const renderer = new THREE.WebGLRenderer({
-      canvas: document.querySelector('#topPageCanvas')
-    })
-    // デバイスの解像度を指定する。
-    renderer.setPixelRatio(window.devicePixelRatio);
-    //寸法
-    renderer.setSize(elementWidth , elementHeight)
+    this.renderer = new THREE.WebGLRenderer()
+    // GLTFLoaderを使用する為の設定
+    this.renderer.outputEncoding = THREE.sRGBEncoding
+    this.element.appendChild(this.renderer.domElement)
 
-    // 平行光源
-    const directionalLight = new THREE.DirectionalLight(0xFFFFFF);
-    directionalLight.position.set(1, 1, 1);
-    // シーンに追加
-    scene.add(directionalLight);
+        // 環境光源
+    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(1, 1, 1).normalize()
+    this.scene.add(directionalLight)
 
-    // 箱を作成(仮)
-    const geometry = new THREE.BoxGeometry(400, 400, 400);
-    const material = new THREE.MeshNormalMaterial();
-    const box = new THREE.Mesh(geometry, material);
-    scene.add(box);
+    // ***** 画面のリサイズ処理 *****
 
-    animate()
-
-    // 毎フレーム時に実行されるループイベント
-    function animate() {
-      requestAnimationFrame(animate)
-
-      box.rotation.x += 0.01
-      box.rotation.y += 0.01
-
-      // レンダリング
-      renderer.render(scene, camera)
+    const onResize = () => {
+      this.renderer.setPixelRatio(window.devicePixelRatio)
+      this.renderer.setSize(this.element.offsetWidth, this.element.offsetHeight)
+      this.camera.aspect = this.element.offsetWidth / this.element.offsetHeight
+      this.camera.updateProjectionMatrix()
     }
+
+    onResize()
+
+    window.addEventListener('resize', onResize)
+
+    // ***** モデル作成 *****
+
+    const modelFile = '/assets/ant/original_ant.gltf'
+
+    const gltfLoader = new GLTFLoader()
+    const gltfModel = await gltfLoader.loadAsync(
+                                                  modelFile,
+                                                  (xhr) => {
+                                                    console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
+                                                  }
+                                                )
+    // AnimationMixerを作成しAnimationClipのリストを取得
+    this.mixer = new THREE.AnimationMixer(gltfModel.scene)
+    // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
+    const action = this.mixer.clipAction(gltfModel.animations[2])
+    action.play()
+
+    this.scene.add(gltfModel.scene)
+
+    this.animate()
+  }
+
+  animate() {
+    const delta = this.clock.getDelta()
+
+    this.requestID = requestAnimationFrame(this.animate.bind(this))
+
+    this.renderer.render(this.scene, this.camera)
+
+    this.mixer.update(delta)
   }
 }
