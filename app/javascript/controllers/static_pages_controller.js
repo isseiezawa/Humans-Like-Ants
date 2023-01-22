@@ -12,7 +12,6 @@ export default class extends Controller {
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
-
   disconnect() {
     // キャッシュが残ってしまうrenderer scene削除
     this.renderer.dispose()
