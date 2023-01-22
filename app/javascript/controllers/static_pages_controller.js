@@ -3,6 +3,8 @@ import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 import { FontLoader } from "three/FontLoader"
 import { TextGeometry } from "three/TextGeometry"
+import { TWEEN } from "tween"
+import { OrbitControls } from "three/OrbitControls"
 
 // Connects to data-controller="static-pages"
 export default class extends Controller {
@@ -61,7 +63,7 @@ export default class extends Controller {
 
     // カメラ作成
     this.camera = new THREE.PerspectiveCamera(75)
-    this.camera.position.setZ(10)
+    this.camera.position.set(0, 0, 500)
     this.camera.far = 1000
 
     // レンダラー作成
@@ -133,24 +135,79 @@ export default class extends Controller {
     plane.receiveShadow = true
     this.scene.add(plane)
 
+    this.controls = new OrbitControls(
+      this.camera,
+      this.renderer.domElement
+    )
+
     // ***** 文字追加 *****
+
+    const title = 'HumansLikeAnts'
+    this.characters = []
+    const titlePositions = [
+      {x: -250, y: 120},
+      {x: -170, y: 120},
+      {x: -90, y: 120},
+      {x: -10, y: 120},
+      {x: 70, y: 120},
+      {x: 150, y: 120},
+      {x: -150, y: -40},
+      {x: -70, y: -40},
+      {x: 10, y: -40},
+      {x: 90, y: -40},
+      {x: -50, y: -200},
+      {x: 30, y: -200},
+      {x: 110, y: -200},
+      {x: 190, y: -200}
+    ]
 
     const fontLoader = new FontLoader()
     const font = await fontLoader.loadAsync('/assets/japanese_font.json')
-    const textMaterial = new THREE.MeshLambertMaterial({ color: 0x469536 })
-    const textGeometry = new TextGeometry('Humans Like Ants', {
-      font: font,
-      size: 30,
-      height: 10
-    })
-    textGeometry.center()
-    const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-    textMesh.position.y = 50
-    textMesh.position.z = -50
-  
-    this.scene.add(textMesh)
+    const textMaterial = new THREE.MeshNormalMaterial({ wireframe: true })
+
+    for(let i = 0; i < title.length; i++) {
+      this.createText(title.charAt(i), font, textMaterial)
+    }
+
+    // ***** animation *****
+
+    for(let j = 0; j < this.characters.length; j++) {
+      new TWEEN.Tween(this.characters[j].position)
+                .to({x: titlePositions[j].x, y: titlePositions[j].y, z: -50}, 3000)
+                .easing(TWEEN.Easing.Quadratic.In)
+                .start()
+
+      new TWEEN.Tween(this.characters[j].rotation)
+                .to({y: Math.PI * 6}, 3000)
+                .easing(TWEEN.Easing.Linear.None)
+                .start()
+    }
+
+    new TWEEN.Tween(this.camera.position)
+              .to({x: 0, y: 0, z: 10}, 5000) // 5秒後に指定した位置へ
+              .delay(3000) // 1秒後スタート
+              .easing(TWEEN.Easing.Exponential.In)
+              .start()
+              .onComplete(() => {
+                this.controls.autoRotateSpeed = 4
+                this.controls.autoRotate = true
+              })
 
     this.animate()
+  }
+
+  createText(character, font, material) {
+    const textGeometry = new TextGeometry(character, {
+      font: font,
+      size: 80,
+      height: 20
+    })
+    const textMesh = new THREE.Mesh(textGeometry, material)
+    textMesh.position.setX(Math.random() * 2000 - 1000)
+    textMesh.position.setY(Math.random() * 2000 - 1000)
+    textMesh.position.setZ(Math.random() * 2000 - 1000)
+    this.scene.add(textMesh)
+    this.characters.push(textMesh)
   }
 
   animate() {
@@ -161,6 +218,8 @@ export default class extends Controller {
     this.renderer.render(this.scene, this.camera)
 
     this.mixer.update(delta)
+    TWEEN.update()
+    this.controls.update()
 
     // ライトを原点方向に見つめさせる処理
     this.light.lookAt(new THREE.Vector3(0, 0, 0))
