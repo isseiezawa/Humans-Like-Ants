@@ -15,6 +15,7 @@ ja:
         gender: '性別'
         role: '管理者権限'
         twitter_id: 'ツイッターID'
+        avatar: 'アバター'
       tweet:
         post: 'つぶやき'
         image: '画像'
