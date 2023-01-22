@@ -66,11 +66,14 @@ export default class extends Controller {
     this.renderer = new THREE.WebGLRenderer()
     // GLTFLoaderを使用する為の設定
     this.renderer.outputEncoding = THREE.sRGBEncoding
+    // 影を落とす設定
+    this.renderer.shadowMap.enabled = true
     this.element.appendChild(this.renderer.domElement)
 
         // 環境光源
     this.light = new THREE.DirectionalLight(0xffff9e);
     this.light.position.set(0, 3, 10)
+    this.light.castShadow = true
 
     this.lightGroup = new THREE.Group()
     this.lightGroup.add(this.light)
@@ -102,6 +105,13 @@ export default class extends Controller {
                                                     console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
                                                   }
                                                 )
+
+    gltfModel.scene.traverse((child) => {
+      if(child.isMesh) {
+        child.castShadow = true
+      }
+    })
+
     // AnimationMixerを作成しAnimationClipのリストを取得
     this.mixer = new THREE.AnimationMixer(gltfModel.scene)
     // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
@@ -113,10 +123,12 @@ export default class extends Controller {
     // ***** 地面追加 *****
 
     const geometry = new THREE.PlaneGeometry(100, 100)
-    const material = new THREE.MeshBasicMaterial({ color: 0xfffafa })
+    const material = new THREE.MeshStandardMaterial({ color: 0x808080 })
     const plane = new THREE.Mesh(geometry, material)
     plane.rotation.x = -Math.PI / 2
-    plane.position.y = -2.1
+    plane.position.y = -1.9
+
+    plane.receiveShadow = true
     this.scene.add(plane)
 
     this.animate()
