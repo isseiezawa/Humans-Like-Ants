@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
+import { FontLoader } from "three/FontLoader"
+import { TextGeometry } from "three/TextGeometry"
 
 // Connects to data-controller="static-pages"
 export default class extends Controller {
@@ -130,6 +132,23 @@ export default class extends Controller {
 
     plane.receiveShadow = true
     this.scene.add(plane)
+
+    // ***** 文字追加 *****
+
+    const fontLoader = new FontLoader()
+    const font = await fontLoader.loadAsync('/assets/japanese_font.json')
+    const textMaterial = new THREE.MeshLambertMaterial({ color: 0x469536 })
+    const textGeometry = new TextGeometry('Humans Like Ants', {
+      font: font,
+      size: 30,
+      height: 10
+    })
+    textGeometry.center()
+    const textMesh = new THREE.Mesh(textGeometry, textMaterial)
+    textMesh.position.y = 50
+    textMesh.position.z = -50
+  
+    this.scene.add(textMesh)
 
     this.animate()
   }
