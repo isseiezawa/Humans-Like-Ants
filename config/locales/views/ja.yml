@@ -1,6 +1,7 @@
 ja:
   defaults:
     edit: '編集'
+    delete: '削除'
     register: '登録'
     give_birth: '産む'
     login: 'ログイン'
@@ -38,6 +39,9 @@ ja:
     update:
       success: "%{item}の編集に成功しました"
       fail: "%{item}の編集に失敗しました"
+    destroy_avatar:
+      success: "%{item}の削除に成功しました"
+      fali: "%{item}が登録されていません"
   worlds:
     show:
       no_ants: 'アリンコがいません。投稿しましょう！'

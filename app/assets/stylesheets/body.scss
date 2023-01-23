@@ -83,3 +83,22 @@ h1 span:after {
 .set-size {
   height: 80vh;
 }
+
+.link-to-button {
+  display: block;
+  text-decoration: none;
+  border-radius: 20%;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 10px;
+  background: #990000;
+  color: #ffffff;
+  line-height: 1em;
+  transition: .3s;
+  box-shadow: 2px 2px 2px #666666;
+}
+.link-to-button:hover {
+  text-decoration: none;
+  color: #d9ff00;
+  box-shadow: none;
+}
