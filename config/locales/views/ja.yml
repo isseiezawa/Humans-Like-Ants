@@ -33,6 +33,8 @@ ja:
       title: 'プロフィール'
     edit:
       title: 'プロフィール編集'
+      have_avatar: 'アバターが登録されています'
+      no_avatar: 'アバターは登録されていません'
     update:
       success: "%{item}の編集に成功しました"
       fail: "%{item}の編集に失敗しました"

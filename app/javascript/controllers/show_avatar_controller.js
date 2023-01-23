@@ -42,6 +42,8 @@ export default class extends Controller {
   }
 
   async init() {
+    const userData = JSON.parse(this.element.dataset.json)
+
     // requestAnimationFrameの戻り値のIDを格納
     this.requestID
 
@@ -82,7 +84,7 @@ export default class extends Controller {
 
     // ***** モデル作成 *****
 
-    const modelFile = '/assets/ant/original_ant.gltf'
+    const modelFile = userData ? userData.avatar_url : '/assets/ant/original_ant.gltf'
 
     const gltfLoader = new GLTFLoader()
     const gltfModel = await gltfLoader.loadAsync(

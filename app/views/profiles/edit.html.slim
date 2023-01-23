@@ -14,4 +14,12 @@
           = form.label :email, User.human_attribute_name(:email)
           .small.text-danger  data-validate-target='emailError'
           = form.email_field :email, data: { validate_target: 'email', action: 'input->validate#validateEmail' }, class: 'form-control'
+          = form.label :avatar, User.human_attribute_name(:avatar)
+          - if @user.avatar.attached?
+            .bg-success.text-white.small
+              = t('.have_avatar')
+          - else
+            .bg-info.small
+              = t('.no_avatar')
+          = form.file_field :avatar
           = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success mt-2 w-25'

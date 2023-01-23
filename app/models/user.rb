@@ -22,6 +22,7 @@
 #
 class User < ApplicationRecord
   authenticates_with_sorcery!
+  has_one_attached :avatar
 
   validates :password, length: { minimum: 8 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
@@ -36,4 +37,12 @@ class User < ApplicationRecord
   enum role: { general: 0, admin: 1 }
 
   has_many :tweets, dependent: :destroy
+
+  def avatar_to_hash
+    avatar.attached? ? as_json(methods: [:avatar_url], only: [:avatar_url]) : nil
+  end
+
+  def avatar_url
+    Rails.application.routes.url_helpers.rails_blob_path(avatar, only_path: true)
+  end
 end
