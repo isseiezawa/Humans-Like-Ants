@@ -324,7 +324,7 @@ export default class extends Controller {
     for(let i = 0; i < this.gltfModels.length; i++) {
       if(this.gltfModels[i].animations.length) {
         const mixer = new THREE.AnimationMixer(this.gltfModels[i].scene)
-        const clipNumber = this.gltfModels[i].scene == hitModelScene ? 1 : 0
+        const clipNumber = this.gltfModels[i].scene == hitModelScene && this.gltfModels[i].animations.length > 1 ? 1 : 0
         const action = mixer.clipAction(this.gltfModels[i].animations[clipNumber])
 
         action.play()
