@@ -182,12 +182,12 @@ export default class extends Controller {
 
     const ground = '/assets/ground/ground.gltf'
     const stone = '/assets/stone/stone.gltf'
-    const modelFile = '/assets/ant/original_ant.gltf'
 
     await this.createGltfModel(ground, 'ground', 20)
     await this.createGltfModel(stone, 'stone', 26)
 
     for(let i = 0; i < tweetData.length; i++) {
+      const modelFile = tweetData[i].user.avatar_url ? tweetData[i].user.avatar_url : '/assets/ant/original_ant.gltf'
       await this.createGltfModel(modelFile, 'userModel', 1, tweetData[i])
     }
 
