@@ -10,6 +10,7 @@
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
 #                                     user GET    /users/:id(.:format)                                                                              users#show
+#                   destroy_avatar_profile DELETE /profile/destroy_avatar(.:format)                                                                 profiles#destroy_avatar
 #                             edit_profile GET    /profile/edit(.:format)                                                                           profiles#edit
 #                                  profile GET    /profile(.:format)                                                                                profiles#show
 #                                          PATCH  /profile(.:format)                                                                                profiles#update
