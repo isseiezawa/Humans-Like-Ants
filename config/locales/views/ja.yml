@@ -1,6 +1,7 @@
 ja:
   defaults:
     edit: '編集'
+    delete: '削除'
     register: '登録'
     give_birth: '産む'
     login: 'ログイン'
@@ -33,9 +34,14 @@ ja:
       title: 'プロフィール'
     edit:
       title: 'プロフィール編集'
+      have_avatar: 'アバターが登録されています'
+      no_avatar: 'アバターは登録されていません'
     update:
       success: "%{item}の編集に成功しました"
       fail: "%{item}の編集に失敗しました"
+    destroy_avatar:
+      success: "%{item}の削除に成功しました"
+      fali: "%{item}が登録されていません"
   worlds:
     show:
       no_ants: 'アリンコがいません。投稿しましょう！'

@@ -18,7 +18,16 @@
         tr
           th.row
             = t(User.human_attribute_name(:avatar))
-          td
+          td.text-center
+            = content_tag :canvas,
+                '',
+                data: { controller: 'show-avatar',
+                json: "#{JSON.generate current_user.avatar_to_hash}" }
+            - if current_user.avatar.attached?
+              = link_to t('defaults.delete'),
+                        destroy_avatar_profile_path,
+                        class: 'link-to-button w-25 mx-auto',
+                        data: { turbo_method: :delete }
       = link_to t('defaults.edit'),
                 edit_profile_path,
                 class: 'd-block btn btn-success w-25 mx-auto mb-3'

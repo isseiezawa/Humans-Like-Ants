@@ -10,6 +10,7 @@
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
 #                                     user GET    /users/:id(.:format)                                                                              users#show
+#                   destroy_avatar_profile DELETE /profile/destroy_avatar(.:format)                                                                 profiles#destroy_avatar
 #                             edit_profile GET    /profile/edit(.:format)                                                                           profiles#edit
 #                                  profile GET    /profile(.:format)                                                                                profiles#show
 #                                          PATCH  /profile(.:format)                                                                                profiles#update
@@ -57,7 +58,9 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   resources :users, only: %i[show new create]
-  resource :profile, only: %i[show edit update]
+  resource :profile, only: %i[show edit update] do
+    delete :destroy_avatar, on: :collection
+  end
   resources :worlds, only: %i[show index], param: 'place_name' do
     resources :tweets, only: %i[create destroy], shallow: true
   end
