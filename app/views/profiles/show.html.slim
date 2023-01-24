@@ -17,6 +17,22 @@
             = current_user.email
         tr
           th.row
+            = t(User.human_attribute_name(:gender))
+          td
+            = current_user.gender_i18n
+        tr
+          th.row
+            = t(User.human_attribute_name(:twitter_id))
+          td
+            = current_user.twitter_id
+        tr
+          th.row
+            = t(User.human_attribute_name(:self_introduction))
+          td
+            .m-1.bg-white
+            = current_user.self_introduction
+        tr
+          th.row
             = t(User.human_attribute_name(:avatar))
           td.text-center
             = content_tag :canvas,

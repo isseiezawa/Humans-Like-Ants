@@ -12,9 +12,10 @@ ja:
         email: 'メールアドレス'
         password: 'パスワード'
         password_confirmation: 'パスワード確認'
-        gender: '性別'
         role: '管理者権限'
-        twitter_id: 'ツイッターID'
+        gender: '性別'
+        twitter_id: 'Twitter ID'
+        self_introduction: '自己紹介'
         avatar: 'アバター'
       tweet:
         post: 'つぶやき'
