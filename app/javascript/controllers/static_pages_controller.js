@@ -172,8 +172,8 @@ export default class extends Controller {
 
     for(let j = 0; j < this.characters.length; j++) {
       new TWEEN.Tween(this.characters[j].position)
-                .to({x: titlePositions[j].x, y: titlePositions[j].y, z: -50}, 3000)
-                .easing(TWEEN.Easing.Quadratic.In)
+                .to({x: titlePositions[j].x, y: titlePositions[j].y, z: -50}, 4000)
+                .easing(TWEEN.Easing.Bounce.Out)
                 .start()
 
       new TWEEN.Tween(this.characters[j].rotation)
@@ -183,9 +183,9 @@ export default class extends Controller {
     }
 
     new TWEEN.Tween(this.camera.position)
-              .to({x: 0, y: 0, z: 10}, 5000) // 5秒後に指定した位置へ
-              .delay(3000) // 1秒後スタート
-              .easing(TWEEN.Easing.Exponential.In)
+              .to({x: 0, y: 0, z: 10}, 4000) // 5秒後に指定した位置へ
+              .delay(5000) // 1秒後スタート
+              .easing(TWEEN.Easing.Bounce.In)
               .start()
               .onComplete(() => {
                 this.controls.autoRotateSpeed = 4
@@ -204,7 +204,7 @@ export default class extends Controller {
     const textMesh = new THREE.Mesh(textGeometry, material)
     textMesh.position.setX(Math.random() * 2000 - 1000)
     textMesh.position.setY(Math.random() * 2000 - 1000)
-    textMesh.position.setZ(Math.random() * 2000 - 1000)
+    textMesh.position.setZ(Math.random() * 1000)
     this.scene.add(textMesh)
     this.characters.push(textMesh)
   }
