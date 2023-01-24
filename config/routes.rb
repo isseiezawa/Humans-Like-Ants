@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[show new create]
   resource :profile, only: %i[show edit update] do
-    delete 'destroy_avatar'
+    delete :destroy_avatar, on: :collection
   end
   resources :worlds, only: %i[show index], param: 'place_name' do
     resources :tweets, only: %i[create destroy], shallow: true
