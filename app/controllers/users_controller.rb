@@ -8,8 +8,6 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def edit; end
-
   def create
     @user = User.new(user_params)
 
@@ -21,21 +19,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    if @user.update(user_params)
-      redirect_to user_url(@user), success: t('.success')
-    else
-      flash.now[:danger] = t('.fail')
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @user.destroy
-
-    redirect_to root_url, success: t('.success')
-  end
-
   private
 
   def set_user
@@ -43,6 +26,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :gender, :role, :twitter_id)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end

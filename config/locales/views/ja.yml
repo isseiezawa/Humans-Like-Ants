@@ -16,11 +16,6 @@ ja:
     create:
       success: 'ユーザー登録が完了しました'
       fail: 'ユーザー登録に失敗しました'
-    update:
-      success: 'ユーザー情報を更新しました'
-      fail: 'ユーザー情報の更新に失敗しました'
-    destroy:
-      success: 'ユーザーを削除しました'
   user_sessions:
     new:
       title: 'ログイン'
