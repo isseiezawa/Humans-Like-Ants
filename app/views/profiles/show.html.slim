@@ -24,7 +24,7 @@
           th.row
             = t(User.human_attribute_name(:twitter_id))
           td
-            = current_user.twitter_id
+            = link_to 'twitte', current_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer'
         tr
           th.row
             = t(User.human_attribute_name(:self_introduction))
