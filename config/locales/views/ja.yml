@@ -7,6 +7,7 @@ ja:
     login: 'ログイン'
     logout: 'ログアウト'
     not_authenticated: 'ログインしてください'
+    not_register: '登録されていません'
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
     ants_count: "%{amount}匹"

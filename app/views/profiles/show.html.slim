@@ -1,7 +1,7 @@
 .container.mt-3
   .row
-    .col-md-10.offset-md-1
-      h1.text-center.mb-5
+    .col-md-10.offset-md-1.text-center
+      h1.mb-5
         span
           = t('.title')
       table.table.table-success.table-striped.table-hover
@@ -24,7 +24,12 @@
           th.row
             = t(User.human_attribute_name(:twitter_id))
           td
-            = link_to 'twitte', current_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer'
+            - if current_user.twitter_id?
+              = link_to current_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
+                i.fa-brands.fa-twitter
+                | ( @#{current_user.twitter_id} )
+            - else
+              = t('defaults.not_register')
         tr
           th.row
             = t(User.human_attribute_name(:self_introduction))
