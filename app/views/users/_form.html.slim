@@ -5,7 +5,7 @@
       .mb-3.col-8
         = form.label :name, User.human_attribute_name(:name), class: 'form-label'
         .small.text-danger data-validate-target='inputError'
-        = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+        = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#validateDefault' }, class: 'form-control'
         .small data-validate-target='inputLength'
       .mb-3.col-8
         = form.label :email, User.human_attribute_name(:email), class: 'form-label'

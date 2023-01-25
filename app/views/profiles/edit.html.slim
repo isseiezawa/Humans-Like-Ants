@@ -11,7 +11,7 @@
             .mb-3.col-8
               = form.label :name, class: 'form-label'
               .small.text-danger data-validate-target='inputError'
-              = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+              = form.text_field :name, data: { validate_target: 'input', action: 'input->validate#validateDefault' }, class: 'form-control'
               .small data-validate-target='inputLength'
             .mb-3.col-8
               = form.label :email, class: 'form-label'
@@ -24,10 +24,13 @@
               = form.label :twitter_id, class: 'form-label'
               .input-group
                 span.input-group-text @
-                = form.text_field :twitter_id, class: 'form-control'
+                = form.text_field :twitter_id, data: { validate_target: 'twitterId', action: 'input->validate#validateTwitterId' }, class: 'form-control'
+              .small data-validate-target='twitterIdLength'
             .mb-3.col-8
               = form.label :self_introduction, class: 'form-label'
-              = form.text_area :self_introduction, size: "1x5", class: 'form-control'
+              .small.text-danger data-validate-target='selfIntroductionError'
+              = form.text_area :self_introduction, size: "1x5", data: { validate_target: 'selfIntroduction', action: 'input->validate#validateSelfIntroduction' }, class: 'form-control'
+              .small data-validate-target='selfIntroductionLength'
             .mb-3.col-8
               = form.label :avatar, class: 'form-label'
               - if @user.avatar.attached?

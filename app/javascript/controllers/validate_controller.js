@@ -12,6 +12,11 @@ export default class extends Controller {
                     'passwordLength',
                     'passwordConfirmation',
                     'passwordConfirmationError',
+                    'twitterId',
+                    'twitterIdLength',
+                    'selfIntroduction',
+                    'selfIntroductionLength',
+                    'selfIntroductionError',
                     'submitButton'
                   ]
 
@@ -25,10 +30,8 @@ export default class extends Controller {
     if(this.hasInputTarget) {
       if(this.inputTarget.value) {
         this.inputflag = true
-        this.inputLengthflag = true
       } else {
         this.inputflag = false
-        this.inputLengthflag = false
       }
     }
 
@@ -55,42 +58,88 @@ export default class extends Controller {
         this.passwordConfirmationflag = false
       }
     }
-  }
 
-  inputForm() {
-    this.characterCountCheck()
-    this.allowedCharacters()
-  }
+    if(this.hasTwitterIdTarget) {
+      if(this.twitterIdTarget.value) {
+        this.twitterIdflag = true
+      } else {
+        this.twitterIdflag = false
+      }
+    }
 
-  characterCountCheck() {
-    // 文字数チェック
-    const length = this.inputTarget.value.length
-
-    this.inputLengthTarget.textContent = `${length} / ${this.characterCountValue}`
-
-    if(length > this.characterCountValue || length == 0) {
-      this.inputLengthTarget.classList.add('text-danger')
-      this.inputLengthflag = false
-    } else {
-      this.inputLengthTarget.classList.remove('text-danger')
-      this.inputLengthflag = true
+    if(this.hasSelfIntroductionTarget) {
+      if(this.selfIntroductionTarget.value) {
+        this.selfIntroductionflag = true
+      } else {
+        this.selfIntroductionflag = false
+      }
     }
   }
 
-  allowedCharacters() {
+  // ***** 使い回すバリデーション *****
+
+  validateCount(inputLength, setLength, emptyAllow = false) {
+    const validate = {text: '', flag: false}
+    // 文字数チェック
+    validate.text = `${inputLength} / ${setLength}`
+
+    if(inputLength <= setLength && inputLength != 0) {
+      validate.flag = true
+    } else if(inputLength <= setLength && emptyAllow) {
+      validate.flag = true
+    } else {
+      validate.flag = false
+    }
+
+    return validate
+  }
+
+  validateAllowCharacters(inputValue, emptyAllow = false) {
+    const validate = {text: '', flag: false}
+
     // 許可された文字チェック
     const allowRegex = /^[a-zA-Z0-9０-９\u3040-\u309f\u30a0-\u30ff\uFF5E!\！\?\？\+\―\*\(\)\（\）\'\"\&\%\$\s。、ㇰヶㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺャㇻㇼㇽㇾㇿヮ蟻好嬉喜友晴一運営]+$/
     const exceptSpaceRegex = /\S+/
-    const inputValue = this.inputTarget.value
 
     if(inputValue.match(allowRegex) && inputValue.match(exceptSpaceRegex) && inputValue) {
-      this.inputErrorTarget.textContent = ''
-      this.inputflag = true
+      validate.text = ''
+      validate.flag = true
+    } else if(emptyAllow && !inputValue) {
+      validate.text = ''
+      validate.flag = true
     } else if(!inputValue.match(exceptSpaceRegex) || !inputValue) {
-      this.inputErrorTarget.textContent = '空文字のみ、または入力されていません'
-      this.inputflag = false
+      validate.text = '空文字のみ、または入力されていません'
+      validate.flag = false
     } else {
-      this.inputErrorTarget.textContent = '使用できない文字が含まれています'
+      validate.text = '使用できない文字が含まれています'
+      validate.flag = false
+    }
+
+    return validate
+  }
+
+  // ***** 項目ごとに指定するバリデーション *****
+
+  validateDefault() {
+    const inputValue = this.inputTarget.value
+
+    // 許可された文字
+    const validateAllowCharacters = this.validateAllowCharacters(inputValue)
+    this.inputErrorTarget.textContent = validateAllowCharacters.text
+
+    // 文字数
+    const validateCount = this.validateCount(inputValue.length, this.characterCountValue)
+    this.inputLengthTarget.textContent = validateCount.text
+
+    if(validateCount.flag) {
+      this.inputLengthTarget.classList.remove('text-danger')
+    } else {
+      this.inputLengthTarget.classList.add('text-danger')
+    }
+
+    if(validateAllowCharacters.flag && validateCount.flag) {
+      this.inputflag = true
+    } else {
       this.inputflag = false
     }
   }
@@ -117,12 +166,12 @@ export default class extends Controller {
 
     this.passwordLengthTarget.textContent = `7 < ${passwordLength}`
 
-    if(passwordLength < 8 || passwordLength == 0) {
-      this.passwordLengthTarget.classList.add('text-danger')
-      this.passwordflag = false
-    } else {
+    if(passwordLength >= 8 && passwordLength != 0) {
       this.passwordLengthTarget.classList.remove('text-danger')
       this.passwordflag = true
+    } else {
+      this.passwordLengthTarget.classList.add('text-danger')
+      this.passwordflag = false
     }
 
     if(this.hasPasswordConfirmationTarget) {
@@ -151,10 +200,52 @@ export default class extends Controller {
     }
   }
 
+  validateTwitterId() {
+    const twitterIdValue = this.twitterIdTarget.value
+
+    // 文字数
+    const validateCount = this.validateCount(twitterIdValue.length, 50, true)
+    console.log(validateCount.flag)
+    this.twitterIdflag = validateCount.flag
+    this.twitterIdLengthTarget.textContent = validateCount.text
+
+    if(validateCount.flag) {
+      this.twitterIdLengthTarget.classList.remove('text-danger')
+    } else {
+      this.twitterIdLengthTarget.classList.add('text-danger')
+    }
+  }
+
+  validateSelfIntroduction() {
+    const selfIntroductionValue = this.selfIntroductionTarget.value
+
+    // 許可された文字
+    const validateAllowCharacters = this.validateAllowCharacters(selfIntroductionValue, true)
+    this.selfIntroductionErrorTarget.textContent = validateAllowCharacters.text
+
+    // 文字数
+    const validateCount = this.validateCount(selfIntroductionValue.length, 160, true)
+    this.selfIntroductionLengthTarget.textContent = validateCount.text
+
+    if(validateCount.flag) {
+      this.selfIntroductionLengthTarget.classList.remove('text-danger')
+    } else {
+      this.selfIntroductionLengthTarget.classList.add('text-danger')
+    }
+
+    if(validateAllowCharacters.flag && validateCount.flag) {
+      this.selfIntroductionflag = true
+    } else {
+      this.selfIntroductionflag = false
+    }
+  }
+
+// ***** flagを確認してsubmit buttonの状態を変える *****
+
   submitButtonChange() {
     switch (this.formTypeValue) {
       case 'userCreate':
-        if(this.inputflag && this.inputLengthflag && this.emailflag && this.passwordflag && this.passwordConfirmationflag) {
+        if(this.inputflag && this.emailflag && this.passwordflag && this.passwordConfirmationflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true
@@ -168,14 +259,14 @@ export default class extends Controller {
         }
         break
       case 'userEdit':
-        if(this.inputflag && this.inputLengthflag && this.emailflag) {
+        if(this.inputflag && this.emailflag && this.twitterIdflag && this.selfIntroductionflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true
         }
         break
       case 'tweetCreate':
-        if(this.inputflag && this.inputLengthflag) {
+        if(this.inputflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true
