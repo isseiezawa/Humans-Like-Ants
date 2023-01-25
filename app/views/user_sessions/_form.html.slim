@@ -2,10 +2,12 @@
   .shadow.p-3.mb-5.bg-body.rounded
     = form_with url: login_path, method: :post, data: { controller: 'validate', validate_form_type_value: 'userSession', action: 'input->validate#submitButtonChange'  }, class: 'row text-center justify-content-center' do |form|
       .mb-3.col-8
+        i.fa-solid.fa-at.me-1
         = form.label :email, User.human_attribute_name(:email), class: 'form-label'
         .small.text-danger  data-validate-target='emailError'
         = form.email_field :email, data: { validate_target: 'email', action: 'input->validate#validateEmail' }, class: 'form-control'
       .mb-3.col-8
+        i.fa-solid.fa-key.me-1
         = form.label :password, User.human_attribute_name(:password), class: 'form-label'
         = form.password_field :password, class: 'form-control'
       .mb-3.col-6

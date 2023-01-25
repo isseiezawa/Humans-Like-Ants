@@ -6,7 +6,9 @@ footer.footer.pt-3.pb-3.bg-success.bg-gradient
           .h3
             | Humans Like Ants
           .pt-1.pb-1
-            = link_to t('worlds.index.title'), worlds_path, class: 'text-decoration-none text-black'
+            = link_to worlds_path, class: 'text-decoration-none text-black' do
+              i.fa-solid.fa-earth-asia.me-1
+              = t('worlds.index.title')
       .col-sm-6.col-12
         .d-flex.flex-column
           .pt-1.pb-1
