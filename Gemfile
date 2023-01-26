@@ -56,6 +56,9 @@ gem 'slim-rails'
 
 gem 'bootstrap', '~> 5.2.2'
 
+# ddecorator
+gem 'draper', '~> 4.0', '>= 4.0.2'
+
 # 認証
 gem 'sorcery'
 

@@ -1,22 +1,49 @@
 .container.mt-3
   .row
-    .col-md-10.offset-md-1
-      h1.text-center.mb-5
+    .col-md-10.offset-md-1.text-center
+      h1.mb-5
         span
           = t('.title')
       table.table.table-success.table-striped.table-hover
         tr
-          th.row
+          th
+            i.fa-solid.fa-user-pen.me-1
             = t(User.human_attribute_name(:name))
           td
             = current_user.name
         tr
-          th.row
+          th
+            i.fa-solid.fa-at.me-1
             = t(User.human_attribute_name(:email))
           td
             = current_user.email
         tr
-          th.row
+          th
+            i.fa-solid.fa-person-half-dress.me-1
+            = t(User.human_attribute_name(:gender))
+          td
+            = current_user.gender_i18n
+        tr
+          th
+            i.fa-brands.fa-twitter.me-1.text-info
+            = t(User.human_attribute_name(:twitter_id))
+          td
+            - if current_user.twitter_id?
+              = link_to current_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
+                i.fa-brands.fa-twitter
+                | ( @#{current_user.twitter_id} )
+            - else
+              = t('defaults.not_register')
+        tr
+          th
+            i.fa-solid.fa-pen-to-square.me-1
+            = t(User.human_attribute_name(:self_introduction))
+          td
+            .m-1.bg-white
+            = current_user.self_introduction
+        tr
+          th
+            i.fa-solid.fa-bugs.me-1
             = t(User.human_attribute_name(:avatar))
           td.text-center
             = content_tag :canvas,

@@ -4,7 +4,7 @@
     .mb-3.col-6
       = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label'
       .small.text-danger data-validate-target='inputError'
-      = form.text_field :post, data: { validate_target: 'input', action: 'input->validate#inputForm' }, class: 'form-control'
+      = form.text_field :post, data: { validate_target: 'input', action: 'input->validate#validateDefault' }, class: 'form-control'
       .small data-validate-target='inputLength'
       = form.label :image, Tweet.human_attribute_name(:image)
       div data-controller='preview'
