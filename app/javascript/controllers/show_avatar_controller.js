@@ -5,9 +5,12 @@ import { OrbitControls } from "three/OrbitControls"
 
 // Connects to data-controller="show-avatar"
 export default class extends Controller {
+  static targets = ['vertices']
+
   connect() {
     window.addEventListener('DOMContentLoaded', this.init())
   }
+
   disconnect() {
     // キャッシュが残ってしまうrenderer scene削除
     this.renderer.dispose()
@@ -108,6 +111,16 @@ export default class extends Controller {
 
       action.play()
     }
+
+    // 頂点の数を出力する
+    let vertices = 0
+    this.gltfModel.scene.traverse( function ( child ) {
+      if ( child.isMesh ) {
+        vertices += child.geometry.attributes.position.count
+      }
+    })
+    this.verticesTarget.textContent = Math.floor(vertices / 3)
+
     // 取得したモデルのサイズを均一にするための計算
     const box3 = new THREE.Box3()
     // 世界軸に沿った最小のバウンディングボックスを計算

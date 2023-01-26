@@ -11,6 +11,7 @@ ja:
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
     ants_count: "%{amount}匹"
+    number_of_vertices: '頂点数'
   users:
     new:
       title: 'ユーザー登録'
