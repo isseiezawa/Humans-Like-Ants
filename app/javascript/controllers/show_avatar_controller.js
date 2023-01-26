@@ -39,6 +39,11 @@ export default class extends Controller {
 
     // アニメーションの中止
     cancelAnimationFrame(this.requestID)
+
+    // canvasを取り除く
+    while(this.element.firstChild){
+      this.element.removeChild(this.element.firstChild)
+    }
   }
 
   async init() {
@@ -50,6 +55,9 @@ export default class extends Controller {
     // 時間を追跡するためのオブジェクト
     this.clock = new THREE.Clock()
 
+    // wire-frameのswitch用(自身の反転ができなかった為)
+    this.boolean = true
+
     // シーン作成
     this.scene = new THREE.Scene()
     this.scene.background = new THREE.Color( 0xF0F8FF );
@@ -59,13 +67,12 @@ export default class extends Controller {
     this.camera.position.setZ(1)
 
     // レンダラー作成
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.element
-    })
+    this.renderer = new THREE.WebGLRenderer()
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.renderer.setSize(400, 400)
     // GLTFLoaderを使用する為の設定
     this.renderer.outputEncoding = THREE.sRGBEncoding
+    this.element.appendChild(this.renderer.domElement)
 
     // 環境光源
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
@@ -87,31 +94,31 @@ export default class extends Controller {
     const modelFile = userData ? userData.avatar_url : '/assets/ant/original_ant.gltf'
 
     const gltfLoader = new GLTFLoader()
-    const gltfModel = await gltfLoader.loadAsync(
+    this.gltfModel = await gltfLoader.loadAsync(
                                                   modelFile,
                                                   (xhr) => {
                                                     console.log( ( Math.trunc(xhr.loaded / xhr.total * 100) ) + '% loaded' )
                                                   }
                                                 )
-    if(gltfModel.animations.length) {
+    if(this.gltfModel.animations.length) {
       // AnimationMixerを作成しAnimationClipのリストを取得
-      this.mixer = new THREE.AnimationMixer(gltfModel.scene)
+      this.mixer = new THREE.AnimationMixer(this.gltfModel.scene)
       // Animation Actionを生成（クリップ（アニメーションデータ）を指定）
-      const action = this.mixer.clipAction(gltfModel.animations[0])
+      const action = this.mixer.clipAction(this.gltfModel.animations[0])
 
       action.play()
     }
     // 取得したモデルのサイズを均一にするための計算
     const box3 = new THREE.Box3()
     // 世界軸に沿った最小のバウンディングボックスを計算
-    box3.setFromObject(gltfModel.scene )
+    box3.setFromObject(this.gltfModel.scene )
     // modelを原点の位置に移動
     const modelCenter = box3.getCenter(new THREE.Vector3())
-    gltfModel.scene.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z)
+    this.gltfModel.scene.position.set(-modelCenter.x, -modelCenter.y, -modelCenter.z)
 
     // 原点(0, 0, 0)を持つgroupに挿入
     const gltfModelGroup = new THREE.Group()
-    gltfModelGroup.add(gltfModel.scene)
+    gltfModelGroup.add(this.gltfModel.scene)
 
     // 現物のサイズを出力
     const width = box3.max.x - box3.min.x
@@ -132,6 +139,15 @@ export default class extends Controller {
     this.scene.add(gltfModelGroup)
 
     this.animate()
+  }
+
+  switchWireFrame() {
+    this.gltfModel.scene.traverse((child) => {
+      if(child.material) {
+        child.material.wireframe = this.boolean
+      }
+    })
+    this.boolean = !this.boolean
   }
 
   animate() {
