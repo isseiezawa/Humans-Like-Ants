@@ -32,6 +32,7 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }, allowed_characters: true
   validates :self_introduction, length: { maximum: 160 }
   validates :twitter_id, length: { maximum: 50 }
+  validates :avatar, attached_file_size: { maximum: 2.megabytes }
 
   enum gender: { unselected: 0, man: 1, woman: 2 }
   enum role: { general: 0, admin: 1 }

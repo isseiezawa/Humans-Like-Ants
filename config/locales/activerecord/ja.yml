@@ -3,6 +3,7 @@ ja:
     errors:
       messages:
         unauthorized_characters: 'に許可されていない文字が含まれています'
+        less_than: "のファイルサイズを%{count}より小さいサイズにしてください"
     models:
       user: 'ユーザー'
     attributes:
