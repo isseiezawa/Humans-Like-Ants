@@ -33,6 +33,9 @@ Metrics/AbcSize:
 Style/RedundantRegexpEscape:
   Exclude:
     - 'lib/**/*'
+# Cyclomatic complexity for validate_each is too high.の警告無効
+Metrics/CyclomaticComplexity:
+  Enabled: false
 
 # Example has too many expectationsの警告無効
 RSpec/MultipleExpectations:

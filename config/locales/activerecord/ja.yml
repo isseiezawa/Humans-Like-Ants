@@ -2,8 +2,10 @@ ja:
   activerecord:
     errors:
       messages:
+        specified_format: '指定された形式'
         unauthorized_characters: 'に許可されていない文字が含まれています'
         less_than: "のファイルサイズを%{count}より小さいサイズにしてください"
+        invalid_file_type: "のファイル形式を%{type}にしてください"
     models:
       user: 'ユーザー'
     attributes:

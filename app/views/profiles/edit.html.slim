@@ -46,6 +46,6 @@
                 .bg-info.small
                   = t('.no_avatar')
             .mb-3.col-8
-              = form.file_field :avatar, class: 'form-control'
+              = form.file_field :avatar, accept: '.gltf', class: 'form-control'
             .mb-3.col-8
               = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success mt-2 w-25'
