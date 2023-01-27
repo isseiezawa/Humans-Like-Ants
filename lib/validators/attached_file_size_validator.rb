@@ -1,4 +1,4 @@
-# eq attached_file_size: { maximum: 2.kilobytes }
+# e.g. attached_file_size: { maximum: 2.kilobytes }
 
 class AttachedFileSizeValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)

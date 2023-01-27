@@ -1,4 +1,4 @@
-# eq attached_file_type: { pattern: /^\.gltf$/i, type: 'gltf' }
+# e.g. attached_file_type: { pattern: /^\.gltf$/i, type: 'gltf' }
 
 class AttachedFileTypeValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)

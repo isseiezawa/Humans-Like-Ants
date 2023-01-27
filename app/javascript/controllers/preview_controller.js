@@ -13,7 +13,6 @@ export default class extends Controller {
     const preview = this.previewTarget
     // 読み込みが終了した時に発火
     reader.onloadend = () => {
-      console.log(preview)
       preview.src = reader.result
     }
     if(file) {

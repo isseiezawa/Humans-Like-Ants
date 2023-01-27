@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show]
   skip_before_action :require_login, only: %i[new create]
 
   def show; end
