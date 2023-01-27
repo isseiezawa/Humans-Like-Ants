@@ -36,6 +36,9 @@ Style/RedundantRegexpEscape:
 # Cyclomatic complexity for validate_each is too high.の警告無効
 Metrics/CyclomaticComplexity:
   Enabled: false
+# Perceived complexity for validate_each is too high.の警告無効
+Metrics/PerceivedComplexity:
+  Enabled: false
 
 # Example has too many expectationsの警告無効
 RSpec/MultipleExpectations:
