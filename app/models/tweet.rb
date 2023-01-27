@@ -28,6 +28,7 @@ class Tweet < ApplicationRecord
   validates :user, presence: true
   validates :world, presence: true
   validates :post, presence: true, length: { maximum: 200 }, allowed_characters: true
+  validates :image, attached_file_size: { maximum: 3.megabytes }, attached_file_type: { pattern: %r{^image/}, type: 'image' }
 
   def tweet_to_hash
     # to_json文字列、as_json文字列キーを持つハッシュ
