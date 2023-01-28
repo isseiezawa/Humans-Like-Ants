@@ -64,4 +64,8 @@ Rails.application.routes.draw do
   resources :worlds, only: %i[show index], param: 'place_name' do
     resources :tweets, only: %i[create destroy], shallow: true
   end
+  get '*path', to: 'application#routing_error', constraints: lambda { |req|
+    # 'rails/active_storage'が含まれているパスは対象外にする
+    req.path.exclude? 'rails/active_storage'
+  }
 end

@@ -13,6 +13,8 @@ ja:
     back_button: "前の%{amount}匹のアリンコ"
     ants_count: "%{amount}匹"
     number_of_vertices: '頂点数'
+    not_found_page: 'ページが見つかりませんでした'
+    sorry: 'すみません'
   users:
     new:
       title: 'ユーザー登録'
