@@ -14,6 +14,10 @@ class WorldsController < ApplicationController
   private
 
   def set_world
-    @world = World.find_by(place: params[:place_name])
+    begin
+      @world = World.find_by!(place: params[:place_name])
+    rescue ActiveHash::RecordNotFound
+      redirect_to worlds_path, danger: t('activerecord.errors.messages.not_found_world', param: params[:place_name])
+    end
   end
 end
