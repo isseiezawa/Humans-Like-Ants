@@ -17,6 +17,12 @@ body {
   background-size: $dot-space $dot-space;
 }
 
+.scrollable-menu {
+  height: auto;
+  max-height: 30vh;
+  overflow-x: hidden;
+}
+
 .footer {
   margin-top: auto;
 }
