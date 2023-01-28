@@ -48,6 +48,12 @@ export default class extends Controller {
     // アニメーションの中止
     cancelAnimationFrame(this.requestID)
 
+    if(!this.requestID) {
+      setTimeout(() => {
+        cancelAnimationFrame(this.requestID)
+      }, 1000)
+    }
+
     // canvasを取り除く
     while(this.element.firstChild){
       this.element.removeChild(this.element.firstChild)

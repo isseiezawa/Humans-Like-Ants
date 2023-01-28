@@ -42,6 +42,12 @@ export default class extends Controller {
 
     // アニメーションの中止
     cancelAnimationFrame(this.requestID)
+
+    if(!this.requestID) {
+      setTimeout(() => {
+        cancelAnimationFrame(this.requestID)
+      }, 1000)
+    }
   }
 
   async init() {
