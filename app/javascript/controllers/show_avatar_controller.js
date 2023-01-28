@@ -42,11 +42,6 @@ export default class extends Controller {
 
     // アニメーションの中止
     cancelAnimationFrame(this.requestID)
-
-    // canvasを取り除く
-    while(this.element.firstChild){
-      this.element.removeChild(this.element.firstChild)
-    }
   }
 
   async init() {
@@ -63,23 +58,26 @@ export default class extends Controller {
 
     // シーン作成
     this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color( 0xF0F8FF );
-
-    // カメラ作成
-    this.camera = new THREE.PerspectiveCamera(75, 400 / 400, 0.1, 100)
-    this.camera.position.setZ(1)
+    this.scene.background = new THREE.Color( 0xF0F8FF )
 
     // レンダラー作成
-    this.renderer = new THREE.WebGLRenderer()
+    const canvasElement = document.getElementById('show-avatar-canvas')
+    const canvasWidth = canvasElement.clientWidth,
+          canvasHeight = canvasElement.clientHeight
+
+    this.renderer = new THREE.WebGLRenderer({canvas: canvasElement})
     this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setSize(400, 400)
+    this.renderer.setSize(canvasWidth, canvasHeight)
     // GLTFLoaderを使用する為の設定
     this.renderer.outputEncoding = THREE.sRGBEncoding
-    this.element.appendChild(this.renderer.domElement)
+
+    // カメラ作成
+    this.camera = new THREE.PerspectiveCamera(75, canvasWidth / canvasHeight, 0.1, 100)
+    this.camera.position.setZ(1)
 
     // 環境光源
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
-    const directionalLight = new THREE.DirectionalLight(0xffffff);
+    const directionalLight = new THREE.DirectionalLight(0xffffff)
     directionalLight.position.set(1, 1, 1).normalize()
     this.scene.add(ambientLight, directionalLight)
 

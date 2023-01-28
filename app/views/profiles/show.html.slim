@@ -50,6 +50,7 @@
                 '',
                 data: { controller: 'show-avatar',
                 json: "#{JSON.generate current_user.avatar_to_hash}" }
+              canvas#show-avatar-canvas
               .row
                 .col.my-auto
                   = t('defaults.number_of_vertices')
