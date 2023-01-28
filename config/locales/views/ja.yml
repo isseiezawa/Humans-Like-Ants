@@ -6,6 +6,7 @@ ja:
     give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
+    world_selection: '地域選択'
     not_authenticated: 'ログインしてください'
     not_register: '登録されていません'
     next_button: "次の%{amount}匹のアリンコ"
@@ -43,7 +44,7 @@ ja:
     show:
       no_ants: 'アリンコがいません。投稿しましょう！'
     index:
-      title: '地域選択'
+      title: '地域一覧'
   tweets:
     create:
       success: '投稿しました'
