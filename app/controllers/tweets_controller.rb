@@ -17,10 +17,10 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    @tweet = Tweet.find(params[:id])
-    @tweet.destroy!
+    tweet = Tweet.find(params[:id])
+    tweet.destroy!
 
-    render json: { status: :ok, message: t('.success') }
+    render turbo_stream: turbo_stream.remove(tweet)
   end
 
   private

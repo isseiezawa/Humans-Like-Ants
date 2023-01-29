@@ -1,7 +1,11 @@
 class ProfilesController < ApplicationController
   before_action :set_user, only: %i[edit update destroy_avatar]
 
-  def show; end
+  def show
+    @tweets = current_user.tweets.order(id: :desc).page(params[:page]).per(3)
+
+    render 'users/scrollable_list' if params[:page]
+  end
 
   def edit; end
 

@@ -1,10 +1,15 @@
-- tweets.each do |tweet|
-  .border.rounded-3.shadow.py-3.my-2.mx-5
-    .d-flex.flex-column
-      .small.text-secondary.mb-1
-        = l(tweet.created_at, format: :long)
-      .fw-bold.mb-2
-        = tweet.post
-      div
-        - if tweet.image.attached?
-          = image_tag  url_for(tweet.image), class: 'img-thumbnail tweet-image'
+#tweets
+  - tweets.each do |tweet|
+    .border.rounded-3.shadow.py-3.my-2.mx-5 id="tweet_#{tweet.id}"
+      .d-flex.flex-column
+        .small.text-secondary.mb-1
+          = l(tweet.created_at, format: :long)
+        .fw-bold.mb-2
+          = tweet.post
+        div
+          - if tweet.image.attached?
+            = image_tag  url_for(tweet.image), class: 'img-thumbnail tweet-image'
+        - if current_user&.own?(tweet)
+          div
+            = link_to tweet_path(tweet), class: 'link-to-button w-25 mt-3 mx-auto', data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do
+              = t('defaults.delete')

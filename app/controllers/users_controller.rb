@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show]
-  skip_before_action :require_login, only: %i[new create]
+  skip_before_action :require_login, only: %i[show new create]
 
   def show
     @tweets = @user.tweets.order(id: :desc).page(params[:page]).per(3)
 
-    render "scrollable_list" if params[:page]
+    render 'scrollable_list' if params[:page]
   end
 
   def new

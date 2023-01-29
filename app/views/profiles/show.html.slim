@@ -67,3 +67,17 @@
       = link_to t('defaults.edit'),
                 edit_profile_path,
                 class: 'd-block btn btn-success w-25 mx-auto mb-3'
+      - if @tweets.present?
+        h3 = t('.tweet_index')
+        .d-flex.flex-column.vh-100.overflow-auto
+          = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
+            == render 'users/tweet', tweets: @tweets
+            - if @tweets.next_page.present?
+              == render 'users/next_page'
+            - else
+              .border.rounded.shadow.w-50.mx-auto.py-2
+                == t('.end_tweet')
+      - else
+        .container.py-3
+          .border.rounded.shadow.w-50.mx-auto.py-2
+            = t('.no_tweet')
