@@ -1,9 +1,0 @@
-.border.rounded.shadow.py-3.my-2.mx-5
-  .d-flex.flex-column
-    .small.text-secondary.mb-1
-      = l(tweet.created_at, format: :long)
-    .fw-bold.mb-2
-      = tweet.post
-    div
-      - if tweet.image.attached?
-        = image_tag  url_for(tweet.image), class: 'img-thumbnail tweet-image'
