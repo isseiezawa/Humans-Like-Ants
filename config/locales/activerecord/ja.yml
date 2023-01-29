@@ -6,6 +6,7 @@ ja:
         unauthorized_characters: 'に許可されていない文字が含まれています'
         less_than: "のファイルサイズを%{count}より小さいサイズにしてください"
         invalid_file_type: "のファイル形式を%{type}にしてください"
+        not_found_world: "%{param}という地域名は登録しておりません。"
     models:
       user: 'ユーザー'
     attributes:

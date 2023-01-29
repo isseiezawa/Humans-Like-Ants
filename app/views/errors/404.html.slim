@@ -1,0 +1,8 @@
+.container-fluid.text-center
+  h1#error.text-center.mt-3.mb-3
+    span
+      | 404 #{t('defaults.not_found_page')}
+  .mt-5
+    .balloon.w-75.mx-auto.py-3.h2
+      = t('defaults.sorry')
+    = image_tag  'sorry_ant', class: 'w-100'

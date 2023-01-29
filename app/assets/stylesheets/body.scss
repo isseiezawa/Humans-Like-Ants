@@ -76,6 +76,37 @@ h1 span:after {
   border-color: #9bac50 transparent transparent transparent;
 }
 
+h1#error:before,
+h1#error:after {
+  position: absolute;
+  z-index: 0;
+  bottom: -10px;
+  display: block;
+  content: '';
+  border: 1em solid #df5151;
+}
+
+h1#error span {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 1rem 2rem;
+  color: rgb(0, 0, 0);
+  background: #fd7878;
+}
+
+h1#error span:before,
+h1#error span:after {
+  position: absolute;
+  bottom: -10px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  content: '';
+  border-style: solid;
+  border-color: #ac5050 transparent transparent transparent;
+}
+
 h1 span:before {
   left: 0;
   border-width: 10px 0 0 10px;
