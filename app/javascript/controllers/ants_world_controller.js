@@ -312,6 +312,7 @@ export default class extends Controller {
             child.userData = {
               imageUrl: data.image_url,
               text: data.post,
+              userId: data.user.id,
               userName: data.user.name
             }
           }
@@ -340,7 +341,7 @@ export default class extends Controller {
     }
   }
 
-  collision() {
+  collision(userName = '', userId = '') {
     // 前のTweenの処理を中断して、その位置から新しいTweenを実行する
     TWEEN.removeAll()
 
@@ -353,6 +354,17 @@ export default class extends Controller {
               .to({x: backX, y: this.camera.position.y, z: backZ}, 1000)
               .easing(TWEEN.Easing.Back.Out)
               .start()
+
+    if(userName) {
+      const userNameElement = document.getElementById('user-name')
+      userNameElement.textContent = userName
+      const userLinkElement = document.getElementById('user-link')
+      const linkTextElement = document.getElementById('link-text')
+      userLinkElement.href = location.origin + '/users/' + userId
+      userLinkElement.textContent = linkTextElement.textContent
+      userLinkElement.classList.remove('no-link')
+      userLinkElement.classList.add('link-to-button-info')
+    }
   }
 
   animate() {
@@ -429,7 +441,8 @@ export default class extends Controller {
             userData.userName,
             userData.imageUrl
           )
-          this.collision()
+
+          this.collision(userData.userName, userData.userId)
           this.waitFrame = 0
         }
       }

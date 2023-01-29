@@ -32,7 +32,7 @@ class Tweet < ApplicationRecord
 
   def tweet_to_hash
     # to_json文字列、as_json文字列キーを持つハッシュ
-    image.attached? ? as_json(methods: [:image_url], only: [:post], include: { user: { methods: [:avatar_url], only: [:name] } }) : as_json(only: [:post], include: { user: { methods: [:avatar_url], only: [:name] } })
+    image.attached? ? as_json(methods: [:image_url], only: [:post], include: { user: { methods: [:avatar_url], only: [:name] } }) : as_json(only: [:post], include: { user: { methods: [:avatar_url], only: [:id, :name] } })
   end
 
   def image_url
