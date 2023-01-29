@@ -1,13 +1,52 @@
-div id="#{dom_id user}"
-  p
-    strong Name:
-    =< user.name
-  p
-    strong Email:
-    =< user.email
-  p
-    strong Crypted password:
-    =< user.crypted_password
-  p
-    strong Salt:
-    =< user.salt
+h1.mb-5
+  span
+    = user.name
+table.table.table-primary.table-striped.table-hover
+  tr
+    th
+      i.fa-solid.fa-user-pen.me-1
+      = t(User.human_attribute_name(:name))
+    td
+      = user.name
+  tr
+    th
+      i.fa-solid.fa-person-half-dress.me-1
+      = t(User.human_attribute_name(:gender))
+    td
+      = user.gender_i18n
+  tr
+    th
+      i.fa-brands.fa-twitter.me-1.text-info
+      = t(User.human_attribute_name(:twitter_id))
+    td
+      - if user.twitter_id?
+        = link_to user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
+          i.fa-brands.fa-twitter
+          | ( @#{user.twitter_id} )
+      - else
+        = t('defaults.not_register')
+  tr
+    th
+      i.fa-solid.fa-pen-to-square.me-1
+      = t(User.human_attribute_name(:self_introduction))
+    td
+      .m-1.bg-white
+      = user.self_introduction
+  tr
+    th
+      i.fa-solid.fa-bugs.me-1
+      = t(User.human_attribute_name(:avatar))
+    td.text-center
+      = content_tag :div,
+          '',
+          data: { controller: 'show-avatar',
+          json: "#{JSON.generate user.avatar_to_hash}" }
+        canvas#show-avatar-canvas
+        .row
+          .col.my-auto
+            = t('defaults.number_of_vertices')
+            | :
+            span data-show-avatar-target="vertices"
+          = button_tag 'wire-frame',
+              data: { action: 'click->show-avatar#switchWireFrame' },
+              class: 'btn btn-secondary my-1 mx-5 col'
