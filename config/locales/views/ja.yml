@@ -15,7 +15,12 @@ ja:
     number_of_vertices: '頂点数'
     not_found_page: 'ページが見つかりませんでした'
     sorry: 'すみません'
+  time:
+    formats:
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒"
   users:
+    show:
+      title: 'ユーザー詳細'
     new:
       title: 'ユーザー登録'
     create:
