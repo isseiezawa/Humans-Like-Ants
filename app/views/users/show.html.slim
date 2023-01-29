@@ -59,11 +59,6 @@
                 = button_tag 'wire-frame',
                     data: { action: 'click->show-avatar#switchWireFrame' },
                     class: 'btn btn-secondary my-1 mx-5 col'
-            - if @user.avatar.attached?
-              = link_to t('defaults.delete'),
-                        destroy_avatar_profile_path,
-                        class: 'link-to-button w-25 mx-auto',
-                        data: { turbo_method: :delete }
       - if @tweets.present?
         h3 = t('.tweet_index')
         .d-flex.flex-column.vh-100.overflow-auto
