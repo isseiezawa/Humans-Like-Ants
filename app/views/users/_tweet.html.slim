@@ -12,4 +12,5 @@
         - if current_user&.own?(tweet)
           div
             = link_to tweet_path(tweet), class: 'link-to-button w-25 mt-3 mx-auto', data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do
+              i.fa-solid.fa-trash.me-1
               = t('defaults.delete')

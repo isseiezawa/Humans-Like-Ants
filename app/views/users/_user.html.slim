@@ -42,11 +42,13 @@ table.table.table-primary.table-striped.table-hover
           data: { controller: 'show-avatar',
           json: "#{JSON.generate user.avatar_to_hash}" }
         canvas#show-avatar-canvas
-        .row
-          .col.my-auto
+        .row.px-2.mx-3
+          .col.my-auto.bg-white.rounded-3.py-2
+            i.fa-solid.fa-shapes.me-1
             = t('defaults.number_of_vertices')
             | :
             span data-show-avatar-target="vertices"
-          = button_tag 'wire-frame',
-              data: { action: 'click->show-avatar#switchWireFrame' },
-              class: 'btn btn-secondary my-1 mx-5 col'
+          = button_tag data: { action: 'click->show-avatar#switchWireFrame' },
+                        class: 'btn btn-secondary my-1 col' do
+            i.fa-solid.fa-border-none.me-1
+            = t('defaults.wire_frame')
