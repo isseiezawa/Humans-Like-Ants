@@ -9,6 +9,25 @@ h1.text-center.mt-3.mb-3
                 data: { controller: 'ants-world',
                         ants_world_target: 'antsWorldElement',
                         json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
+  .container.border.rounded-3.w-75.mt-3
+    table.table.text-center
+      tr
+        th
+          i.fa-solid.fa-user-pen.me-1
+          = t(User.human_attribute_name(:name))
+        td
+          = content_tag :div,
+                        t('.want_collision'),
+                        id: 'user-name',
+                        data: { controller:'ant-world', ants_world_target: 'userName' }
+      tr
+        th
+          i.fa-solid.fa-person-booth.me-1
+          = t('users.show.title')
+        td
+          #link-text.d-none
+            = t('.go_link')
+          = link_to '', '', id: 'user-link', class: 'no-link'
 - else
   .text-center
     = image_tag 'ant_gif'

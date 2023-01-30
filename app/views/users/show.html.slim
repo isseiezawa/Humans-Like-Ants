@@ -1,10 +1,19 @@
-p style="color: green" = notice
-
-== render @user
-
-div
-  => link_to "Edit this user", edit_user_path(@user)
-  '|
-  =< link_to "Back to users", users_path
-
-  = button_to "Destroy this user", @user, method: :delete
+.container.mt-3
+  .row
+    .col-md-10.offset-md-1.text-center
+      == render @user
+      - if @tweets.present?
+        h3.border.rounded.shadow.w-50.mx-auto.py-2
+          = t('.tweet_index')
+        .d-flex.flex-column.vh-100.overflow-auto.mb-5.pb-4
+          = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
+            == render 'tweet', tweets: @tweets
+            - if @tweets.next_page.present?
+              == render 'next_page'
+            - else
+              .border.rounded.shadow.w-50.mx-auto.py-2
+                == t('.end_tweet')
+      - else
+        .container.py-3
+          .border.rounded.shadow.w-50.mx-auto.py-2
+            = t('.no_tweet')

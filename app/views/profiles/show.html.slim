@@ -51,19 +51,38 @@
                 data: { controller: 'show-avatar',
                 json: "#{JSON.generate current_user.avatar_to_hash}" }
               canvas#show-avatar-canvas
-              .row
-                .col.my-auto
+              .row.px-2.mx-3
+                .col.my-auto.bg-white.rounded-3.py-2
+                  i.fa-solid.fa-shapes.me-1
                   = t('defaults.number_of_vertices')
                   | :
                   span data-show-avatar-target="vertices"
-                = button_tag 'wire-frame',
-                    data: { action: 'click->show-avatar#switchWireFrame' },
-                    class: 'btn btn-secondary my-1 mx-5 col'
+                = button_tag data: { action: 'click->show-avatar#switchWireFrame' },
+                              class: 'btn btn-secondary my-1 col' do
+                  i.fa-solid.fa-border-none.me-1
+                  = t('defaults.wire_frame')
             - if current_user.avatar.attached?
-              = link_to t('defaults.delete'),
-                        destroy_avatar_profile_path,
+              = link_to destroy_avatar_profile_path,
                         class: 'link-to-button w-25 mx-auto',
-                        data: { turbo_method: :delete }
-      = link_to t('defaults.edit'),
-                edit_profile_path,
-                class: 'd-block btn btn-success w-25 mx-auto mb-3'
+                        data: { turbo_method: :delete } do
+                i.fa-solid.fa-trash.me-1
+                = t('.avatar_delete')
+      = link_to edit_profile_path,
+                class: 'd-block btn btn-success w-25 mx-auto mb-3' do
+        i.fa-solid.fa-pen-to-square.me-1
+        = t('defaults.edit')
+      - if @tweets.present?
+        h3.border.rounded.shadow.w-50.mx-auto.py-2
+          = t('.tweet_index')
+        .d-flex.flex-column.vh-100.overflow-auto.mb-5.pb-4
+          = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
+            == render 'users/tweet', tweets: @tweets
+            - if @tweets.next_page.present?
+              == render 'users/next_page'
+            - else
+              .border.rounded.shadow.w-50.mx-auto.py-2
+                == t('.end_tweet')
+      - else
+        .container.py-3
+          .border.rounded.shadow.w-50.mx-auto.py-2
+            = t('.no_tweet')
