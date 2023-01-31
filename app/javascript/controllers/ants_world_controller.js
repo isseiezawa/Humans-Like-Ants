@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 // 一人称視点
-import { PointerLockControls } from "three/PointerLockControls"
+import { PointerLockControls } from "../plugins/PointerLockControlsMobile"
 import * as ThreeMeshUI from "three-mesh-ui"
 import { TextBoard } from "../modules/TextBoard"
 import { Heart } from "../modules/Heart"
@@ -14,6 +14,22 @@ export default class extends Controller {
   static targets = ['antsWorldElement']
 
   connect() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      const pcElement = document.getElementById('pc')
+      if(pcElement) pcElement.classList.add('d-none')
+    } else {
+      const phoneElement = document.getElementById('phone')
+      const buttonElement = document.getElementById('button-group')
+      const escElement = document.getElementById('key-esc')
+
+      if(phoneElement) {
+        phoneElement.classList.add('d-none')
+        buttonElement.classList.add('d-none')
+        escElement.classList.add('d-none')
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', this.init())
   }
 
@@ -55,9 +71,17 @@ export default class extends Controller {
       }, 1000)
     }
 
-    // canvasを取り除く
-    while(this.element.firstChild){
-      this.element.removeChild(this.element.firstChild)
+    // button-group以外を取り除く
+    let childrenCount = this.element.childElementCount
+
+    for(let i = 0; i < childrenCount; i++) {
+      const child = this.element.children[i]
+      
+      if(child.id != 'button-group' && child.id != 'explanation' && child.id != 'key-esc') {
+        child.remove()
+        --childrenCount
+        --i
+      }
     }
   }
 
@@ -131,8 +155,18 @@ export default class extends Controller {
 
     this.controls = new PointerLockControls(this.camera, this.renderer.domElement)
 
-    this.element.addEventListener('click', () => {
-      this.controls.lock()
+    // 黒幕の要素
+    const explanation = document.getElementById('explanation')
+
+    if(!this.controls.isLocked) {
+      this.element.addEventListener('mousedown', () => {
+        this.controls.lock()
+        explanation.style.zIndex = -1
+      })
+    }
+
+    this.controls.addEventListener('unlock', () => {
+      explanation.style.zIndex = 2
     })
 
     const onKeyDown = (event) => {
@@ -171,6 +205,56 @@ export default class extends Controller {
 
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('keyup', onKeyUp)
+
+    // スマホ用
+
+    // 前進
+    const touchForward = document.getElementById('key-w')
+    touchForward.addEventListener('touchstart', () => {
+      this.moveForward = true
+    })
+    touchForward.addEventListener('touchend', () => {
+      this.moveForward = false
+    })
+    // 左進
+    const touchLeft = document.getElementById('key-a')
+    touchLeft.addEventListener('touchstart', () => {
+      this.moveLeft = true
+    })
+    touchLeft.addEventListener('touchend', () => {
+      this.moveLeft = false
+    })
+    // 後進
+    const touchBack = document.getElementById('key-s')
+    touchBack.addEventListener('touchstart', () => {
+      this.moveBackward = true
+    })
+    touchBack.addEventListener('touchend', () => {
+      this.moveBackward = false
+    })
+    // 右進
+    const touchRight = document.getElementById('key-d')
+    touchRight.addEventListener('touchstart', () => {
+      this.moveRight = true
+    })
+    touchRight.addEventListener('touchend', () => {
+      this.moveRight = false
+    })
+    // エスケープ
+    const touchEsc = document.getElementById('key-esc')
+    touchEsc.addEventListener('click', () => {
+      explanation.style.zIndex = 2
+    })
+    
+    // キャンバスを触っている際のタッチスクロールキャンセル
+    this.element.addEventListener('touchmove', (event) => {
+      event.preventDefault()
+    })
+
+    // 右クリック及び長押しキャンセル
+    this.element.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+    })
 
     this.cameraRaycaster = new THREE.Raycaster()
 
@@ -225,6 +309,10 @@ export default class extends Controller {
     }
 
     this.element.addEventListener('dblclick', shooting)
+
+    // 餌発射
+    const touchLikeBullet = document.getElementById('key-like')
+    touchLikeBullet.addEventListener('touchstart', shooting)
 
     // ***** 空作成 *****
 

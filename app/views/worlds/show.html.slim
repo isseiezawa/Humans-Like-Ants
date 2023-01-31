@@ -9,6 +9,43 @@ h1.text-center.mt-3.mb-3
                 data: { controller: 'ants-world',
                         ants_world_target: 'antsWorldElement',
                         json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
+    #explanation.text-center.d-flex.align-items-center.justify-content-center
+      #pc
+        .h3
+          span.keybord.mb-3
+            | W
+          span.keybord.mb-3
+            | A
+          span.keybord.mb-3
+            | S
+          span.keybord.mb-3
+            | D
+          | キーで移動<br>ダブルクリックでいいねを発射
+        b
+          | Click Start!
+      #phone
+        .h3
+          | ←↑↓→で移動<br>
+          i.fa-solid.fa-heart
+          | ボタンでいいねを発射
+        b
+          | Touch Start!
+    #key-esc.keybord
+      i.fa-solid.fa-person-walking-dashed-line-arrow-right
+    #button-group.button-group.d-flex.justify-content-around.text-center.mb-2
+      #cross-key.d-flex.flex-column
+        #key-w.keybord.mx-auto
+          i.fa-solid.fa-arrow-up
+        .key-ad.d-flex.justify-content-between
+          #key-a.keybord
+            i.fa-solid.fa-arrow-left
+          #key-d.keybord
+            i.fa-solid.fa-arrow-right
+        #key-s.keybord.mx-auto
+          i.fa-solid.fa-arrow-down
+      #bullet-key
+        .bullet-button
+          i#key-like.fa-solid.fa-heart
   .container.border.rounded-3.w-75.mt-3
     table.table.text-center
       tr
