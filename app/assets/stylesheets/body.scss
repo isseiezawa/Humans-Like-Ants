@@ -124,4 +124,14 @@ h1 span:after {
 
 .set-size {
   height: 80vh;
+  position: relative;
+}
+
+#explanation {
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+  height: 80vh;
+  color: #fff;
+  background-color: rgba(0,0,0,.8);
 }
