@@ -98,7 +98,7 @@ export default class extends Controller {
 
     // ***** モデル作成 *****
 
-    const modelFile = userData ? userData.avatar_url : '/assets/ant/original_ant.gltf'
+    const modelFile = userData ? userData.avatar_url : this.element.dataset.ant
 
     const gltfLoader = new GLTFLoader()
     this.gltfModel = await gltfLoader.loadAsync(

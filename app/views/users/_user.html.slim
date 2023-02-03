@@ -40,7 +40,8 @@ table.table.table-primary.table-striped.table-hover
       = content_tag :div,
           '',
           data: { controller: 'show-avatar',
-          json: "#{JSON.generate user.avatar_to_hash}" }
+                  ant: image_path('ant/original_ant.gltf'),
+                  json: "#{JSON.generate user.avatar_to_hash}" }
         canvas#show-avatar-canvas
         .row.px-2.mx-3
           .col.my-auto.bg-white.rounded-3.py-2
