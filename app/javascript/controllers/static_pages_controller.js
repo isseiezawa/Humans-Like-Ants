@@ -167,7 +167,8 @@ export default class extends Controller {
     ]
 
     const fontLoader = new FontLoader()
-    const font = await fontLoader.loadAsync('/assets/japanese_font.json')
+    const japaneseFont = this.element.dataset.japaneseFont
+    const font = await fontLoader.loadAsync(japaneseFont)
     const textMaterial = new THREE.MeshNormalMaterial({ wireframe: true })
 
     for(let i = 0; i < title.length; i++) {
