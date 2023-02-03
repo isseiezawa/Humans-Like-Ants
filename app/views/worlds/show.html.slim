@@ -7,7 +7,12 @@ h1.text-center.mt-3.mb-3
                 '',
                 class: 'set-size',
                 data: { controller: 'ants-world',
-                        ants_world_target: 'antsWorldElement',
+                        ground: image_path('ground/ground.gltf'),
+                        stone: image_path('stone/stone.gltf'),
+                        ant: image_path('ant/original_ant.gltf'),
+                        font_json: image_path('font.json'),
+                        font_image: image_path('font.png'),
+                        sky: image_path('sky.jpg'),
                         json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
     #explanation.text-center.d-flex.align-items-center.justify-content-center
       #pc

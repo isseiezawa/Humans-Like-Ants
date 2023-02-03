@@ -4,13 +4,10 @@ import { OrbitControls } from "three/OrbitControls"
 import { FontLoader } from "three/FontLoader"
 import { TextGeometry } from "three/TextGeometry"
 import * as d3 from "d3"
-import { transformSVGPathExposed } from "../plugins/d3-threeD"
-
-// import geoJson from "/assets/japan.geo.json"
+import { transformSVGPathExposed } from "plugins/d3-threeD"
 
 // Connects to data-controller="world-map"
 export default class extends Controller {
-  static targets = ['japanMapContainer']
 
   connect() {
     window.addEventListener('DOMContentLoaded', this.init())
@@ -121,7 +118,7 @@ export default class extends Controller {
           height = this.element.clientHeight
     const scale = 1500
 
-    const geoJson = '/assets/japan.geo.json'
+    const geoJson = this.element.dataset.geoJson
     let geoData = []
 
     // 投影法
@@ -246,7 +243,8 @@ export default class extends Controller {
     // ***** 文字作成雛形 *****
 
     const fontLoader = new FontLoader()
-    this.font = await fontLoader.loadAsync('/assets/japanese_font.json')
+    const japaneseFont = this.element.dataset.japaneseFont
+    this.font = await fontLoader.loadAsync(japaneseFont)
     this.textMaterial = new THREE.MeshNormalMaterial()
 
     // ***** 星(パーティクル)追加 *****

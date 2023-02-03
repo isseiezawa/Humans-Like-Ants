@@ -2,16 +2,15 @@ import { Controller } from "@hotwired/stimulus"
 import * as THREE from "three"
 import { GLTFLoader } from "three/GLTFLoader"
 // 一人称視点
-import { PointerLockControls } from "../plugins/PointerLockControlsMobile"
+import { PointerLockControls } from "plugins/PointerLockControlsMobile"
 import * as ThreeMeshUI from "three-mesh-ui"
-import { TextBoard } from "../modules/TextBoard"
-import { Heart } from "../modules/Heart"
+import { TextBoard } from "modules/TextBoard"
+import { Heart } from "modules/Heart"
 import { TWEEN } from "tween"
 import Stats from "stats"
 
 // Connects to data-controller="ants-world"
 export default class extends Controller {
-  static targets = ['antsWorldElement']
 
   connect() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -86,7 +85,7 @@ export default class extends Controller {
   }
 
   async init() {
-    const tweetData = JSON.parse(this.antsWorldElementTarget.dataset.json)
+    const tweetData = JSON.parse(this.element.dataset.json)
 
     // requestAnimationFrameの戻り値のIDを格納
     this.requestID
@@ -270,18 +269,21 @@ export default class extends Controller {
     this.collisionModel
     this.mixers = []
 
-    const ground = '/assets/ground/ground.gltf'
-    const stone = '/assets/stone/stone.gltf'
+    const ground = this.element.dataset.ground
+    const stone = this.element.dataset.stone
 
     await this.createGltfModel(ground, 'ground', 20)
     await this.createGltfModel(stone, 'stone', 33)
 
     for(let i = 0; i < tweetData.length; i++) {
-      const modelFile = tweetData[i].user.avatar_url ? tweetData[i].user.avatar_url : '/assets/ant/original_ant.gltf'
+      const modelFile = tweetData[i].user.avatar_url ? tweetData[i].user.avatar_url : this.element.dataset.ant
       await this.createGltfModel(modelFile, 'userModel', 1, tweetData[i])
     }
 
-    this.textBoard  = new TextBoard()
+    const fontJson = this.element.dataset.fontJson
+    const fontImage = this.element.dataset.fontImage
+
+    this.textBoard  = new TextBoard(fontJson, fontImage)
     this.scene.add(this.textBoard.container)
 
     // ***** Like Bullet(いいね発射) *****
@@ -317,7 +319,7 @@ export default class extends Controller {
     // ***** 空作成 *****
 
     const textureLoader = new THREE.TextureLoader()
-    const skyTexture = await textureLoader.loadAsync('/assets/sky.jpeg')
+    const skyTexture = await textureLoader.loadAsync(this.element.dataset.sky)
     const skyGeometry = new THREE.SphereGeometry(30, 30, 30)
     const skyMaterial = new THREE.MeshBasicMaterial({ map: skyTexture, side: THREE.BackSide });
     const skyMesh = new THREE.Mesh(skyGeometry, skyMaterial)
