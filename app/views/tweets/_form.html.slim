@@ -9,5 +9,5 @@
       = form.label :image, Tweet.human_attribute_name(:image)
       div data-controller='preview'
         = form.file_field :image, data: { preview_target: 'image', action: 'change->preview#setImage' }, accept: 'image/*', class: 'form-control'
-        = image_tag 'preview', data: { preview_target: 'preview' }, class: 'pt-3 pb-1 w-50'
+        = image_tag 'preview.png', data: { preview_target: 'preview' }, class: 'mt-3 mb-1 w-50 shadow rounded-3'
       = form.submit t('defaults.give_birth'), data: { validate_target: 'submitButton' }, class: 'btn btn-success', disabled: true
