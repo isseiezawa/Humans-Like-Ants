@@ -3,7 +3,7 @@ import * as THREE from "three"
 import * as ThreeMeshUI from "three-mesh-ui"
 
 class TextBoard {
-  constructor() {
+  constructor(fontJson, fontImage) {
     // ***** 全てのブロックを入れるコンテナ作成 *****
     this.container = new ThreeMeshUI.Block({
       width: 1.2,
@@ -12,8 +12,8 @@ class TextBoard {
       backgroundOpacity: 0.2,
       contentDirection: 'row',
       justifyContent: 'space-between',
-      fontFamily: '/assets/font.json',
-      fontTexture: '/assets/font.png'
+      fontFamily: fontJson,
+      fontTexture: fontImage
     })
 
     // 衝突があるまで非表示
