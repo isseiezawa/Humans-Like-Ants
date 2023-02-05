@@ -1,0 +1,27 @@
+.description {
+  display: flex;
+  justify-content: center;
+}
+
+.description p {
+  color: rgb(119, 119, 119);
+  font-weight: bolder;
+  line-height: 3;
+}
+
+.description img {
+  width: 300px;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .description {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .description img {
+    margin: auto;
+  }
+}

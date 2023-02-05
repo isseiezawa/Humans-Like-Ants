@@ -21,6 +21,13 @@ ja:
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+  static_pages:
+    description:
+      headline_1: '3Dモデラー向け SNS'
+      text_1: |
+        最近話題のメタバース
+        自身で作成したモデルをアバターにして
+        コミュニケーションを楽しみましょう！
   users:
     show:
       title: 'ユーザー詳細'
