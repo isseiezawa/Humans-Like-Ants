@@ -66,6 +66,14 @@ ja:
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
       go_link: '見に行く'
+      info_pc: |
+        キーで移動
+        ダブルクリックでいいねを発射
+      info_phone: |
+        ボタンで移動
+        ハートボタンでいいねを発射
+      click_start: 'クリックでスタート'
+      touch_start: 'タップでスタート'
     index:
       title: '地域一覧'
   tweets:
