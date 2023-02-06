@@ -1,7 +1,20 @@
 .container.my-5
   .border.border-dark.rounded.shadow.p-2
-    .h1.text-center
+    .h1.fw-bolder.text-center
+      i.fa-solid.fa-cubes.me-1
       = t('.headline_1')
     .description.h6
       = simple_format(t('.text_1'))
-      = image_tag 'jump_ant.png'
+      .img-group
+        = image_tag 'jump_ant.png'
+  .border.border-dark.rounded.shadow.p-2.mt-2
+    .h1.fw-bolder.text-center
+      i.fa-regular.fa-map.me-1
+      = t('.headline_2')
+    .description.reverse.h6
+      .img-group
+        = image_tag 'board_ant.png'
+        = link_to worlds_path, class: 'link-success' do
+          i.fa-solid.fa-earth-asia.me-1
+          = t('worlds.index.title')
+      = simple_format(t('.text_2'))

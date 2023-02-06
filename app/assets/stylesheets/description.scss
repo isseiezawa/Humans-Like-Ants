@@ -9,8 +9,21 @@
   line-height: 3;
 }
 
-.description img {
+.description .img-group {
+  position: relative;
+}
+
+.description .img-group img {
   width: 300px;
+}
+
+.description .img-group a {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
 }
 
 @media screen and (max-width: 480px) {
@@ -21,7 +34,11 @@
     text-align: center;
   }
 
-  .description img {
+  .description.reverse {
+    flex-direction: column-reverse;
+  }
+
+  .description .img-group img {
     margin: auto;
   }
 }
