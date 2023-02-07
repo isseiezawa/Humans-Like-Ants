@@ -27,7 +27,14 @@
           .h3
             = t('.headline_4')
           hr
-          = simple_format(t('.text_4_html'))
+          = simple_format(t('.text_4_1'))
+          .container-fluid.border.p-2
+            = simple_format(t('.text_4_2'))
+        .container.border.p-3.mt-2
+          .h3
+            = t('.headline_5')
+          hr
+          = simple_format(t('.text_5_html'))
       .modal-footer
         button.btn.btn-secondary[type="button" data-bs-dismiss="modal"]
           | Close
