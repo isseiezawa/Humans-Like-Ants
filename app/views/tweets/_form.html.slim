@@ -1,8 +1,10 @@
+== render 'shared/description_modal'
 .form.bg-light.rounded
   = form_with model: tweet, url: world_tweets_path(world.place), data: { controller: 'validate', validate_form_type_value: 'tweetCreate', validate_character_count_value: 200, action: 'input->validate#submitButtonChange' }, class: 'row text-center justify-content-center' do |form|
     == render 'shared/error_messages', object: form.object
     .mb-3.col-6
-      = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label'
+      = form.label :post, Tweet.human_attribute_name(:post), class: 'form-label me-1'
+      == render 'shared/info_button'
       .small.text-danger data-validate-target='inputError'
       = form.text_field :post, data: { validate_target: 'input', action: 'input->validate#validateDefault' }, class: 'form-control'
       .small data-validate-target='inputLength'

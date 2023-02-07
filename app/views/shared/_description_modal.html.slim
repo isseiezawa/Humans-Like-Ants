@@ -1,0 +1,33 @@
+#restrictionModal.modal.fade[tabindex="-1" aria-labelledby="restrictionModalLabel" aria-hidden="true"]
+  .modal-dialog.modal-dialog-scrollable
+    .modal-content.text-center
+      .modal-header
+        h2#restrictionModalLabel.modal-title.ms-3
+          = t('.title')
+        button.btn-close[type="button" data-bs-dismiss="modal" aria-label="Close"]
+      .modal-body
+        .container.border.p-3
+          .h3
+            = t('.headline_1')
+          hr
+          = simple_format(t('.text_1'))
+        .container.border.p-3.mt-2
+          .h3
+            = t('.headline_2')
+          hr
+          = simple_format(t('.text_2'))
+        .container.border.p-3.mt-2
+          .h3
+            = t('.headline_3')
+          hr
+          = simple_format(t('.text_3_html'))
+          .container-fluid.border.p-2
+            == render 'shared/allow_characters'
+        .container.border.p-3.mt-2
+          .h3
+            = t('.headline_4')
+          hr
+          = simple_format(t('.text_4_html'))
+      .modal-footer
+        button.btn.btn-secondary[type="button" data-bs-dismiss="modal"]
+          | Close
