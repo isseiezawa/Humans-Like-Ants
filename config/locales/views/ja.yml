@@ -21,6 +21,18 @@ ja:
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+  static_pages:
+    description:
+      headline_1: '3Dモデラー向け SNS'
+      text_1: |
+        最近話題のメタバース
+        自身で作成したモデルをアバターにして
+        コミュニケーションを楽しみましょう！
+      headline_2: '地域に行こう！'
+      text_2: |
+        それぞれの地域にアリンコがいます
+        見に行きましょう！
+        ログインしてつぶやきましょう！
   users:
     show:
       title: 'ユーザー詳細'
@@ -66,6 +78,14 @@ ja:
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
       go_link: '見に行く'
+      info_pc: |
+        キーで移動
+        ダブルクリックでいいねを発射
+      info_phone: |
+        ボタンで移動
+        ハートボタンでいいねを発射
+      click_start: 'クリックでスタート'
+      touch_start: 'タップでスタート'
     index:
       title: '地域一覧'
   tweets:
@@ -76,3 +96,30 @@ ja:
       success: '投稿を削除しました'
     posting_success:
       success_message: '投稿に成功しました'
+  shared:
+    description_modal:
+      title: '利用制限と注意事項'
+      headline_1: '使用できる拡張子について'
+      text_1: |
+        使用できる3Dコンテンツの拡張子は
+        「.gltf」
+        となっております。
+      headline_2: 'ファイルサイズ'
+      text_2: |
+        3Dの描写を安定させるために
+        ファイル容量を設定させて頂いてます。
+        アバター -> 2MB以内
+        つぶやき -> 3MB以内
+        尚、頂点数に制限を設定しておりませんが
+        頂点数5000以下のご協力をお願いいたします。
+      headline_3: '使用可能文字'
+      text_3_html: |
+        3D描写をする部分で使用可能な文字に制限があります。
+        <i class="fa-solid fa-circle-info"></i>のアイコンがついた箇所が目印です。
+        現時点では以下が使用できます。
+      headline_4: '注意事項'
+      text_4_html: |
+        3Dモデルを直接描写する以上
+        他者が3Dモデルをダウンロードしてしまう恐れがあります。
+        <b class="text-danger">販売予定や購入した3Dモデル等を使用せずに
+        自身で作成した適当なモデルをご使用ください。</b>

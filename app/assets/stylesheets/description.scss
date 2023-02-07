@@ -1,0 +1,56 @@
+.description {
+  display: flex;
+  justify-content: center;
+}
+
+.description p {
+  color: rgb(119, 119, 119);
+  font-weight: bolder;
+  line-height: 3;
+}
+
+.description .img-group {
+  position: relative;
+}
+
+.description .img-group img {
+  width: 300px;
+}
+
+.description .img-group a {
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .description {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .description.reverse {
+    flex-direction: column-reverse;
+  }
+
+  .description .img-group img {
+    margin: auto;
+  }
+}
+
+.allow-characters {
+  line-height: 1.5;
+}
+
+.info-button {
+  padding: 0;
+  line-height: normal;
+  border: none;
+  color: rgb(0, 47, 255);
+  background-color: rgba(0, 0, 0, 0);
+}
