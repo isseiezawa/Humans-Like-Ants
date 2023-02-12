@@ -59,21 +59,8 @@ export default class extends Controller {
       }
     }
 
-    if(this.hasTwitterIdTarget) {
-      if(this.twitterIdTarget.value) {
-        this.twitterIdflag = true
-      } else {
-        this.twitterIdflag = false
-      }
-    }
-
-    if(this.hasSelfIntroductionTarget) {
-      if(this.selfIntroductionTarget.value) {
-        this.selfIntroductionflag = true
-      } else {
-        this.selfIntroductionflag = false
-      }
-    }
+    this.twitterIdflag = true
+    this.selfIntroductionflag = true
   }
 
   // ***** 使い回すバリデーション *****
