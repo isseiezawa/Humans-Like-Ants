@@ -22,6 +22,11 @@
 #
 class User < ApplicationRecord
   authenticates_with_sorcery!
+
+  has_many :tweets, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :liked_tweets, through: :likes, source: :tweet
+
   has_one_attached :avatar
 
   validates :password, length: { minimum: 8 }, if: -> { new_record? || changes[:crypted_password] }
@@ -37,8 +42,6 @@ class User < ApplicationRecord
   enum gender: { unselected: 0, man: 1, woman: 2 }
   enum role: { general: 0, admin: 1 }
 
-  has_many :tweets, dependent: :destroy
-
   def avatar_to_hash
     avatar.attached? ? as_json(methods: [:avatar_url], only: [:avatar_url]) : nil
   end
@@ -49,5 +52,17 @@ class User < ApplicationRecord
 
   def own?(object)
     object.user_id == id
+  end
+
+  def like(tweet)
+    liked_tweets << tweet
+  end
+
+  def unlike(tweet)
+    liked_tweets.destroy(tweet)
+  end
+
+  def like?(tweet)
+    liked_tweets.include?(tweet)
   end
 end
