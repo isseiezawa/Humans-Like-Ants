@@ -59,12 +59,20 @@ Rails.application.routes.draw do
   delete 'logout', to: 'user_sessions#destroy'
 
   resources :users, only: %i[show new create]
+
   resource :profile, only: %i[show edit update] do
     delete :destroy_avatar, on: :collection
   end
+
   resources :worlds, only: %i[show index], param: 'place_name' do
-    resources :tweets, only: %i[create destroy], shallow: true
+    resources :tweets, only: %i[create]
   end
+
+  resources :tweets, only: %i[destroy] do
+    resource :like, only: %i[create destroy]
+    get :likes, on: :collection
+  end
+
   get '*path', to: 'application#routing_error', constraints: lambda { |req|
     # 'rails/active_storage'が含まれているパスは対象外にする
     req.path.exclude? 'rails/active_storage'
