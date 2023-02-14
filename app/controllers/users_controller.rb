@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   skip_before_action :require_login, only: %i[show new create]
 
   def show
-    @tweets = @user.tweets.order(id: :desc).page(params[:page]).per(3)
+    @tweets = @user.tweets.includes(:likes).order(id: :desc).page(params[:page]).per(3)
 
     render 'scrollable_list' if params[:page]
   end
