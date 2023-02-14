@@ -1,6 +1,7 @@
-- if liked
-  = link_to tweet_like_path(tweet), data: { turbo_method: :delete } do
-    i.fa-solid.fa-heart
-- else
-  = link_to tweet_like_path(tweet), data: { turbo_method: :post } do
-    i.fa-regular.fa-heart
+= turbo_frame_tag "like-button-#{tweet.id}" do
+  - if liked
+    = link_to tweet_like_path(tweet), data: { turbo_method: :delete } do
+      i.fa-solid.fa-heart.like-button
+  - else
+    = link_to tweet_like_path(tweet), data: { turbo_method: :post } do
+      i.fa-regular.fa-heart.like-button
