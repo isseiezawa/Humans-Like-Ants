@@ -1,5 +1,5 @@
 = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
-  == render 'users/tweet', tweets: @tweets
+  == render partial: 'users/tweet', collection: @tweets
   - if @tweets.next_page.present?
     == render 'next_page'
   - else

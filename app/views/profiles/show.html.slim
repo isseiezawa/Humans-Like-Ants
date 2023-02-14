@@ -77,7 +77,7 @@
           = t('.tweet_index')
         .d-flex.flex-column.vh-100.overflow-auto.mb-5.pb-4
           = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
-            == render 'users/tweet', tweets: @tweets
+            == render partial: 'users/tweet', collection: @tweets
             - if @tweets.next_page.present?
               == render 'users/next_page'
             - else
