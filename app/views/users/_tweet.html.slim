@@ -8,7 +8,7 @@
       div
         - if tweet.image.attached?
           = image_tag  url_for(tweet.image), class: 'img-thumbnail tweet-image'
-      == render 'likes/like_button', tweet: tweet, liked: current_user.like?(tweet)
+      == render 'likes/like_button', tweet: tweet, liked: current_user&.like?(tweet)
       - if current_user&.own?(tweet)
         div
           = link_to tweet_path(tweet), class: 'link-to-button w-25 mt-3 mx-auto', data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm') } do
