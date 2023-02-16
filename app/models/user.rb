@@ -55,11 +55,9 @@ class User < ApplicationRecord
   end
 
   def like(tweet)
-    begin
-      liked_tweets << tweet
-    rescue ActiveRecord::RecordInvalid
-      return false
-    end
+    liked_tweets << tweet
+  rescue ActiveRecord::RecordInvalid
+    false
   end
 
   def unlike(tweet)
