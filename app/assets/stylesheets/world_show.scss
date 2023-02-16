@@ -1,0 +1,42 @@
+.set-size {
+  height: 80vh;
+  position: relative;
+}
+
+#explanation {
+  z-index: 2;
+  position: absolute;
+  width: 100vw;
+  height: 80vh;
+  color: #fff;
+  background-color: rgba(0,0,0,.8);
+}
+
+#like-message-box {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 1%;
+  left: 1%;
+  margin: 1px;
+  padding: 10px;
+  border-radius: 10%;
+  background-color: rgba(255, 255, 255, 0.747);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+
+#like-message-box div {
+  color: #fa4969;
+  text-shadow:1px 1px 0 #FFF, -1px -1px 0 #FFF,
+              -1px 1px 0 #FFF, 1px -1px 0 #FFF,
+              0px 1px 0 #FFF,  0-1px 0 #FFF,
+              -1px 0 0 #FFF, 1px 0 0 #FFF;
+
+}
+
+@media screen and (max-width: 480px) {
+  #like-message-box div {
+    font-size: small;
+  }
+}
