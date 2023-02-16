@@ -81,6 +81,8 @@ ja:
       info_pc: |
         キーで移動
         ダブルクリックでいいねを発射
+      info_esc: |
+        3D空間から抜ける時はESCキーを押してね
       info_phone: |
         ボタンで移動
         ハートボタンでいいねを発射
@@ -96,6 +98,10 @@ ja:
       success: '投稿を削除しました'
     posting_success:
       success_message: '投稿に成功しました'
+  likes:
+    create:
+      success: "%{name}さんの「%{post}」をいいねしました"
+      fail: "%{name}さんの「%{post}」はすでにいいねされています"
   shared:
     description_modal:
       title: '利用制限と注意事項'

@@ -13,6 +13,7 @@ h1.text-center.mt-3.mb-3
                         font_json: image_path('font.json'),
                         font_image: image_path('font.png'),
                         sky: image_path('sky.jpg'),
+                        info_esc: t('.info_esc'),
                         json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
     #explanation.text-center.d-flex.align-items-center.justify-content-center
       #pc
@@ -41,6 +42,11 @@ h1.text-center.mt-3.mb-3
           = simple_format(t('.info_phone'))
         b
           = t('.touch_start')
+    #like-message-box
+      = content_tag :div,
+                    '',
+                    class: 'like-message',
+                    data: { ants_world_target: 'message' }
     #key-esc.keybord
       i.fa-solid.fa-person-walking-dashed-line-arrow-right
     #button-group.button-group.d-flex.justify-content-around.text-center.mb-2
