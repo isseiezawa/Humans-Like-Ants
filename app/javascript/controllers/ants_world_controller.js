@@ -456,7 +456,6 @@ export default class extends Controller {
       const linkTextElement = document.getElementById('link-text')
       userLinkElement.href = location.origin + '/users/' + userId
       userLinkElement.textContent = linkTextElement.textContent
-      userLinkElement.classList.remove('no-link')
       userLinkElement.classList.add('link-to-button-info')
     }
   }
