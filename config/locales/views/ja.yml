@@ -9,6 +9,7 @@ ja:
     logout: 'ログアウト'
     world_selection: '地域選択'
     not_authenticated: 'ログインしてください'
+    not_authenticated_like_info_json: 'ログインすればいいねができます！'
     not_register: '登録されていません'
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
