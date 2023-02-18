@@ -1,0 +1,42 @@
+.info-button {
+  padding: 0;
+  line-height: normal;
+  border: none;
+  color: rgb(0, 47, 255);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.reload-button {
+  z-index: 3;
+  position: fixed;
+  right: 0%;
+  bottom: 0%;
+  padding: 2px;
+  margin: 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.17) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.15) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.1) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.06) 0px 1px 1px, rgba(0, 0, 0, 0.09) 0px 1px 1px, rgba(0, 0, 0, 0.09) 0px 2px 2px, rgba(0, 0, 0, 0.09) 0px 2px 2px, rgba(0, 0, 0, 0.09) 0px 2px 2px;
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.15) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.1) 0px -5px 5px 0px inset, rgba(0, 0, 0, 0.06) 0px 1px 1px, rgba(0, 0, 0, 0.09) 0px 1px 1px, rgba(0, 0, 0, 0.09) 0px 2px 2px, rgba(0, 0, 0, 0.09) 0px 2px 2px, rgba(0, 0, 0, 0.09) 0px 2px 2px;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.reload-button:hover {
+  box-shadow: none;
+}
+
+.reload-button svg {
+  color: #000000;
+  font-size: 1.5rem;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.reload-button:hover svg {
+  transform: rotateZ(360deg);
+}

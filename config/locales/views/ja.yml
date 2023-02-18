@@ -98,6 +98,7 @@ ja:
       success: '投稿を削除しました'
     posting_success:
       success_message: '投稿に成功しました'
+      reload_message: 'リロードしてください'
   likes:
     create:
       success: "%{name}さんの「%{post}」をいいねしました"

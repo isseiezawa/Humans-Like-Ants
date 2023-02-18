@@ -1,4 +1,8 @@
 = turbo_stream.replace 'tweet-form' do
-  .container-fluid.bg-primary.bg-gradient
-    .text-center.text-white.h3.justify-content-center.pt-5.pb-5
+  = content_tag :div,
+                data: {controller: 'reload-button-move'},
+                class: 'container-fluid bg-primary bg-gradient text-center text-white'
+    .h3.pt-3.pb-3.h3.pt-3
       = t('.success_message')
+    .h3.pt-3.pb-3.h3.pt-3
+      = t('.reload_message')
