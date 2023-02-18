@@ -64,7 +64,7 @@ class User < ApplicationRecord
     liked_tweets.destroy(tweet)
   end
 
-  def like?(tweet)
-    liked_tweets.include?(tweet)
+  def like?(tweet_likes)
+    tweet_likes.pluck(:user_id).include?(id)
   end
 end

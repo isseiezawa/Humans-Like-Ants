@@ -1,5 +1,5 @@
 = turbo_frame_tag "like-button-#{tweet.id}" do
-  - if liked
+  - if current_user&.like?(tweet.likes)
     = link_to tweet_like_path(tweet), data: { turbo_method: :delete } do
       i.fa-solid.fa-heart.like-button
     span.ms-2
