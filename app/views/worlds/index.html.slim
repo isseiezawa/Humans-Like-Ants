@@ -9,4 +9,4 @@ h1.text-center.mt-3.mb-3
                       japanese_font: image_path('japanese_font.json') }
 .row.row-cols-3
   - @worlds.each do |world|
-    == render 'place', world: world
+  == render @worlds
