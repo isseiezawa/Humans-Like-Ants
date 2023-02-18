@@ -19,7 +19,10 @@ class ApplicationController < ActionController::Base
 
   # require_loginで実行するメソッド
   def not_authenticated
-    redirect_to login_path, warning: t('defaults.not_authenticated')
+    respond_to do |format|
+      format.html { redirect_to login_path, warning: t('defaults.not_authenticated') }
+      format.json { render json: t('defaults.not_authenticated_like_info_json') }
+    end
   end
 
   def render404

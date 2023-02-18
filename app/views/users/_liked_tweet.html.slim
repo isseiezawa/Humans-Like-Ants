@@ -1,0 +1,13 @@
+.w-50
+  .border.rounded-5.shadow.m-1
+    .fw-bold.my-1
+      = link_to user_path(liked_tweet.user.id), class: 'default-link' do
+        = liked_tweet.user.name
+    .small.mb-1.text-black-50
+      = l(liked_tweet.created_at, format: :long)
+    .small.fw-bold.mb-2
+      = liked_tweet.post
+    - if liked_tweet.image.attached?
+      .container
+        = image_tag  url_for(liked_tweet.image), class: 'img-thumbnail tweet-image'
+    == render 'likes/like_button', tweet: liked_tweet

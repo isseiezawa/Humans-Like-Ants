@@ -7,6 +7,7 @@
 #                                    login GET    /login(.:format)                                                                                  user_sessions#new
 #                                          POST   /login(.:format)                                                                                  user_sessions#create
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
+#                               likes_user GET    /users/:id/likes(.:format)                                                                        users#likes
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
 #                                     user GET    /users/:id(.:format)                                                                              users#show
@@ -16,9 +17,12 @@
 #                                          PATCH  /profile(.:format)                                                                                profiles#update
 #                                          PUT    /profile(.:format)                                                                                profiles#update
 #                             world_tweets POST   /worlds/:world_place_name/tweets(.:format)                                                        tweets#create
-#                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
 #                                    world GET    /worlds/:place_name(.:format)                                                                     worlds#show
+#                               tweet_like DELETE /tweets/:tweet_id/like(.:format)                                                                  likes#destroy
+#                                          POST   /tweets/:tweet_id/like(.:format)                                                                  likes#create
+#                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
+#                                          GET    /*path(.:format)                                                                                  application#routing_error
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
 #        turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
@@ -57,13 +61,22 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
-  resources :users, only: %i[show new create]
+  resources :users, only: %i[show new create] do
+    get :likes, on: :member
+  end
+
   resource :profile, only: %i[show edit update] do
     delete :destroy_avatar, on: :collection
   end
+
   resources :worlds, only: %i[show index], param: 'place_name' do
-    resources :tweets, only: %i[create destroy], shallow: true
+    resources :tweets, only: %i[create]
   end
+
+  resources :tweets, only: %i[destroy] do
+    resource :like, only: %i[create destroy]
+  end
+
   get '*path', to: 'application#routing_error', constraints: lambda { |req|
     # 'rails/active_storage'が含まれているパスは対象外にする
     req.path.exclude? 'rails/active_storage'

@@ -2,12 +2,16 @@
   .row
     .col-md-10.offset-md-1.text-center
       == render @user
+      .d-flex.justify-content-center.border.rounded.shadow.my-3
+        = link_to likes_user_path(@user), class: 'default-link' do
+          i.fa-solid.fa-heart.like-button.me-1
+          = t('users.likes.title')
       - if @tweets.present?
         h3.border.rounded.shadow.w-50.mx-auto.py-2
           = t('.tweet_index')
         .d-flex.flex-column.vh-100.overflow-auto.mb-5.pb-4
           = turbo_frame_tag "tweets-page-#{@tweets.current_page}" do
-            == render 'tweet', tweets: @tweets
+            == render partial: 'tweet' , collection: @tweets
             - if @tweets.next_page.present?
               == render 'next_page'
             - else

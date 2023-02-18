@@ -21,6 +21,8 @@ class Tweet < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :user
+  has_many :likes, dependent: :destroy
+  has_many :liked_users, through: :likes, source: :user
   belongs_to_active_hash :world
 
   has_one_attached :image
@@ -32,7 +34,7 @@ class Tweet < ApplicationRecord
 
   def tweet_to_hash
     # to_json文字列、as_json文字列キーを持つハッシュ
-    image.attached? ? as_json(methods: [:image_url], only: [:post], include: { user: { methods: [:avatar_url], only: %i[id name] } }) : as_json(only: [:post], include: { user: { methods: [:avatar_url], only: %i[id name] } })
+    image.attached? ? as_json(methods: [:image_url], only: %i[id post], include: { user: { methods: [:avatar_url], only: %i[id name] } }) : as_json(only: %i[id post], include: { user: { methods: [:avatar_url], only: %i[id name] } })
   end
 
   def image_url

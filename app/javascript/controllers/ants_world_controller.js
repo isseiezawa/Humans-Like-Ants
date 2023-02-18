@@ -8,9 +8,11 @@ import { TextBoard } from "modules/TextBoard"
 import { Heart } from "modules/Heart"
 import { TWEEN } from "tween"
 import Stats from "stats"
+import { post } from '@rails/request.js'
 
 // Connects to data-controller="ants-world"
 export default class extends Controller {
+  static targets = ['message']
 
   connect() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -21,12 +23,13 @@ export default class extends Controller {
       const phoneElement = document.getElementById('phone')
       const buttonElement = document.getElementById('button-group')
       const escElement = document.getElementById('key-esc')
-
+      
       if(phoneElement) {
         phoneElement.classList.add('d-none')
         buttonElement.classList.add('d-none')
         escElement.classList.add('d-none')
       }
+      this.messageTarget.textContent = this.element.dataset.infoEsc
     }
 
     window.addEventListener('DOMContentLoaded', this.init())
@@ -76,7 +79,7 @@ export default class extends Controller {
     for(let i = 0; i < childrenCount; i++) {
       const child = this.element.children[i]
       
-      if(child.id != 'button-group' && child.id != 'explanation' && child.id != 'key-esc') {
+      if(child.id != 'button-group' && child.id != 'explanation' && child.id != 'key-esc' && child.id != 'like-message-box') {
         child.remove()
         --childrenCount
         --i
@@ -400,6 +403,7 @@ export default class extends Controller {
         gltfModel.scene.traverse((child) => {
           if(child.isMesh) {
             child.userData = {
+              tweetId: data.id,
               imageUrl: data.image_url,
               text: data.post,
               userId: data.user.id,
@@ -452,8 +456,16 @@ export default class extends Controller {
       const linkTextElement = document.getElementById('link-text')
       userLinkElement.href = location.origin + '/users/' + userId
       userLinkElement.textContent = linkTextElement.textContent
-      userLinkElement.classList.remove('no-link')
       userLinkElement.classList.add('link-to-button-info')
+    }
+  }
+
+  async likeRequest(tweetId) {
+    const response = await post(`${location.origin}/tweets/${tweetId}/like.json`, {
+      contentType: 'application/json' })
+    if(response.ok) {
+      const text = await response.text
+      this.messageTarget.textContent = text
     }
   }
 
@@ -566,6 +578,9 @@ export default class extends Controller {
             this.likeBullet.material.dispose()
             this.likeBullet.geometry.dispose()
             this.scene.remove(this.likeBullet)
+
+            const tweetId = bulletHitMesh[0].object.userData.tweetId
+            this.likeRequest(tweetId)
 
             // 最小の構成 Mesh(衝突) < Group(gltfModel.scene) < Group(gltfModelGroup)
             const bulletHitObject = bulletHitMesh[0].object.parent.parent

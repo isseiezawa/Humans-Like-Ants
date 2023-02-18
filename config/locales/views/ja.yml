@@ -9,6 +9,7 @@ ja:
     logout: 'ログアウト'
     world_selection: '地域選択'
     not_authenticated: 'ログインしてください'
+    not_authenticated_like_info_json: 'ログインすればいいねができます！'
     not_register: '登録されていません'
     next_button: "次の%{amount}匹のアリンコ"
     back_button: "前の%{amount}匹のアリンコ"
@@ -46,6 +47,8 @@ ja:
     create:
       success: 'ユーザー登録が完了しました'
       fail: 'ユーザー登録に失敗しました'
+    likes:
+      title: 'いいね一覧'
   user_sessions:
     new:
       title: 'ログイン'
@@ -81,6 +84,8 @@ ja:
       info_pc: |
         キーで移動
         ダブルクリックでいいねを発射
+      info_esc: |
+        3D空間から抜ける時はESCキーを押してね
       info_phone: |
         ボタンで移動
         ハートボタンでいいねを発射
@@ -96,6 +101,11 @@ ja:
       success: '投稿を削除しました'
     posting_success:
       success_message: '投稿に成功しました'
+      reload_message: 'リロードしてください'
+  likes:
+    create:
+      success: "%{name}さんの「%{post}」をいいねしました"
+      fail: "%{name}さんの「%{post}」はすでにいいねされています"
   shared:
     description_modal:
       title: '利用制限と注意事項'
