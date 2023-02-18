@@ -1,0 +1,5 @@
+h1.my-3
+  span
+    = t('.title')
+.d-flex.flex-wrap.align-items-stretch.text-center
+  == render partial: 'liked_tweet', collection: @liked_tweets
