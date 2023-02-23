@@ -528,7 +528,6 @@ export default class extends Controller {
       if(hitStone.length > 0) {
         this.controls.moveForward(this.velocity.z * delta)
         this.controls.moveRight(this.velocity.x * delta)
-        this.collision()
       }
 
       // *** モデル接触 ***
