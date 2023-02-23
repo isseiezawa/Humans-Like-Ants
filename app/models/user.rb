@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :tweets, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_tweets, through: :likes, source: :tweet
+  has_many :avatar_tag_maps, dependent: :destroy
+  has_many :avatar_tags, through: :avatar_tag_maps
 
   has_one_attached :avatar
 
