@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_141927) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_avatar_tags_on_name", unique: true
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
