@@ -6,6 +6,6 @@ class CreateAvatarTagMaps < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_index :avatar_tag_maps, [:user_id, :avatar_tag_id], unique: true
+    add_index :avatar_tag_maps, %i[user_id avatar_tag_id], unique: true
   end
 end
