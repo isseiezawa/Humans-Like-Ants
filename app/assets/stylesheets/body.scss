@@ -17,6 +17,16 @@ body {
   background-size: $dot-space $dot-space;
 }
 
+@media screen and (max-width: 480px) {
+  p, tr, td, div, a, button {
+    font-size: 0.8rem;
+  }
+
+  .btn {
+    font-size: 0.8rem!important;
+  }
+}
+
 .scrollable-menu {
   height: auto;
   max-height: 30vh;
