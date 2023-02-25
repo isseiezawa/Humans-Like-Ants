@@ -2,7 +2,7 @@ class AvatarTagsController < ApplicationController
   before_action :set_avatar_tag, only: %i[show]
 
   def show
-    @tagged_users = @avatar_tag.tagged_users
+    @tagged_users = @avatar_tag.tagged_users.includes(:avatar_tags).with_attached_avatar
   end
 
   def search
