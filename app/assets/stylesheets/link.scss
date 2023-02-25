@@ -40,3 +40,23 @@
   color: #ffffff;
   box-shadow: none;
 }
+
+.searched-tag-button {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 20%;
+  text-align: center;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  background: #b3413c;
+  color: #ffffff;
+  line-height: 1em;
+  transition: .3s;
+  box-shadow: 2px 2px 2px #666666;
+}
+.searched-tag-button:hover {
+  text-decoration: none;
+  color: #ffffff;
+  box-shadow: none;
+}

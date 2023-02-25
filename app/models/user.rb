@@ -28,6 +28,9 @@ class User < ApplicationRecord
   has_many :liked_tweets, through: :likes, source: :tweet
   has_many :avatar_tag_maps, dependent: :destroy
   has_many :avatar_tags, through: :avatar_tag_maps
+  # avatar_tagsテーブルへの同時保存設定
+  accepts_nested_attributes_for :avatar_tag_maps, allow_destroy: true
+  accepts_nested_attributes_for :avatar_tags
 
   has_one_attached :avatar
 
@@ -68,5 +71,19 @@ class User < ApplicationRecord
 
   def like?(tweet_likes)
     tweet_likes.pluck(:user_id).include?(id)
+  end
+
+  # 代入関数を使用
+  def avatar_tags_attributes=(avatar_tags_attributes)
+    # expect {"uniq_id"=>{"name"=>"text"}}
+    avatar_tags_attributes.values.uniq.each do |tag_params|
+      if tag_params['name'].present?
+        # モデル.find_or_create_by(name: 'text')
+        # 条件を指定して初めの1件を取得し1件もなければ作成
+        tag = AvatarTag.find_or_create_by(tag_params)
+
+        avatar_tags << tag unless avatar_tags.exists?(name: tag.name)
+      end
+    end
   end
 end

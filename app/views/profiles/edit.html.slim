@@ -52,4 +52,12 @@
             .mb-3.col-8
               = form.file_field :avatar, accept: '.gltf', class: 'form-control'
             .mb-3.col-8
+              i.fa-solid.fa-tags.me-1
+              #avatar-tags-list
+                = form.collection_check_boxes(:avatar_tag_ids, @user.avatar_tags, :id, :name) do |avatar_tag|
+                  = avatar_tag.label { avatar_tag.check_box + avatar_tag.text }
+              = content_tag :div, '', data: { controller: 'avatar-tags-form' } do
+                = text_field_tag nil, nil, data: { avatar_tags_form_target: 'avatarTag', action: 'input->avatar-tags-form#avatarTagList' }
+                #select-tag
+            .mb-3.col-8
               = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success mt-2 w-25'
