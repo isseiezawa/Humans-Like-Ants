@@ -77,13 +77,13 @@ class User < ApplicationRecord
   def avatar_tags_attributes=(avatar_tags_attributes)
     # expect {"uniq_id"=>{"name"=>"text"}}
     avatar_tags_attributes.values.uniq.each do |tag_params|
-      if tag_params['name'].present?
-        # モデル.find_or_create_by(name: 'text')
-        # 条件を指定して初めの1件を取得し1件もなければ作成
-        tag = AvatarTag.find_or_create_by(tag_params)
+      next if tag_params['name'].blank?
 
-        avatar_tags << tag unless avatar_tags.exists?(name: tag.name)
-      end
+      # モデル.find_or_create_by(name: 'text')
+      # 条件を指定して初めの1件を取得し1件もなければ作成
+      tag = AvatarTag.find_or_create_by(tag_params)
+
+      avatar_tags << tag unless avatar_tags.exists?(name: tag.name)
     end
   end
 end
