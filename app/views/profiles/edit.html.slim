@@ -57,7 +57,9 @@
                 = form.collection_check_boxes(:avatar_tag_ids, @user.avatar_tags, :id, :name) do |avatar_tag|
                   = avatar_tag.label { avatar_tag.check_box + avatar_tag.text }
               = content_tag :div, '', data: { controller: 'avatar-tags-form' } do
-                = text_field_tag nil, nil, data: { avatar_tags_form_target: 'avatarTag', action: 'input->avatar-tags-form#avatarTagList' }
+                .input-group
+                  = text_field_tag nil, nil, data: { avatar_tags_form_target: 'inputAvatarTag', action: 'input->avatar-tags-form#avatarTagList' }, class: 'form-control'
+                  = link_to 'add', 'javascript:void(0)', data: { action: 'click->avatar-tags-form#addAvatarTag' }, class: 'btn btn-outline-secondary'
                 #select-tag
             .mb-3.col-8
               = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success mt-2 w-25'
