@@ -20,13 +20,14 @@ export default class extends Controller {
       this.selectElement.removeChild(this.selectElement.lastChild)
     }
 
-    response_json.forEach(tag => {
+    for(let i = 0; i < response_json.length; i++) {
+      if(i > 10) { break }
       const searchedTagElment = document.createElement('a')
       searchedTagElment.classList.add('searched-tag-button')
       searchedTagElment.dataset.action = 'click->avatar-tags-form#setAvatarTag'
-      searchedTagElment.textContent = tag
+      searchedTagElment.textContent = response_json[i]
       this.selectElement.appendChild(searchedTagElment)
-    })
+    }
   }
 
   setAvatarTag(event) {

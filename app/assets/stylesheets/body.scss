@@ -131,3 +131,8 @@ h1 span:after {
   right: 0;
   border-width: 10px 10px 0 0;
 }
+
+::placeholder {
+  color: rgb(196, 196, 196);
+  font-size: 0.8em;
+}

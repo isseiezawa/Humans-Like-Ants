@@ -7,6 +7,8 @@ ja:
     give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
+    logout_confirm: 'ログアウトしますか?'
+    avatar_tags_search: 'アバター推しポイントタグ検索'
     world_selection: '地域選択'
     not_authenticated: 'ログインしてください'
     not_authenticated_like_info_json: 'ログインすればいいねができます！'
