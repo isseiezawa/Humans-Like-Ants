@@ -8,10 +8,10 @@ export default class extends Controller {
     this.tagsListElement = document.getElementById('avatar-tags-list')
     this.selectElement = document.getElementById('select-tag')
 
-    this.avatarTagList()
+    this.searchAvatarTags()
   }
 
-  async avatarTagList() {
+  async searchAvatarTags() {
     const params = this.inputAvatarTagTarget.value
     const response = await fetch(`${location.origin}/avatar_tags/search?name=${params}`)
     const response_json = await response.json()

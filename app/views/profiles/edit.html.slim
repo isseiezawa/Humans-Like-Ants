@@ -60,7 +60,7 @@
                   = avatar_tag.label { avatar_tag.check_box + avatar_tag.text }
               = content_tag :div, '', data: { controller: 'avatar-tags-form' } do
                 .input-group
-                  = text_field_tag nil, nil, data: { avatar_tags_form_target: 'inputAvatarTag', action: 'input->avatar-tags-form#avatarTagList' }, class: 'form-control'
+                  = text_field_tag nil, nil, data: { avatar_tags_form_target: 'inputAvatarTag', action: 'input->avatar-tags-form#searchAvatarTags' }, class: 'form-control'
                   = link_to 'add', 'javascript:void(0)', data: { action: 'click->avatar-tags-form#addAvatarTag' }, class: 'btn btn-outline-secondary'
                 .small.my-1
                   = t('.search_tags')
