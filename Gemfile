@@ -68,9 +68,6 @@ gem 'sorcery'
 gem 'enum_help'
 gem 'rails-i18n', '~> 7.0', '>= 7.0.6'
 
-# スキーマ情報記述
-gem 'annotate'
-
 # 初期値データ管理
 gem 'seed-fu'
 
@@ -102,6 +99,9 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  # スキーマ情報記述
+  gem 'annotate'
 end
 
 group :test do
