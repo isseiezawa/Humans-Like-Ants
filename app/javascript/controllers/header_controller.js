@@ -13,8 +13,16 @@ export default class extends Controller {
 
     listElement.classList.add('show')
 
-    while(listElement.lastChild) {
-      listElement.removeChild(listElement.lastChild)
+    // #avatar-tags-indexのelement以外を取り除く処理
+    let childrenCount = listElement.childElementCount
+    for(let i = 0; i < childrenCount; i++) {
+      const child = listElement.children[i]
+      
+      if(child.id != 'avatar-tags-index') {
+        child.remove()
+        --childrenCount
+        --i
+      }
     }
 
     for(let i = 0; i < response_json.length; i++) {

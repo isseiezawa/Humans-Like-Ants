@@ -13,4 +13,4 @@ tr
   td.align-middle
     = tagged_user.avatar.attached? ? '○' : '×'
   td.align-middle.w-25
-    == render partial: 'avatar_tags/avatar_tag', collection: tagged_user.avatar_tags
+    == render partial: 'avatar_tags/avatar_tag', collection: tagged_user.avatar_tags.includes(:tagged_users)

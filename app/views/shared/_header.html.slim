@@ -34,3 +34,5 @@ header
               = button_tag data: { bs_toggle: 'dropdown' }, aria_expanded: false, class: 'btn btn-outline-black dropdpwn-toggle' do
                 i.fa-solid.fa-sort-down.small
               ul#avatar-tag-lists.dropdown-menu.dropdown-menu-end.top-100.start-0.scrollable-menu
+                li#avatar-tags-index.border-bottom
+                  = link_to t('avatar_tags.index.title'), avatar_tags_path, class: 'dropdown-item'

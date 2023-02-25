@@ -112,6 +112,8 @@ ja:
   avatar_tags:
     show:
       title: "「%{name}」タグ"
+    index:
+      title: '推しタグ一覧'
   shared:
     description_modal:
       title: '利用制限と注意事項'

@@ -59,6 +59,6 @@ table.table.table-primary.table-striped.table-hover
       = AvatarTag.model_name.human
     td.text-center
       - if user.avatar_tags.present?
-        == render partial: 'avatar_tags/avatar_tag', collection: user.avatar_tags
+        == render partial: 'avatar_tags/avatar_tag', collection: user.avatar_tags.includes(:tagged_users)
       - else
         = t('defaults.not_register')
