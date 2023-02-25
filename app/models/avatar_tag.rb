@@ -13,7 +13,7 @@
 #
 class AvatarTag < ApplicationRecord
   has_many :avatar_tag_maps, dependent: :destroy
-  has_many :tagged_user, through: :avatar_tag_maps, source: :user
+  has_many :tagged_users, through: :avatar_tag_maps, source: :user
 
   validates :name, presence: true, uniqueness: true
 end

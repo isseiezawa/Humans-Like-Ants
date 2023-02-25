@@ -70,6 +70,7 @@ ja:
       title: 'プロフィール編集'
       have_avatar: 'アバターが登録されています'
       no_avatar: 'アバターは登録されていません'
+      search_tags: '検索されたタグ'
     update:
       success: "%{item}の編集に成功しました"
       fail: "%{item}の編集に失敗しました"
@@ -106,6 +107,9 @@ ja:
     create:
       success: "%{name}さんの「%{post}」をいいねしました"
       fail: "%{name}さんの「%{post}」はすでにいいねされています"
+  avatar_tags:
+    show:
+      title: "「%{name}」タグ"
   shared:
     description_modal:
       title: '利用制限と注意事項'
