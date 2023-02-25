@@ -5,19 +5,19 @@ table.table.table-primary.table-striped.table-hover
   tr
     th
       i.fa-solid.fa-user-pen.me-1
-      = t(User.human_attribute_name(:name))
+      = User.human_attribute_name(:name)
     td
       = user.name
   tr
     th
       i.fa-solid.fa-person-half-dress.me-1
-      = t(User.human_attribute_name(:gender))
+      = User.human_attribute_name(:gender)
     td
       = user.gender_i18n
   tr
     th
       i.fa-brands.fa-twitter.me-1.text-info
-      = t(User.human_attribute_name(:twitter_id))
+      = User.human_attribute_name(:twitter_id)
     td
       - if user.twitter_id?
         = link_to user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
@@ -28,14 +28,14 @@ table.table.table-primary.table-striped.table-hover
   tr
     th
       i.fa-solid.fa-pen-to-square.me-1
-      = t(User.human_attribute_name(:self_introduction))
+      = User.human_attribute_name(:self_introduction)
     td
       .m-1.bg-white
       = user.self_introduction
   tr
     th
       i.fa-solid.fa-bugs.me-1
-      = t(User.human_attribute_name(:avatar))
+      = User.human_attribute_name(:avatar)
     td.text-center
       = content_tag :div,
           '',

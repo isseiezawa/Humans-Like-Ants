@@ -8,25 +8,25 @@
         tr
           th
             i.fa-solid.fa-user-pen.me-1
-            = t(User.human_attribute_name(:name))
+            = User.human_attribute_name(:name)
           td
             = current_user.name
         tr
           th
             i.fa-solid.fa-at.me-1
-            = t(User.human_attribute_name(:email))
+            = User.human_attribute_name(:email)
           td
             = current_user.email
         tr
           th
             i.fa-solid.fa-person-half-dress.me-1
-            = t(User.human_attribute_name(:gender))
+            = User.human_attribute_name(:gender)
           td
             = current_user.gender_i18n
         tr
           th
             i.fa-brands.fa-twitter.me-1.text-info
-            = t(User.human_attribute_name(:twitter_id))
+            = User.human_attribute_name(:twitter_id)
           td
             - if current_user.twitter_id?
               = link_to current_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
@@ -37,14 +37,14 @@
         tr
           th
             i.fa-solid.fa-pen-to-square.me-1
-            = t(User.human_attribute_name(:self_introduction))
+            = User.human_attribute_name(:self_introduction)
           td
             .m-1.bg-white
             = current_user.self_introduction
         tr
           th
             i.fa-solid.fa-bugs.me-1
-            = t(User.human_attribute_name(:avatar))
+            = User.human_attribute_name(:avatar)
           td.text-center
             = content_tag :div,
                 '',
