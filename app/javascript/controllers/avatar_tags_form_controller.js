@@ -21,11 +21,11 @@ export default class extends Controller {
     }
 
     response_json.forEach(tag => {
-      const searched_tag_elment = document.createElement('a')
-      searched_tag_elment.classList.add('searched-tag-button')
-      searched_tag_elment.dataset.action = 'click->avatar-tags-form#setAvatarTag'
-      searched_tag_elment.textContent = tag
-      this.selectElement.appendChild(searched_tag_elment)
+      const searchedTagElment = document.createElement('a')
+      searchedTagElment.classList.add('searched-tag-button')
+      searchedTagElment.dataset.action = 'click->avatar-tags-form#setAvatarTag'
+      searchedTagElment.textContent = tag
+      this.selectElement.appendChild(searchedTagElment)
     })
   }
 
@@ -34,10 +34,10 @@ export default class extends Controller {
 
     const id = new Date().getTime()
 
-    const label_element = document.createElement('label')
-    label_element.innerHTML = `<input type='checkbox' checked='checked' name='user[avatar_tags_attributes][${id}][name]' value='${text}'>${text}`
+    const labelElement = document.createElement('label')
+    labelElement.innerHTML = `<input type='checkbox' checked='checked' name='user[avatar_tags_attributes][${id}][name]' value='${text}'>${text}`
 
-    this.tagsListElement.appendChild(label_element)
+    this.tagsListElement.appendChild(labelElement)
   }
 
   addAvatarTag() {
@@ -46,10 +46,10 @@ export default class extends Controller {
     if(inputValue) {
       const id = new Date().getTime()
 
-      const label_element = document.createElement('label')
-      label_element.innerHTML = `<input type='checkbox' checked='checked' name='user[avatar_tags_attributes][${id}][name]' value='${inputValue}'>${inputValue}`
+      const labelElement = document.createElement('label')
+      labelElement.innerHTML = `<input type='checkbox' checked='checked' name='user[avatar_tags_attributes][${id}][name]' value='${inputValue}'>${inputValue}`
 
-      this.tagsListElement.appendChild(label_element)
+      this.tagsListElement.appendChild(labelElement)
 
       input.value = ''
     }
