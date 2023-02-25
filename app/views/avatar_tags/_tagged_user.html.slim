@@ -1,0 +1,16 @@
+tr
+  td.align-middle.w-25
+    = link_to tagged_user.name, user_path(tagged_user)
+  td.align-middle
+    = tagged_user.gender_i18n
+  td.align-middle.w-25
+    - if tagged_user.twitter_id?
+      = link_to tagged_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
+        i.fa-brands.fa-twitter
+        | ( @#{tagged_user.twitter_id} )
+    - else
+      = t('defaults.not_register')
+  td.align-middle
+    = tagged_user.avatar.attached? ? '○' : '×'
+  td.align-middle.w-25
+    == render partial: 'avatar_tags/avatar_tag', collection: tagged_user.avatar_tags.includes(:tagged_users)

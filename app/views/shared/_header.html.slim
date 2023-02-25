@@ -15,7 +15,7 @@ header
               i.fa-solid.fa-heart.me-1
               = t('users.likes.title')
           li.nav-item
-            = link_to logout_path, class: 'nav-link', data: { turbo_method: :delete } do
+            = link_to logout_path, class: 'nav-link', data: { turbo_method: :delete, turbo_confirm: t('defaults.logout_confirm') } do
               i.fa-solid.fa-right-from-bracket.me-1
               = t('defaults.logout')
           li.nav-item.dropdown
@@ -28,3 +28,11 @@ header
               - world_all.each do |world|
                 li
                   = link_to world.place_ja, world_path(world.place), class: 'dropdown-item'
+          li.nav-item
+            = content_tag :div, data: { controller: 'header' }, class: 'input-group d-flex' do
+              = text_field_tag nil, nil, data: { header_target: 'inputAvatarTag', action: 'input->header#searchAvatarTags', bs_toggle: 'dropdown' }, placeholder: "#{t('defaults.avatar_tags_search')}", class: 'form-control dropdpwn-toggle header-form', aria_expanded: false
+              = button_tag data: { bs_toggle: 'dropdown' }, aria_expanded: false, class: 'btn btn-outline-black dropdpwn-toggle' do
+                i.fa-solid.fa-sort-down.small
+              ul#avatar-tag-lists.dropdown-menu.dropdown-menu-end.top-100.start-0.scrollable-menu
+                li#avatar-tags-index.border-bottom
+                  = link_to t('avatar_tags.index.title'), avatar_tags_path, class: 'dropdown-item'

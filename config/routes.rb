@@ -22,6 +22,9 @@
 #                               tweet_like DELETE /tweets/:tweet_id/like(.:format)                                                                  likes#destroy
 #                                          POST   /tweets/:tweet_id/like(.:format)                                                                  likes#create
 #                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
+#                       search_avatar_tags GET    /avatar_tags/search(.:format)                                                                     avatar_tags#search
+#                              avatar_tags GET    /avatar_tags(.:format)                                                                            avatar_tags#index
+#                               avatar_tag GET    /avatar_tags/:avatar_tag_name(.:format)                                                           avatar_tags#show
 #                                          GET    /*path(.:format)                                                                                  application#routing_error
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
@@ -75,6 +78,10 @@ Rails.application.routes.draw do
 
   resources :tweets, only: %i[destroy] do
     resource :like, only: %i[create destroy]
+  end
+
+  resources :avatar_tags, only: %i[show index], param: 'avatar_tag_name' do
+    get :search, on: :collection
   end
 
   get '*path', to: 'application#routing_error', constraints: lambda { |req|

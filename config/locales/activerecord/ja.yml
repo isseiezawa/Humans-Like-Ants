@@ -7,8 +7,10 @@ ja:
         less_than: "のファイルサイズを%{count}より小さいサイズにしてください"
         invalid_file_type: "のファイル形式を%{type}にしてください"
         not_found_world: "%{param}という地域名は登録しておりません。"
+        not_found_avatar_tags: "%{param}というタグは存在しておりません。"
     models:
       user: 'ユーザー'
+      avatar_tag: 'アバター推しポイントタグ'
     attributes:
       user:
         id: 'ID'

@@ -34,6 +34,6 @@ class ProfilesController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :gender, :twitter_id, :self_introduction, :avatar)
+    params.require(:user).permit(:name, :email, :gender, :twitter_id, :self_introduction, :avatar, avatar_tags_attributes: [:name], avatar_tag_ids: [])
   end
 end

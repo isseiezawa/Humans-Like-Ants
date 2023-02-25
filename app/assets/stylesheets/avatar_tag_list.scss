@@ -1,0 +1,31 @@
+#avatar-tags-list label {
+  margin: 3px 0;
+  border: 1px dashed #e9e9e9;
+}
+
+.avatar-tag {
+	position: relative;
+	display: inline-block;
+	margin: 0 .6em .6em .6em;
+	padding: .6em .6em .6em 1.2em;
+	line-height: 1;
+	color: #fff;
+	text-decoration: none;
+  background-image: linear-gradient(to right, #243949 0%, #517fa4 100%);
+}
+.avatar-tag:before {
+	position: absolute;
+	top: 0;
+	left: -1em;
+	content: '';
+	border-width: 1.1em 1em 1.1em 0;
+	border-style: solid;
+	border-color: transparent #243949 transparent transparent;
+}
+.avatar-tag:after {
+	position: absolute;
+	top: center;
+	left: 0;
+	content: '●';
+	color: #fff;
+}

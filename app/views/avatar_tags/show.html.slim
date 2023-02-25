@@ -1,0 +1,19 @@
+h1.h3.text-center.mt-3.mb-3
+  span
+    = t('.title', name: @avatar_tag.name)
+.container-fluid
+  table#tagged-users-table.table.table-sm.table-hover.table-striped.table-bordered.border-secondary.shadow.text-center
+    thead
+      tr
+        th
+          = User.human_attribute_name(:name)
+        th
+          = User.human_attribute_name(:gender)
+        th
+          = User.human_attribute_name(:twitter_id)
+        th
+          = User.human_attribute_name(:avatar)
+        th
+          = AvatarTag.model_name.human
+      tbody
+        == render partial: 'tagged_user', collection: @tagged_users
