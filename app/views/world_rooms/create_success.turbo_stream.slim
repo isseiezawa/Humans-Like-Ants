@@ -1,0 +1,7 @@
+= turbo_stream.replace 'world-room-form' do
+  .container-fluid.bg-light.bg-gradient.text-center
+    .h3.pt-3.pb-3.h3.pt-3
+      = t('.success_message')
+
+= turbo_stream.prepend 'world-rooms' do
+  == render 'worlds/world_room', world_room: @world_room

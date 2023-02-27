@@ -26,6 +26,9 @@ ja:
       tweet:
         post: 'つぶやき'
         image: '画像'
+      world_room:
+        id: 'Room No.'
+        name: '部屋名'
   enums:
     user:
       gender:

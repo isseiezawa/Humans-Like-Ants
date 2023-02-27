@@ -11,5 +11,9 @@
 class WorldRoom < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
+  has_many :tweets
   belongs_to_active_hash :world
+
+  validates :name, presence: true, length: { maximum: 200 }
+  validates :world_id, presence: true
 end

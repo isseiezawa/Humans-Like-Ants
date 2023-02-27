@@ -4,6 +4,7 @@ ja:
     delete: '削除'
     delete_confirm: '削除しますか?'
     register: '登録'
+    add: '追加'
     give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
@@ -82,6 +83,11 @@ ja:
       fali: "%{item}が登録されていません"
   worlds:
     show:
+      tweet_amount: '投稿数'
+    index:
+      title: '地域一覧'
+  world_rooms:
+    show:
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
       go_link: '見に行く'
@@ -95,8 +101,10 @@ ja:
         ハートボタンでいいねを発射
       click_start: 'クリックでスタート'
       touch_start: 'タップでスタート'
-    index:
-      title: '地域一覧'
+    form:
+      create_world_room: '部屋作成'
+    create_success:
+      success_message: '部屋を作成しました'
   tweets:
     create:
       success: '投稿しました'

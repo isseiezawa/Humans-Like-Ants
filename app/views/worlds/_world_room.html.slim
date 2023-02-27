@@ -1,0 +1,8 @@
+tr
+  th
+    = world_room.id
+  th.w-50
+    = link_to world_room_path(world_room), class: 'default-link' do
+      = world_room.name
+  th
+    = world_room.tweets.length
