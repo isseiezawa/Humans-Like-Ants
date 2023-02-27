@@ -7,7 +7,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
-#  world_id   :integer          not null
 #
 # Indexes
 #

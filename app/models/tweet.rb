@@ -7,7 +7,6 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
-#  world_id   :integer          not null
 #
 # Indexes
 #
@@ -21,14 +20,14 @@ class Tweet < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
   belongs_to :user
+  belongs_to :world_room
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
-  belongs_to_active_hash :world
 
   has_one_attached :image
 
   validates :user, presence: true
-  validates :world, presence: true
+  validates :world_room, presence: true
   validates :post, presence: true, length: { maximum: 200 }, allowed_characters: true
   validates :image, attached_file_size: { maximum: 3.megabytes }, attached_file_type: { pattern: %r{^image/}, type: 'image' }
 
