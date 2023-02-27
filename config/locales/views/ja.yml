@@ -14,8 +14,6 @@ ja:
     not_authenticated: 'ログインしてください'
     not_authenticated_like_info_json: 'ログインすればいいねができます！'
     not_register: '登録されていません'
-    next_button: "次の%{amount}匹のアリンコ"
-    back_button: "前の%{amount}匹のアリンコ"
     rooms_count: "%{amount}:部屋"
     ants_count: "%{amount}匹"
     number_of_vertices: '頂点数'
