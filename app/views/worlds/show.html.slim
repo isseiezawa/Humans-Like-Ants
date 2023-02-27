@@ -18,3 +18,4 @@ h3.text-center
           = t('.tweet_amount')
     tbody#world-rooms
       == render partial: 'worlds/world_room', collection: @world_rooms
+  = paginate @world_rooms

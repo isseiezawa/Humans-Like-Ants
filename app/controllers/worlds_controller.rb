@@ -4,7 +4,7 @@ class WorldsController < ApplicationController
 
   def show
     @world_room = WorldRoom.new
-    @world_rooms = @world.world_rooms.includes(:tweets).order(id: :desc)
+    @world_rooms = @world.world_rooms.includes(:tweets).order(id: :desc).page(params[:page]).per(10)
   end
 
   def index

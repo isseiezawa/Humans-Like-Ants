@@ -26,6 +26,13 @@ ja:
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
   static_pages:
     description:
       headline_1: '3Dモデラー向け SNS'
@@ -85,8 +92,11 @@ ja:
     show:
       title: '部屋一覧'
       tweet_amount: '投稿数'
+      end_world_room: '部屋は以上です'
     index:
       title: '地域一覧'
+    scrollable_list:
+      end_world_room: '部屋は以上です'
   world_rooms:
     show:
       no_ants: 'アリンコがいません。投稿しましょう！'
