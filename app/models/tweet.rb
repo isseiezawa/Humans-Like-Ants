@@ -28,7 +28,7 @@ class Tweet < ApplicationRecord
   has_one_attached :image
 
   validates :user, presence: true
-  validates :world_room, presence: true
+  validates :world_room_id, presence: true
   validates :post, presence: true, length: { maximum: 200 }, allowed_characters: true
   validates :image, attached_file_size: { maximum: 3.megabytes }, attached_file_type: { pattern: %r{^image/}, type: 'image' }
 

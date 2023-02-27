@@ -1,0 +1,100 @@
+== render 'shared/reload_button'
+h1.text-center.mt-3.mb-3
+  span
+    = @world_room.name
+- if @tweets.present?
+  = content_tag :div,
+                '',
+                class: 'set-size',
+                data: { controller: 'ants-world',
+                        ground: image_path('ground/ground.gltf'),
+                        stone: image_path('stone/stone.gltf'),
+                        ant: image_path('ant/original_ant.gltf'),
+                        font_json: image_path('font.json'),
+                        font_image: image_path('font.png'),
+                        sky: image_path('sky.jpg'),
+                        info_esc: t('.info_esc'),
+                        json: "#{JSON.generate @tweets.map(&:tweet_to_hash)}" }
+    #explanation.text-center.d-flex.align-items-center.justify-content-center
+      #pc
+        .h3
+          span.keybord.mb-3
+            | W
+          span.keybord.mb-3
+            | A
+          span.keybord.mb-3
+            | S
+          span.keybord.mb-3
+            | D
+          = simple_format(t('.info_pc'))
+        b
+          = t('.click_start')
+      #phone
+        .h3
+          span.keybord.mb-3
+            | ←
+          span.keybord.mb-3
+            | ↑
+          span.keybord.mb-3
+            | ↓
+          span.keybord.mb-3
+            | →
+          = simple_format(t('.info_phone'))
+        b
+          = t('.touch_start')
+    #like-message-box
+      = content_tag :div,
+                    '',
+                    class: 'like-message',
+                    data: { ants_world_target: 'message' }
+    #key-esc.keybord
+      i.fa-solid.fa-person-walking-dashed-line-arrow-right
+    #button-group.button-group.d-flex.justify-content-around.text-center.mb-2
+      #cross-key.d-flex.flex-column
+        #key-w.keybord.mx-auto
+          i.fa-solid.fa-arrow-up
+        .key-ad.d-flex.justify-content-between
+          #key-a.keybord
+            i.fa-solid.fa-arrow-left
+          #key-d.keybord
+            i.fa-solid.fa-arrow-right
+        #key-s.keybord.mx-auto
+          i.fa-solid.fa-arrow-down
+      #bullet-key
+        .bullet-button
+          i#key-like.fa-solid.fa-heart
+  .container.border.rounded-3.w-75.mt-3
+    table.table.text-center
+      tr
+        th
+          i.fa-solid.fa-user-pen.me-1
+          = t(User.human_attribute_name(:name))
+        td
+          = content_tag :div,
+                        t('.want_collision'),
+                        id: 'user-name',
+                        data: { controller:'ant-world', ants_world_target: 'userName' }
+      tr
+        th
+          i.fa-solid.fa-person-booth.me-1
+          = t('users.show.title')
+        td
+          #link-text.d-none
+            = t('.go_link')
+          = link_to '', '', id: 'user-link'
+  .d-flex.justify-content-around.align-items-center
+    = link_to_previous_page @tweets,
+                            t('defaults.back_button',
+                            amount: @world_room.tweets_length(@tweets.prev_page)),
+                            class: 'mt-3 mb-1 btn btn-success'
+    = link_to_next_page @tweets,
+                        t('defaults.next_button',
+                        amount: @world_room.tweets_length(@tweets.next_page)),
+                        class: 'mt-3 mb-1 btn btn-success'
+- else
+  .text-center
+    = image_tag 'ant_gif.gif'
+    .small = t('.no_ants')
+/ id属性tweet-from
+= turbo_frame_tag 'tweet-form' do
+  == render 'tweets/form', { world_room: @world_room, tweet: @tweet }

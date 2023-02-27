@@ -1,10 +1,11 @@
 h1.text-center.mt-3.mb-3
   span
-    = @world.place_ja
-    =< "(#{@world.place})"
+    = "#{@world.place_ja} (#{@world.place})"
     / id属性tweet-from
 #world-room-form
   == render 'world_rooms/form', { world: @world, world_room: @world_room}
+h3.text-center
+  = t('.title')
 .container-fluid.vh-100.overflow-auto.px-3.py-2
   table.table.table-striped.table-hover.text-center
     thead

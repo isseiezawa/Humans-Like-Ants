@@ -16,4 +16,8 @@ class WorldRoom < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 200 }
   validates :world_id, presence: true
+
+  def tweets_length(page_number)
+    tweets.joins(:user).select(:post, :name).page(page_number).per(5).length
+  end
 end

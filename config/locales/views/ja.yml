@@ -83,6 +83,7 @@ ja:
       fali: "%{item}が登録されていません"
   worlds:
     show:
+      title: '部屋一覧'
       tweet_amount: '投稿数'
     index:
       title: '地域一覧'
