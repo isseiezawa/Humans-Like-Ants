@@ -4,6 +4,6 @@ class RemoveWorldIdFromTweets < ActiveRecord::Migration[7.0]
   end
 
   def down
-    add_column :tweets, :world_id, :integer, null: false
+    add_column :tweets, :world_id, :integer, null: false, default: 1
   end
 end
