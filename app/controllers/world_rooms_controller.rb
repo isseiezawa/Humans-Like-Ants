@@ -1,5 +1,5 @@
 class WorldRoomsController < ApplicationController
-  skip_before_action :require_login, only: %i[show]
+  skip_before_action :require_login, only: %i[show search]
   before_action :set_world_room, only: %i[show]
   before_action :set_world, only: %i[search]
 
