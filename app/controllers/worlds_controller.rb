@@ -16,7 +16,7 @@ class WorldsController < ApplicationController
     @search_worlds = World.like(place_ja: "%#{params[:place]}%") if @search_worlds.blank?
     render turbo_stream: turbo_stream.replace('search-worlds',
                                               partial: 'worlds/search_worlds',
-                                              location: @search_worlds)
+                                              locals: { search_worlds: @search_worlds })
   end
 
   private
