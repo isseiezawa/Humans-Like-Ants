@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_185209) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_world_rooms_on_user_id"
   end
 
