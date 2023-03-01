@@ -5,6 +5,7 @@ ja:
     delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
     add: '追加'
+    search: '検索'
     give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
@@ -94,6 +95,8 @@ ja:
       no_room: '部屋はまだありません、作成しましょう！'
     index:
       title: '地域一覧'
+    search_form:
+      search_world_form: '都道府県名検索または下の地図の地域をダブルクリック！'
     scrollable_list:
       end_world_room: '部屋は以上です'
   world_rooms:
