@@ -19,7 +19,8 @@ h3.text-center
           th
             = t('.tweet_amount')
       == render partial: 'worlds/world_rooms', locals: { world_rooms: @world_rooms }
-    = paginate @world_rooms
+      #pagenate
+        = paginate @world_rooms
   - else
     = image_tag 'ant_gif.gif'
     .small = t('.no_room')
