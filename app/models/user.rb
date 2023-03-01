@@ -23,6 +23,7 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  has_many :world_rooms, dependent: :destroy
   has_many :tweets, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :liked_tweets, through: :likes, source: :tweet

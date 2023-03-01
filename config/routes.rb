@@ -19,6 +19,7 @@
 #                        world_room_tweets POST   /world_rooms/:world_room_id/tweets(.:format)                                                      tweets#create
 #                        world_world_rooms POST   /worlds/:world_place_name/world_rooms(.:format)                                                   world_rooms#create
 #                               world_room GET    /world_rooms/:id(.:format)                                                                        world_rooms#show
+#                                          DELETE /world_rooms/:id(.:format)                                                                        world_rooms#destroy
 #                                   worlds GET    /worlds(.:format)                                                                                 worlds#index
 #                                    world GET    /worlds/:place_name(.:format)                                                                     worlds#show
 #                               tweet_like DELETE /tweets/:tweet_id/like(.:format)                                                                  likes#destroy
@@ -75,7 +76,7 @@ Rails.application.routes.draw do
   end
 
   resources :worlds, only: %i[show index], param: 'place_name' do
-    resources :world_rooms, only: %i[show create], shallow: true do
+    resources :world_rooms, only: %i[show create destroy], shallow: true do
       resources :tweets, only: %i[create]
     end
   end

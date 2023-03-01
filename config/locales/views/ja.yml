@@ -2,7 +2,7 @@ ja:
   defaults:
     edit: '編集'
     delete: '削除'
-    delete_confirm: '削除しますか?'
+    delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
     add: '追加'
     give_birth: '産む'
@@ -91,6 +91,7 @@ ja:
       title: '部屋一覧'
       tweet_amount: '投稿数'
       end_world_room: '部屋は以上です'
+      no_room: '部屋はまだありません、作成しましょう！'
     index:
       title: '地域一覧'
     scrollable_list:

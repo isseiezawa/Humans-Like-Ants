@@ -6,16 +6,20 @@ h1.text-center.mt-3.mb-3
   == render 'world_rooms/form', { world: @world, world_room: @world_room}
 h3.text-center
   = t('.title')
-.container-fluid.vh-100.overflow-auto.px-3.py-2
-  table.table.table-striped.table-hover.text-center
-    thead
-      tr
-        th
-          = WorldRoom.human_attribute_name(:id)
-        th
-          = WorldRoom.human_attribute_name(:name)
-        th
-          = t('.tweet_amount')
-    tbody#world-rooms
-      == render partial: 'worlds/world_room', collection: @world_rooms
-  = paginate @world_rooms
+.container-fluid.vh-100.overflow-auto.px-3.py-2.text-center
+  - if @world_rooms.present?
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th
+            = WorldRoom.human_attribute_name(:id)
+          th
+            = WorldRoom.human_attribute_name(:name)
+          th
+            = t('.tweet_amount')
+      tbody#world-rooms
+        == render partial: 'worlds/world_room', collection: @world_rooms
+    = paginate @world_rooms
+  - else
+    = image_tag 'ant_gif.gif'
+    .small = t('.no_room')

@@ -39,7 +39,10 @@ Metrics/CyclomaticComplexity:
 # Perceived complexity for validate_each is too high.の警告無効
 Metrics/PerceivedComplexity:
   Enabled: false
-
+  # Do not add a NOT NULL column without a default value.の警告無効
+Rails/NotNullColumn:
+  Exclude:
+    - 'db/migrate/20230227185209_add_references_to_world_rooms.rb'
 # Example has too many expectationsの警告無効
 RSpec/MultipleExpectations:
   Enabled: false

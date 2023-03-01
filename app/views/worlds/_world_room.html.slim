@@ -1,6 +1,11 @@
-tr
-  th
-    = world_room.id
+tr id="world_room_#{world_room.id}"
+  th.d-flex.flex-column.text-center
+    div
+      = world_room.id
+    - if current_user.own?(world_room)
+      = link_to world_room_path(world_room), class: 'btn btn-danger w-75 mx-auto', data: { turbo_method: :delete, turbo_confirm: t('defaults.delete_confirm', text: world_room.name) } do
+        i.fa-solid.fa-trash.me-1
+        = t('defaults.delete')
   th.w-50
     = link_to world_room_path(world_room), class: 'default-link' do
       = world_room.name
