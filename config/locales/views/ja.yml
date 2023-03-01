@@ -4,6 +4,7 @@ ja:
     delete: '削除'
     delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
+    create: '作成'
     add: '追加'
     search: '検索'
     give_birth: '産む'
@@ -80,6 +81,7 @@ ja:
       title: 'プロフィール編集'
       have_avatar: 'アバターが登録されています'
       no_avatar: 'アバターは登録されていません'
+      add_avatar_tag_info: 'タグを新規作成or検索'
       search_tags: '検索されたタグ'
     update:
       success: "%{item}の編集に成功しました"
