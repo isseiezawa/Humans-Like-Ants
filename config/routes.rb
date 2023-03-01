@@ -16,6 +16,8 @@
 #                                  profile GET    /profile(.:format)                                                                                profiles#show
 #                                          PATCH  /profile(.:format)                                                                                profiles#update
 #                                          PUT    /profile(.:format)                                                                                profiles#update
+#                            search_worlds GET    /worlds/search(.:format)                                                                          worlds#search
+#                 search_world_world_rooms GET    /worlds/:world_place_name/world_rooms/search(.:format)                                            world_rooms#search
 #                        world_room_tweets POST   /world_rooms/:world_room_id/tweets(.:format)                                                      tweets#create
 #                        world_world_rooms POST   /worlds/:world_place_name/world_rooms(.:format)                                                   world_rooms#create
 #                               world_room GET    /world_rooms/:id(.:format)                                                                        world_rooms#show
