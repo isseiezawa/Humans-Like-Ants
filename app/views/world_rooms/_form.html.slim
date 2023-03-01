@@ -1,5 +1,7 @@
 = form_with model: world_room, url: world_world_rooms_path(world.place), class: 'row text-center justify-content-center' do |form|
   == render 'shared/error_messages', object: form.object
-  .input-group.w-75.mb-3.col-8
-    = form.text_field :name, placeholder: t('.create_world_room'), class: 'form-control text-center'
-    = form.submit t('defaults.add'), class: 'btn btn-success'
+  .input-group.w-75.mb-3
+    .form-floating
+      = form.text_field :name, placeholder: 'name', class: 'form-control text-center'
+      = form.label :name, t('.create_world_room')
+    = form.submit t('defaults.add'), class: 'btn btn-outline-success'
