@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   resources :worlds, only: %i[show index], param: 'place_name' do
     get :search, on: :collection
     resources :world_rooms, only: %i[show create destroy], shallow: true do
+      get :search, on: :collection
       resources :tweets, only: %i[create]
     end
   end

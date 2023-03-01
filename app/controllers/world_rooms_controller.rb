@@ -1,6 +1,7 @@
 class WorldRoomsController < ApplicationController
   skip_before_action :require_login, only: %i[show]
   before_action :set_world_room, only: %i[show]
+  before_action :set_world, only: %i[search]
 
   def show
     @tweet = Tweet.new
@@ -22,6 +23,14 @@ class WorldRoomsController < ApplicationController
     end
   end
 
+  def search
+    @search_world_rooms = @world.world_rooms.where('name LIKE ?', "%#{params[:world_room_name]}%").order(id: :desc)
+
+    render turbo_stream: turbo_stream.replace('world-rooms',
+                                              partial: 'worlds/world_rooms',
+                                              locals: { world_rooms: @search_world_rooms })
+  end
+
   def destroy
     world_room = current_user.world_rooms.find(params[:id])
     world_room.destroy!
@@ -35,6 +44,12 @@ class WorldRoomsController < ApplicationController
     @world_room = WorldRoom.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to worlds_path, danger: t('activerecord.errors.messages.not_found_world_room', param: params[:id])
+  end
+
+  def set_world
+    @world = World.find_by!(place: params[:world_place_name])
+  rescue ActiveHash::RecordNotFound
+    redirect_to worlds_path, danger: t('activerecord.errors.messages.not_found_world', param: params[:world_place_name])
   end
 
   def world_room_params

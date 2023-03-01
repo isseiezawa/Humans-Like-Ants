@@ -118,6 +118,8 @@ ja:
       touch_start: 'タップでスタート'
     form:
       create_world_room: '部屋作成'
+    search_form:
+      search_wold_rooms: '部屋検索'
     create_success:
       success_message: '部屋を作成しました'
   tweets:
