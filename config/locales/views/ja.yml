@@ -2,8 +2,11 @@ ja:
   defaults:
     edit: '編集'
     delete: '削除'
-    delete_confirm: '削除しますか?'
+    delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
+    create: '作成'
+    add: '追加'
+    search: '検索'
     give_birth: '産む'
     login: 'ログイン'
     logout: 'ログアウト'
@@ -13,8 +16,7 @@ ja:
     not_authenticated: 'ログインしてください'
     not_authenticated_like_info_json: 'ログインすればいいねができます！'
     not_register: '登録されていません'
-    next_button: "次の%{amount}匹のアリンコ"
-    back_button: "前の%{amount}匹のアリンコ"
+    rooms_count: "%{amount}:部屋"
     ants_count: "%{amount}匹"
     number_of_vertices: '頂点数'
     wire_frame: 'ワイヤーフレーム'
@@ -24,6 +26,13 @@ ja:
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
+  views:
+    pagination:
+      first: "&laquo; 最初"
+      last: "最後 &raquo;"
+      previous: "&lsaquo; 前"
+      next: "次 &rsaquo;"
+      truncate: "..."
   static_pages:
     description:
       headline_1: '3Dモデラー向け SNS'
@@ -72,6 +81,7 @@ ja:
       title: 'プロフィール編集'
       have_avatar: 'アバターが登録されています'
       no_avatar: 'アバターは登録されていません'
+      add_avatar_tag_info: 'タグを新規作成or検索'
       search_tags: '検索されたタグ'
     update:
       success: "%{item}の編集に成功しました"
@@ -80,6 +90,18 @@ ja:
       success: "%{item}の削除に成功しました"
       fali: "%{item}が登録されていません"
   worlds:
+    show:
+      title: '部屋一覧'
+      tweet_amount: '投稿数'
+      end_world_room: '部屋は以上です'
+      no_room: '部屋はまだありません、作成しましょう！'
+    index:
+      title: '地域一覧'
+    search_form:
+      search_world_form: '都道府県名検索または下の地図の地域をダブルクリック！'
+    scrollable_list:
+      end_world_room: '部屋は以上です'
+  world_rooms:
     show:
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
@@ -94,8 +116,12 @@ ja:
         ハートボタンでいいねを発射
       click_start: 'クリックでスタート'
       touch_start: 'タップでスタート'
-    index:
-      title: '地域一覧'
+    form:
+      create_world_room: '部屋作成'
+    search_form:
+      search_wold_rooms: '部屋検索'
+    create_success:
+      success_message: '部屋を作成しました'
   tweets:
     create:
       success: '投稿しました'

@@ -7,6 +7,7 @@ ja:
         less_than: "のファイルサイズを%{count}より小さいサイズにしてください"
         invalid_file_type: "のファイル形式を%{type}にしてください"
         not_found_world: "%{param}という地域名は登録しておりません。"
+        not_found_world_room: "Room No.%{param}の部屋は存在しておりません。"
         not_found_avatar_tags: "%{param}というタグは存在しておりません。"
     models:
       user: 'ユーザー'
@@ -26,6 +27,9 @@ ja:
       tweet:
         post: 'つぶやき'
         image: '画像'
+      world_room:
+        id: 'Room No.'
+        name: '部屋名'
   enums:
     user:
       gender:

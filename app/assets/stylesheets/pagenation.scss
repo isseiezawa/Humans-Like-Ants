@@ -1,0 +1,24 @@
+.pagination {
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.pagination>li>a {          
+  border: none;     
+  color: #696969;   
+}
+
+.pagination>.active>a {     
+  background: #93c9ff;     
+  border-radius: 15px;     
+}
+
+.pagination>li>a:hover {        
+  border-radius: 15px;   
+}
+
+@media screen and (max-width: 480px) {
+  .pagination>li>a {
+    font-size: 0.5rem;
+  }
+}

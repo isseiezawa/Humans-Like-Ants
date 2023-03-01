@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_141927) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_27_185209) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,11 +68,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_141927) do
 
   create_table "tweets", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "world_id", null: false
     t.text "post", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "world_room_id", default: 1, null: false
     t.index ["user_id"], name: "index_tweets_on_user_id"
+    t.index ["world_room_id"], name: "index_tweets_on_world_room_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -89,6 +90,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_141927) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "world_rooms", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "world_id", null: false
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_world_rooms_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "avatar_tag_maps", "avatar_tags"
@@ -96,4 +106,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_141927) do
   add_foreign_key "likes", "tweets"
   add_foreign_key "likes", "users"
   add_foreign_key "tweets", "users"
+  add_foreign_key "tweets", "world_rooms"
+  add_foreign_key "world_rooms", "users"
 end

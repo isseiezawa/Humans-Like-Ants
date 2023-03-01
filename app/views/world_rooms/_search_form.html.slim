@@ -1,0 +1,6 @@
+= form_with  url: search_world_world_rooms_path(world.place), method: :get, class: 'row text-center justify-content-center' do |form|
+  .input-group.w-75.mb-3
+    .form-floating
+      = form.text_field :world_room_name, placeholder: 'name', class: 'form-control text-center'
+      = form.label :name, t('.search_wold_rooms')
+    = form.submit t('defaults.search'), class: 'btn btn-outline-secondary'

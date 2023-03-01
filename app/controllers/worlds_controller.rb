@@ -3,12 +3,20 @@ class WorldsController < ApplicationController
   before_action :set_world, only: %i[show]
 
   def show
-    @tweet = Tweet.new
-    @tweets = @world.tweets.includes(:user).with_attached_image.order(id: :desc).page(params[:page]).per(3)
+    @world_room = WorldRoom.new
+    @world_rooms = @world.world_rooms.includes(:tweets).order(id: :desc).page(params[:page]).per(10)
   end
 
   def index
     @worlds = World.all
+  end
+
+  def search
+    @search_worlds = World.like(place: "%#{params[:place]}%")
+    @search_worlds = World.like(place_ja: "%#{params[:place]}%") if @search_worlds.blank?
+    render turbo_stream: turbo_stream.replace('search-worlds',
+                                              partial: 'worlds/search_worlds',
+                                              locals: { search_worlds: @search_worlds })
   end
 
   private
