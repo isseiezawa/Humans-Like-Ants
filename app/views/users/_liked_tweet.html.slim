@@ -9,5 +9,5 @@
       = liked_tweet.post
     - if liked_tweet.image.attached?
       .container
-        = image_tag  url_for(liked_tweet.image), class: 'img-thumbnail tweet-image'
+        == render 'shared/image_modal_button', { src: url_for(liked_tweet.image), custom_class: 'img-thumbnail tweet-image' }
     == render 'likes/like_button', tweet: liked_tweet

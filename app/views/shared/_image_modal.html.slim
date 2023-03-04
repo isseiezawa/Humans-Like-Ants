@@ -1,0 +1,17 @@
+= content_tag 'div',
+  id: 'image-modal',
+  class: 'modal',
+  area: { labelledby: 'imageModalLabel', hidden: true },
+  tabindex: '-1',
+  data: { controller: 'image-modal'}
+  = content_tag 'div',
+    class: 'modal-dialog modal-dialog-centered modal-fullscreen',
+    data: { bs_dismiss: 'modal' },
+    area: { label: 'close' }
+    .modal-content.bg-gray
+      .modal-body.d-flex.align-items-center.justify-content-center
+        = image_tag '',
+          id: 'modal-image',
+          class: 'img-fluid bg-light',
+          data: { bs_dismiss: 'modal' },
+          area: { label: 'close' }
