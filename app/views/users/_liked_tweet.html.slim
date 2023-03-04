@@ -3,6 +3,10 @@
     .fw-bold.my-1
       = link_to user_path(liked_tweet.user.id), class: 'default-link' do
         = liked_tweet.user.name
+    .small.border.rounded.w-75.mx-auto.my-1
+      = link_to liked_tweet.world_room.world.place_ja, world_path(liked_tweet.world_room.world.place), class: 'default-link'
+      span  → 
+      = link_to liked_tweet.world_room.name, world_room_path(liked_tweet.world_room), class: 'default-link'
     .small.mb-1.text-black-50
       = l(liked_tweet.created_at, format: :long)
     .small.fw-bold.mb-2

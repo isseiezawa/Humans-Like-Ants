@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
   before_action :set_user, only: %i[edit update destroy_avatar]
 
   def show
-    @tweets = current_user.tweets.includes(:likes).with_attached_image.order(id: :desc).page(params[:page]).per(3)
+    @tweets = current_user.tweets.includes(:likes, :world_room).with_attached_image.order(id: :desc).page(params[:page]).per(3)
 
     render 'users/scrollable_list' if params[:page]
   end
