@@ -88,6 +88,7 @@ Rails.application.routes.draw do
 
   resources :tweets, only: %i[destroy] do
     resource :like, only: %i[create destroy]
+    get :likes, on: :member
   end
 
   resources :avatar_tags, only: %i[show index], param: 'avatar_tag_name' do

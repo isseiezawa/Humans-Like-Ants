@@ -1,0 +1,17 @@
+h1.my-3
+  span
+    = t('.title')
+.container-fluid
+  table#liked-users-table.table.table-sm.table-hover.table-striped.table-bordered.border-secondary.shadow.text-center
+    thead
+      tr
+        th
+          = User.human_attribute_name(:name)
+        th
+          = User.human_attribute_name(:gender)
+        th
+          = User.human_attribute_name(:twitter_id)
+        th
+          = User.human_attribute_name(:avatar)
+      tbody
+        == render partial: 'liked_user', collection: @liked_users

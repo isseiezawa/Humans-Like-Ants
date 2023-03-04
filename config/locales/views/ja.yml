@@ -11,6 +11,7 @@ ja:
     login: 'ログイン'
     logout: 'ログアウト'
     logout_confirm: 'ログアウトしますか?'
+    liked_users: "%{amount}件のいいね"
     avatar_tags_search: 'アバター推しポイントタグ検索'
     world_selection: '地域選択'
     not_authenticated: 'ログインしてください'
@@ -168,6 +169,8 @@ ja:
     posting_success:
       success_message: '投稿に成功しました'
       reload_message: 'リロードしてください'
+    likes:
+      title: 'いいねしたユーザー'
   likes:
     create:
       success: "%{name}さんの「%{post}」をいいねしました"
