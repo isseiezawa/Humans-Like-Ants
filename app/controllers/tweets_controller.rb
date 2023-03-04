@@ -1,5 +1,7 @@
 class TweetsController < ApplicationController
   protect_from_forgery with: :null_session
+  skip_before_action :require_login, only: %i[likes]
+  before_action :set_tweet, only: %i[likes]
 
   def create
     @world_room = WorldRoom.find(params[:world_room_id])
@@ -23,7 +25,15 @@ class TweetsController < ApplicationController
     render turbo_stream: turbo_stream.remove(tweet)
   end
 
+  def likes
+    @liked_users = @tweet.liked_users.with_attached_avatar.order(id: :desc)
+  end
+
   private
+
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
+  end
 
   def tweet_params
     params.require(:tweet).permit(:post, :image)

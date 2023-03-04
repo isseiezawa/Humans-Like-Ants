@@ -1,0 +1,14 @@
+tr
+  td.align-middle.w-25
+    = link_to liked_user.name, user_path(liked_user)
+  td.align-middle
+    = liked_user.gender_i18n
+  td.align-middle.w-25
+    - if liked_user.twitter_id?
+      = link_to liked_user.decorate.to_twitter_url, target: :_blank, rel: 'noopener noreferrer' do
+        i.fa-brands.fa-twitter
+        | ( @#{liked_user.twitter_id} )
+    - else
+      = t('defaults.not_register')
+  td.align-middle
+    = liked_user.avatar.attached? ? '○' : 'x'
