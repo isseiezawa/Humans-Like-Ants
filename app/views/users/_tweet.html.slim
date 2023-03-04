@@ -1,6 +1,10 @@
 #tweets
   .border.rounded-3.shadow.py-3.my-2.mx-5 id="tweet_#{tweet.id}"
     .d-flex.flex-column
+      .small.border.rounded.w-75.mx-auto.my-1
+        = link_to tweet.world_room.world.place_ja, world_path(tweet.world_room.world.place), class: 'default-link'
+        span  → 
+        = link_to tweet.world_room.name, world_room_path(tweet.world_room), class: 'default-link'
       .small.text-secondary.mb-1
         = l(tweet.created_at, format: :long)
       .fw-bold.mb-2
