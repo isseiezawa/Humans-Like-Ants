@@ -45,6 +45,43 @@ ja:
         それぞれの地域にアリンコがいます
         見に行きましょう！
         ログインしてつぶやきましょう！
+    guide:
+      title: '使い方'
+      world_info: '地域選択と部屋作成'
+      world_info_text_html: |
+        サイト上部<span class="text-success">「<i class="fa-solid fa-earth-asia"></i>地域選択」</span>→<span class="text-success">「地域一覧」</span>をクリック！
+        検索窓で都道府県を検索、もしくは地図をダブルクリック！
+        都道府県ごとに部屋が作成できます！<span class="small text-danger">ログイン必要</span>
+        自身で作成された部屋は削除することができます。
+      metaverse_info: '3D空間'
+      metaverse_info_text_html: |
+        部屋に投稿がある場合3D空間が生成されます。
+        PCの場合<span class="text-success">プロフィール画面へ移動</span>するためには
+        <span class="text-danger">3D空間を抜ける</span>必要があります
+        ~操作説明~
+      metaverse_info_pc_text_html: |
+        <span class="h4 text-secondary">PCの場合</span>
+        「クリック」で3D空間に入る
+        「W,A,S,Dキー」で前後左右移動
+        「ダブルクリック」でいいね発射
+        「ESCキー」で3D空間を抜ける
+      metaverse_info_phone_text_html: |
+        <span class="h4 text-secondary">携帯端末の場合</span>
+        「タップ」で3D空間に入る
+        「↑↓←→ボタン」で移動
+        「ダブルタップorハートボタン」でいいね発射
+        「右上のアイコン」で3D空間を抜ける
+      form_info: '各所入力フォームについて'
+      form_info_text_html: |
+        入力箇所の一部には3Dに描写する都合上<span class="text-danger">使用できない文字</span>があります。
+        また、3Dの描写を安定させるためにファイル容量を設定させて頂いております。
+        制限箇所には<i class="fa-solid fa-circle-info info-button"></i>が設置されており、クリックすると内容が確認できます。そちらでご確認ください。
+      avatar_tag_info: 'アバタータグについて'
+      avatar_tag_info_text_html: |
+        <span class="text-secondary">ログインユーザーのみ</span>
+        <span class="text-success">プロフィール編集画面</span>でアバターやユーザー自身の<span class="text-danger">推しポイントのタグ付け</span>ができます。
+        アプリ上部にある推しポイントタグ検索を行うと紐づいたユーザー一覧が表示されます。
+        積極的にタグ付けを行いましょう！
   users:
     show:
       title: 'ユーザー詳細'

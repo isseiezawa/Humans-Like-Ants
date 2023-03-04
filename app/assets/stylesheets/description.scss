@@ -1,12 +1,12 @@
 .description {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .description p {
-  color: rgb(119, 119, 119);
   font-weight: bolder;
-  line-height: 3;
+  line-height: 2;
 }
 
 .description .img-group {

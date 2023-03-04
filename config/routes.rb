@@ -64,6 +64,7 @@
 
 Rails.application.routes.draw do
   root 'static_pages#top'
+  get 'guide', to: 'static_pages#guide'
 
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
