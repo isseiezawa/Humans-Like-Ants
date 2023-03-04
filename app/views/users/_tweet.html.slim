@@ -7,7 +7,7 @@
         = tweet.post
       div
         - if tweet.image.attached?
-          = image_tag  url_for(tweet.image), class: 'img-thumbnail tweet-image'
+          == render 'shared/image_modal_button', { src: url_for(tweet.image), custom_class: 'img-thumbnail tweet-image' }
       == render 'likes/like_button', tweet: tweet
       - if current_user&.own?(tweet)
         div

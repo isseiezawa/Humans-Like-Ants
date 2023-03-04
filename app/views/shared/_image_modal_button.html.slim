@@ -1,0 +1,10 @@
+/ use example
+/ == render 'shared/image_modal'
+/ == render 'shared/image_modal_button',
+  { src: image_url('avatar_tag_info.png'), custom_class: 'rounded shadow my-2' }
+= button_tag type: 'button',
+  class: 'no-button ',
+  data: { bs_toggle: 'modal',
+    bs_target: '#image-modal',
+    bs_image_modal: src } do
+  = image_tag src, class: custom_class
