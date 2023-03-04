@@ -4,6 +4,7 @@
 #
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
 #                                     root GET    /                                                                                                 static_pages#top
+#                                    guide GET    /guide(.:format)                                                                                  static_pages#guide
 #                                    login GET    /login(.:format)                                                                                  user_sessions#new
 #                                          POST   /login(.:format)                                                                                  user_sessions#create
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
@@ -26,6 +27,7 @@
 #                                    world GET    /worlds/:place_name(.:format)                                                                     worlds#show
 #                               tweet_like DELETE /tweets/:tweet_id/like(.:format)                                                                  likes#destroy
 #                                          POST   /tweets/:tweet_id/like(.:format)                                                                  likes#create
+#                              likes_tweet GET    /tweets/:id/likes(.:format)                                                                       tweets#likes
 #                                    tweet DELETE /tweets/:id(.:format)                                                                             tweets#destroy
 #                       search_avatar_tags GET    /avatar_tags/search(.:format)                                                                     avatar_tags#search
 #                              avatar_tags GET    /avatar_tags(.:format)                                                                            avatar_tags#index
