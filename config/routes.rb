@@ -101,6 +101,8 @@ Rails.application.routes.draw do
     resources :users
     resources :tweets
     resources :world_rooms
+    resources :likes
+    resources :avatar_tag_maps
     resources :avatar_tags
 
     root to: "users#index"
