@@ -9,6 +9,10 @@ footer.footer.pt-3.pb-3.bg-success.bg-gradient
             = link_to worlds_path, class: 'text-decoration-none text-black' do
               i.fa-solid.fa-earth-asia.me-1
               = t('worlds.index.title')
+          .pt-1.pb-1
+            = link_to information_index_path, class: 'text-decoration-none text-black' do
+              i.fa-solid.fa-bullhorn.me-1
+              = t('information.index.title')
       .col-sm-6.col-12
         .d-flex.flex-column
           .pt-1.pb-1

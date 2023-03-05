@@ -11,6 +11,7 @@ class InformationDashboard < Administrate::BaseDashboard
     id: Field::Number,
     title: Field::String,
     text: Field::Text,
+    image: Field::ActiveStorage,
     user: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
@@ -25,6 +26,7 @@ class InformationDashboard < Administrate::BaseDashboard
     id
     title
     text
+    image
     user
   ].freeze
 
@@ -34,6 +36,7 @@ class InformationDashboard < Administrate::BaseDashboard
     id
     title
     text
+    image
     user
     created_at
     updated_at
@@ -45,6 +48,7 @@ class InformationDashboard < Administrate::BaseDashboard
   FORM_ATTRIBUTES = %i[
     title
     text
+    image
     user
   ].freeze
 

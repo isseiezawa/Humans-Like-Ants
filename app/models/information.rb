@@ -20,6 +20,8 @@
 class Information < ApplicationRecord
   belongs_to :user
 
+  has_one_attached :image
+
   validates :user, presence: true
   validates :title, presence: true, length: { maximum: 255 }
   validates :text, presence: true, length: { maximum: 65_535 }
