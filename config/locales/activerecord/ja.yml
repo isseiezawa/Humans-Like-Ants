@@ -9,9 +9,15 @@ ja:
         not_found_world: "%{param}という地域名は登録しておりません。"
         not_found_world_room: "Room No.%{param}の部屋は存在しておりません。"
         not_found_avatar_tags: "%{param}というタグは存在しておりません。"
+        not_found_admin: 'そ、そんなページ存在しないんだからね！'
     models:
       user: 'ユーザー'
+      tweet: 'つぶやき'
+      world_room: '地域内の部屋'
       avatar_tag: 'アバター推しポイントタグ'
+      avatar_tag_map: 'アバタータグ紐付け'
+      like: 'いいね'
+      information: 'ユーザー報告'
     attributes:
       user:
         id: 'ID'
@@ -24,12 +30,47 @@ ja:
         twitter_id: 'Twitter ID'
         self_introduction: '自己紹介'
         avatar: 'アバター'
+        avatar_tags: 'アバター推しポイントタグ'
+        avatar_tag_maps: 'アバタータグ紐付け'
+        created_at: '作成日'
+        updated_at: '編集日'
       tweet:
         post: 'つぶやき'
         image: '画像'
+        user: 'ユーザー'
+        liked_users: 'いいねしたユーザー'
+        world_room: '投稿場所'
+        created_at: '作成日'
+        updated_at: '編集日'
       world_room:
         id: 'Room No.'
         name: '部屋名'
+        user: 'ユーザー'
+        tweets: 'つぶやき'
+        created_at: '作成日'
+        updated_at: '編集日'
+      like:
+        tweet: 'つぶやき'
+        user: 'ユーザー'
+        created_at: '作成日'
+        updated_at: '編集日'
+      avatar_tag_map:
+        user: 'ユーザー'
+        avatar_tag: 'アバター推しポイントタグ'
+        created_at: '作成日'
+        updated_at: '編集日'
+      avatar_tag:
+        name: 'タグ名'
+        avatar_tag_maps: 'アバタータグ紐付け'
+        tagged_users: 'タグ付けしたユーザー'
+        created_at: '作成日'
+        updated_at: '編集日'
+      information:
+        title: 'タイトル'
+        text: '内容'
+        user: 'ユーザー'
+        created_at: '作成日'
+        updated_at: '編集日'
   enums:
     user:
       gender:

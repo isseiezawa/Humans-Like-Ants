@@ -29,6 +29,7 @@ ja:
     description: '3Dモデルを作成して、アバターとして登録しましょう!'
   time:
     formats:
+      short: "%m月%m日(%a)"
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
   views:
     pagination:
@@ -86,6 +87,9 @@ ja:
         <span class="text-success">プロフィール編集画面</span>でアバターやユーザー自身の<span class="text-danger">推しポイントのタグ付け</span>ができます。
         アプリ上部にある推しポイントタグ検索を行うと紐づいたユーザー一覧が表示されます。
         積極的にタグ付けを行いましょう！
+  information:
+    index:
+      title: 'お知らせ'
   users:
     show:
       title: "%{name}さんの巣"

@@ -1,0 +1,16 @@
+.border.rounded.shadow.bg-light.m-3.p-4
+  h2.text-warning
+    = information.title
+  hr
+  - if information.image.attached?
+    .container-fluid.text-center
+      == render 'shared/image_modal_button', { src: url_for(information.image), custom_class: 'w-75 mb-3 tweet-image' }
+  p
+    = information.text
+  hr
+  .text-secondary.d-flex.justify-content-between
+    p
+      | by
+      ==< information.user.name
+    p
+      = l(information.created_at, format: :long)

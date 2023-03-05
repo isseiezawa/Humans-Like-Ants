@@ -56,6 +56,11 @@ gem 'aws-sdk-s3', require: false
 gem 'html2slim'
 gem 'slim-rails'
 
+# admin
+gem 'administrate'
+gem 'administrate-field-active_storage'
+gem 'image_processing'
+
 gem 'bootstrap', '~> 5.2.2'
 
 # ddecorator

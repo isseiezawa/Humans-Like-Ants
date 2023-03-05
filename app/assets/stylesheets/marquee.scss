@@ -1,0 +1,29 @@
+.text-marquee-container {
+  overflow: hidden;
+  background-color: #a0c9eb;
+  border-top: 0.5rem dotted #fff;
+  border-bottom: 1rem ridge rgba(220, 124, 50, 0.6);
+  padding-top: 0.5rem;
+}
+.text-marquee-text {
+  font-size: 2rem;
+  transform: translateX(100%);
+  animation: marquee 30s linear infinite;
+}
+
+.small-text {
+  font-size: 0.6rem;
+  text-align: end;
+}
+@keyframes marquee {
+  0% {
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  100% {
+    -moz-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+}
