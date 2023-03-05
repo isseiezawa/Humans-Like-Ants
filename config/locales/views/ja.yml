@@ -29,6 +29,7 @@ ja:
     description: '3Dモデルを作成して、アバターとして登録しましょう!'
   time:
     formats:
+      short: "%m月%m日(%a)"
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
   views:
     pagination:

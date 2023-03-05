@@ -1,0 +1,11 @@
+- if Infomation.last.present?
+  .text-marquee-container
+    .text-marquee-text
+      .d-flex.align-items-end
+        = image_tag 'ant_gif.gif'
+        .balloon4
+          = Infomation.last.title
+          .small-text
+            ==> l(Infomation.last.created_at, format: :short)
+            | by
+            ==< Infomation.last.user.name
