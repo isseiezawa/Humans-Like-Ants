@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class LikeDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -12,7 +12,7 @@ class LikeDashboard < Administrate::BaseDashboard
     tweet: Field::BelongsTo,
     user: Field::BelongsTo,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

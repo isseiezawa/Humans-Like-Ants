@@ -165,7 +165,7 @@ Rails.application.routes.draw do
     resources :avatar_tags
     resources :information
 
-    root to: "users#index"
+    root to: 'users#index'
   end
 
   get '*path', to: 'application#routing_error', constraints: lambda { |req|

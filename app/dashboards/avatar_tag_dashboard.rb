@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class AvatarTagDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -13,7 +13,7 @@ class AvatarTagDashboard < Administrate::BaseDashboard
     name: Field::String,
     tagged_users: Field::HasMany,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES

@@ -1,4 +1,4 @@
-require "administrate/base_dashboard"
+require 'administrate/base_dashboard'
 
 class TweetDashboard < Administrate::BaseDashboard
   # ATTRIBUTE_TYPES
@@ -15,7 +15,7 @@ class TweetDashboard < Administrate::BaseDashboard
     user: Field::BelongsTo,
     world_room: Field::BelongsTo,
     created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    updated_at: Field::DateTime
   }.freeze
 
   # COLLECTION_ATTRIBUTES
