@@ -17,6 +17,7 @@ ja:
       avatar_tag: 'アバター推しポイントタグ'
       avatar_tag_map: 'アバタータグ紐付け'
       like: 'いいね'
+      infomation: '報告'
     attributes:
       user:
         id: 'ID'
@@ -62,6 +63,12 @@ ja:
         name: 'タグ名'
         avatar_tag_maps: 'アバタータグ紐付け'
         tagged_users: 'タグ付けしたユーザー'
+        created_at: '作成日'
+        updated_at: '編集日'
+      infomation:
+        title: 'タイトル'
+        text: '内容'
+        user: 'ユーザー'
         created_at: '作成日'
         updated_at: '編集日'
   enums:

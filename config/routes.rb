@@ -32,6 +32,55 @@
 #                       search_avatar_tags GET    /avatar_tags/search(.:format)                                                                     avatar_tags#search
 #                              avatar_tags GET    /avatar_tags(.:format)                                                                            avatar_tags#index
 #                               avatar_tag GET    /avatar_tags/:avatar_tag_name(.:format)                                                           avatar_tags#show
+#                              admin_users GET    /admin/users(.:format)                                                                            admin/users#index
+#                                          POST   /admin/users(.:format)                                                                            admin/users#create
+#                           new_admin_user GET    /admin/users/new(.:format)                                                                        admin/users#new
+#                          edit_admin_user GET    /admin/users/:id/edit(.:format)                                                                   admin/users#edit
+#                               admin_user GET    /admin/users/:id(.:format)                                                                        admin/users#show
+#                                          PATCH  /admin/users/:id(.:format)                                                                        admin/users#update
+#                                          PUT    /admin/users/:id(.:format)                                                                        admin/users#update
+#                                          DELETE /admin/users/:id(.:format)                                                                        admin/users#destroy
+#                             admin_tweets GET    /admin/tweets(.:format)                                                                           admin/tweets#index
+#                                          POST   /admin/tweets(.:format)                                                                           admin/tweets#create
+#                          new_admin_tweet GET    /admin/tweets/new(.:format)                                                                       admin/tweets#new
+#                         edit_admin_tweet GET    /admin/tweets/:id/edit(.:format)                                                                  admin/tweets#edit
+#                              admin_tweet GET    /admin/tweets/:id(.:format)                                                                       admin/tweets#show
+#                                          PATCH  /admin/tweets/:id(.:format)                                                                       admin/tweets#update
+#                                          PUT    /admin/tweets/:id(.:format)                                                                       admin/tweets#update
+#                                          DELETE /admin/tweets/:id(.:format)                                                                       admin/tweets#destroy
+#                        admin_world_rooms GET    /admin/world_rooms(.:format)                                                                      admin/world_rooms#index
+#                                          POST   /admin/world_rooms(.:format)                                                                      admin/world_rooms#create
+#                     new_admin_world_room GET    /admin/world_rooms/new(.:format)                                                                  admin/world_rooms#new
+#                    edit_admin_world_room GET    /admin/world_rooms/:id/edit(.:format)                                                             admin/world_rooms#edit
+#                         admin_world_room GET    /admin/world_rooms/:id(.:format)                                                                  admin/world_rooms#show
+#                                          PATCH  /admin/world_rooms/:id(.:format)                                                                  admin/world_rooms#update
+#                                          PUT    /admin/world_rooms/:id(.:format)                                                                  admin/world_rooms#update
+#                                          DELETE /admin/world_rooms/:id(.:format)                                                                  admin/world_rooms#destroy
+#                              admin_likes GET    /admin/likes(.:format)                                                                            admin/likes#index
+#                                          POST   /admin/likes(.:format)                                                                            admin/likes#create
+#                           new_admin_like GET    /admin/likes/new(.:format)                                                                        admin/likes#new
+#                          edit_admin_like GET    /admin/likes/:id/edit(.:format)                                                                   admin/likes#edit
+#                               admin_like GET    /admin/likes/:id(.:format)                                                                        admin/likes#show
+#                                          PATCH  /admin/likes/:id(.:format)                                                                        admin/likes#update
+#                                          PUT    /admin/likes/:id(.:format)                                                                        admin/likes#update
+#                                          DELETE /admin/likes/:id(.:format)                                                                        admin/likes#destroy
+#                    admin_avatar_tag_maps GET    /admin/avatar_tag_maps(.:format)                                                                  admin/avatar_tag_maps#index
+#                                          POST   /admin/avatar_tag_maps(.:format)                                                                  admin/avatar_tag_maps#create
+#                 new_admin_avatar_tag_map GET    /admin/avatar_tag_maps/new(.:format)                                                              admin/avatar_tag_maps#new
+#                edit_admin_avatar_tag_map GET    /admin/avatar_tag_maps/:id/edit(.:format)                                                         admin/avatar_tag_maps#edit
+#                     admin_avatar_tag_map GET    /admin/avatar_tag_maps/:id(.:format)                                                              admin/avatar_tag_maps#show
+#                                          PATCH  /admin/avatar_tag_maps/:id(.:format)                                                              admin/avatar_tag_maps#update
+#                                          PUT    /admin/avatar_tag_maps/:id(.:format)                                                              admin/avatar_tag_maps#update
+#                                          DELETE /admin/avatar_tag_maps/:id(.:format)                                                              admin/avatar_tag_maps#destroy
+#                        admin_avatar_tags GET    /admin/avatar_tags(.:format)                                                                      admin/avatar_tags#index
+#                                          POST   /admin/avatar_tags(.:format)                                                                      admin/avatar_tags#create
+#                     new_admin_avatar_tag GET    /admin/avatar_tags/new(.:format)                                                                  admin/avatar_tags#new
+#                    edit_admin_avatar_tag GET    /admin/avatar_tags/:id/edit(.:format)                                                             admin/avatar_tags#edit
+#                         admin_avatar_tag GET    /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#show
+#                                          PATCH  /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#update
+#                                          PUT    /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#update
+#                                          DELETE /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#destroy
+#                               admin_root GET    /admin(.:format)                                                                                  admin/users#index
 #                                          GET    /*path(.:format)                                                                                  application#routing_error
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
 #         turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
@@ -104,6 +153,7 @@ Rails.application.routes.draw do
     resources :likes
     resources :avatar_tag_maps
     resources :avatar_tags
+    resources :infomations
 
     root to: "users#index"
   end

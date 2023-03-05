@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_27_185209) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_05_113214) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -54,6 +54,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_185209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_avatar_tags_on_name", unique: true
+  end
+
+  create_table "infomations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "text", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_infomations_on_user_id"
   end
 
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -103,6 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_27_185209) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "avatar_tag_maps", "avatar_tags"
   add_foreign_key "avatar_tag_maps", "users"
+  add_foreign_key "infomations", "users"
   add_foreign_key "likes", "tweets"
   add_foreign_key "likes", "users"
   add_foreign_key "tweets", "users"
