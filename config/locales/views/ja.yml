@@ -24,6 +24,9 @@ ja:
     not_found_page: 'ページが見つかりませんでした'
     loading: '読み込み中'
     sorry: 'すみません'
+  meta_tags:
+    default_title: '3Dモデラー向けSNS'
+    description: '3Dモデルを作成して、アバターとして登録しましょう!'
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
