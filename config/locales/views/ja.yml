@@ -24,6 +24,9 @@ ja:
     not_found_page: 'ページが見つかりませんでした'
     loading: '読み込み中'
     sorry: 'すみません'
+  meta_tags:
+    default_title: '3Dモデラー向けSNS'
+    description: '3Dモデルを作成して、アバターとして登録しましょう!'
   time:
     formats:
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
@@ -85,7 +88,8 @@ ja:
         積極的にタグ付けを行いましょう！
   users:
     show:
-      title: 'ユーザー詳細'
+      title: "%{name}さんの巣"
+      description: "「%{name}」の巣にぜひ来ませんか？待ってます！"
       tweet_index: '投稿一覧'
       no_tweet: '投稿はありません'
       end_tweet: '投稿は以上です'
@@ -98,6 +102,7 @@ ja:
       fail: 'ユーザー登録に失敗しました'
     likes:
       title: 'いいね一覧'
+      second_title: "%{name}さんのいいね一覧"
   user_sessions:
     new:
       title: 'ログイン'
@@ -141,6 +146,7 @@ ja:
       end_world_room: '部屋は以上です'
   world_rooms:
     show:
+      description: "「%{name}」の巣にぜひ来ませんか？遊びに来て！"
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
       go_link: '見に行く'
@@ -170,7 +176,7 @@ ja:
       success_message: '投稿に成功しました'
       reload_message: 'リロードしてください'
     likes:
-      title: 'いいねしたユーザー'
+      title: "「%{post}」にいいねしたユーザー"
   likes:
     create:
       success: "%{name}さんの「%{post}」をいいねしました"

@@ -21,7 +21,7 @@ header
             ul.dropdown-menu.scrollable-menu[aria-labelledby="navbarDropdownMenuLink"]
               li.border-bottom
                 = link_to t('worlds.index.title'), worlds_path, class: 'dropdown-item text-success'
-              - world_all.each do |world|
+              - World.all.each do |world|
                 li
                   = link_to world.place_ja, world_path(world.place), class: 'dropdown-item'
           li.nav-item

@@ -27,8 +27,8 @@ class WorldRoomsController < ApplicationController
     @search_world_rooms = @world.world_rooms.where('name LIKE ?', "%#{params[:world_room_name]}%").order(id: :desc)
 
     render turbo_stream: [turbo_stream.replace('world-rooms',
-                                              partial: 'worlds/world_rooms',
-                                              locals: { world_rooms: @search_world_rooms }),
+                                               partial: 'worlds/world_rooms',
+                                               locals: { world_rooms: @search_world_rooms }),
                           turbo_stream.remove('pagenate')]
   end
 

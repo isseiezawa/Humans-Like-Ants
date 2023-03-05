@@ -17,6 +17,7 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - 'lib/**/*'
+    - 'config/routes.rb'
 # Align the keys of a hash literal if they span more than one lineの警告無効
 Layout/HashAlignment:
   Exclude:

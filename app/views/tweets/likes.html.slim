@@ -1,6 +1,7 @@
-h1.my-3
+- set_meta_tags title: t('.title', post: @tweet.decorate.post_decorate)
+h1.my-3.h3
   span
-    = t('.title')
+    = t('.title', post: @tweet.decorate.post_decorate)
 .container-fluid
   table#liked-users-table.table.table-sm.table-hover.table-striped.table-bordered.border-secondary.shadow.text-center
     thead
