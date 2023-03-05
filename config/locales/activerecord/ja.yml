@@ -9,6 +9,7 @@ ja:
         not_found_world: "%{param}という地域名は登録しておりません。"
         not_found_world_room: "Room No.%{param}の部屋は存在しておりません。"
         not_found_avatar_tags: "%{param}というタグは存在しておりません。"
+        not_found_admin: 'そ、そんなページ存在しないんだからね！'
     models:
       user: 'ユーザー'
       avatar_tag: 'アバター推しポイントタグ'
