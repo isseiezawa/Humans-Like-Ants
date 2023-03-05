@@ -80,6 +80,14 @@
 #                                          PATCH  /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#update
 #                                          PUT    /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#update
 #                                          DELETE /admin/avatar_tags/:id(.:format)                                                                  admin/avatar_tags#destroy
+#                  admin_information_index GET    /admin/information(.:format)                                                                      admin/information#index
+#                                          POST   /admin/information(.:format)                                                                      admin/information#create
+#                    new_admin_information GET    /admin/information/new(.:format)                                                                  admin/information#new
+#                   edit_admin_information GET    /admin/information/:id/edit(.:format)                                                             admin/information#edit
+#                        admin_information GET    /admin/information/:id(.:format)                                                                  admin/information#show
+#                                          PATCH  /admin/information/:id(.:format)                                                                  admin/information#update
+#                                          PUT    /admin/information/:id(.:format)                                                                  admin/information#update
+#                                          DELETE /admin/information/:id(.:format)                                                                  admin/information#destroy
 #                               admin_root GET    /admin(.:format)                                                                                  admin/users#index
 #                                          GET    /*path(.:format)                                                                                  application#routing_error
 #         turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
@@ -153,7 +161,7 @@ Rails.application.routes.draw do
     resources :likes
     resources :avatar_tag_maps
     resources :avatar_tags
-    resources :infomations
+    resources :information
 
     root to: "users#index"
   end

@@ -29,7 +29,7 @@ class User < ApplicationRecord
   has_many :liked_tweets, through: :likes, source: :tweet
   has_many :avatar_tag_maps, dependent: :destroy
   has_many :avatar_tags, through: :avatar_tag_maps
-  has_many :infomations, dependent: :destroy
+  has_many :informations, dependent: :destroy
 
   # avatar_tagsテーブルへの同時保存設定
   accepts_nested_attributes_for :avatar_tag_maps, allow_destroy: true
