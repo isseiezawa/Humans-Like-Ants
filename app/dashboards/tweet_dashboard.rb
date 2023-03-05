@@ -9,8 +9,6 @@ class TweetDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     id: Field::Number,
-    image_attachment: Field::HasOne,
-    image_blob: Field::HasOne,
     liked_users: Field::HasMany,
     likes: Field::HasMany,
     post: Field::Text,
@@ -27,8 +25,8 @@ class TweetDashboard < Administrate::BaseDashboard
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = %i[
     id
-    image_attachment
-    image_blob
+    post
+    user
     liked_users
   ].freeze
 
@@ -36,10 +34,7 @@ class TweetDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed on the model's show page.
   SHOW_PAGE_ATTRIBUTES = %i[
     id
-    image_attachment
-    image_blob
     liked_users
-    likes
     post
     user
     world_room
@@ -51,10 +46,7 @@ class TweetDashboard < Administrate::BaseDashboard
   # an array of attributes that will be displayed
   # on the model's form (`new` and `edit`) pages.
   FORM_ATTRIBUTES = %i[
-    image_attachment
-    image_blob
     liked_users
-    likes
     post
     user
     world_room

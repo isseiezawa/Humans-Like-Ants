@@ -12,7 +12,6 @@ class WorldRoomDashboard < Administrate::BaseDashboard
     name: Field::String,
     tweets: Field::HasMany,
     user: Field::BelongsTo,
-    world: Field::BelongsTo,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -36,7 +35,6 @@ class WorldRoomDashboard < Administrate::BaseDashboard
     name
     tweets
     user
-    world
     created_at
     updated_at
   ].freeze
@@ -48,7 +46,6 @@ class WorldRoomDashboard < Administrate::BaseDashboard
     name
     tweets
     user
-    world
   ].freeze
 
   # COLLECTION_FILTERS
