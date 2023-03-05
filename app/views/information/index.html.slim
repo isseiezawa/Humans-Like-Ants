@@ -1,6 +1,8 @@
+- set_meta_tags title: t('.title')
 h1.text-center.mt-3.mb-3
   span
     = t('.title')
 .d-flex.flex-column
   == render @informations
 == render 'shared/image_modal'
+= paginate @informations
