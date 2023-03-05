@@ -88,7 +88,7 @@ ja:
         積極的にタグ付けを行いましょう！
   users:
     show:
-      title: 'ユーザー詳細'
+      title: "%{name}さんの巣"
       tweet_index: '投稿一覧'
       no_tweet: '投稿はありません'
       end_tweet: '投稿は以上です'
@@ -101,6 +101,7 @@ ja:
       fail: 'ユーザー登録に失敗しました'
     likes:
       title: 'いいね一覧'
+      second_title: "%{name}さんのいいね一覧"
   user_sessions:
     new:
       title: 'ログイン'
@@ -173,7 +174,7 @@ ja:
       success_message: '投稿に成功しました'
       reload_message: 'リロードしてください'
     likes:
-      title: 'いいねしたユーザー'
+      title: "「%{post}」にいいねしたユーザー"
   likes:
     create:
       success: "%{name}さんの「%{post}」をいいねしました"
