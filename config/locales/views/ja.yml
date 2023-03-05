@@ -89,6 +89,7 @@ ja:
   users:
     show:
       title: "%{name}さんの巣"
+      description: "「%{name}」の巣にぜひ来ませんか？待ってます！"
       tweet_index: '投稿一覧'
       no_tweet: '投稿はありません'
       end_tweet: '投稿は以上です'
@@ -145,6 +146,7 @@ ja:
       end_world_room: '部屋は以上です'
   world_rooms:
     show:
+      description: "「%{name}」の巣にぜひ来ませんか？遊びに来て！"
       no_ants: 'アリンコがいません。投稿しましょう！'
       want_collision: 'モデルと接触してください'
       go_link: '見に行く'
