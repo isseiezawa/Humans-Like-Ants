@@ -58,7 +58,6 @@ gem 'slim-rails'
 
 # admin
 gem 'administrate'
-gem 'administrate-field-active_storage'
 
 gem 'bootstrap', '~> 5.2.2'
 
