@@ -1,0 +1,13 @@
+.border.rounded.shadow.bg-light.m-2.p-2
+  h2.text-warning
+    = information.title
+  hr
+  p
+    = information.text
+  hr
+  .text-secondary.d-flex.justify-content-between
+    p
+      | by
+      ==< information.user.name
+    p
+      = l(information.created_at, format: :long)

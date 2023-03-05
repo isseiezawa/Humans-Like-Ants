@@ -4,7 +4,8 @@
       .d-flex.align-items-end
         = image_tag 'ant_gif.gif'
         .balloon4
-          = Information.last.title
+          = link_to information_index_path do
+            = Information.last.title
           .small-text
             ==> l(Information.last.created_at, format: :short)
             | by
