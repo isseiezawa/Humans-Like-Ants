@@ -5,9 +5,11 @@
 #                                   Prefix Verb   URI Pattern                                                                                       Controller#Action
 #                                     root GET    /                                                                                                 static_pages#top
 #                                    guide GET    /guide(.:format)                                                                                  static_pages#guide
+#                         terms_of_service GET    /terms_of_service(.:format)                                                                       static_pages#terms_of_service
 #                                    login GET    /login(.:format)                                                                                  user_sessions#new
 #                                          POST   /login(.:format)                                                                                  user_sessions#create
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
+#                        information_index GET    /information(.:format)                                                                            information#index
 #                               likes_user GET    /users/:id/likes(.:format)                                                                        users#likes
 #                                    users POST   /users(.:format)                                                                                  users#create
 #                                 new_user GET    /users/new(.:format)                                                                              users#new
@@ -124,6 +126,7 @@
 Rails.application.routes.draw do
   root 'static_pages#top'
   get 'guide', to: 'static_pages#guide'
+  get 'terms_of_service', to: 'static_pages#terms_of_service'
 
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
