@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @user.save
+    # params[:agree]は利用規約同意。&&は左から評価する
+    if params[:agree] && @user.save
       redirect_to login_url, success: t('.success')
     else
       flash.now[:danger] = t('.fail')

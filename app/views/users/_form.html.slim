@@ -25,5 +25,8 @@
         = form.label :password_confirmation, class: 'form-label'
         .small.text-danger  data-validate-target='passwordConfirmationError'
         = form.password_field :password_confirmation, data: { validate_target: 'passwordConfirmation', action: 'input->validate#validatePasswordConfirmation' }, class: 'form-control'
+      .mb-3.col-8
+        = check_box_tag :agree, true, false, data: { validate_target: 'agree', action: 'click->validate#validateTermsAgree' }, class: 'form-check-input'
+        = label_tag :agree, t('defaults.agree'), class: 'form-check-label'
       .mb-3.col-6
         = form.submit t('defaults.register'), data: { validate_target: 'submitButton' }, class: 'btn btn-success', disabled: true

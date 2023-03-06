@@ -4,6 +4,7 @@ ja:
     delete: '削除'
     delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
+    agree: '利用規約に同意'
     create: '作成'
     add: '追加'
     search: '検索'
