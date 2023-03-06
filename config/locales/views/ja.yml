@@ -88,6 +88,8 @@ ja:
         <span class="text-success">プロフィール編集画面</span>でアバターやユーザー自身の<span class="text-danger">推しポイントのタグ付け</span>ができます。
         アプリ上部にある推しポイントタグ検索を行うと紐づいたユーザー一覧が表示されます。
         積極的にタグ付けを行いましょう！
+    inquiry:
+      title: 'お問合せ'
   information:
     index:
       title: 'お知らせ'
