@@ -17,6 +17,7 @@ export default class extends Controller {
                     'selfIntroduction',
                     'selfIntroductionLength',
                     'selfIntroductionError',
+                    'agree',
                     'submitButton'
                   ]
 
@@ -59,6 +60,7 @@ export default class extends Controller {
       }
     }
 
+    this.agreeflag = false
     this.twitterIdflag = true
     this.selfIntroductionflag = true
   }
@@ -227,12 +229,16 @@ export default class extends Controller {
     }
   }
 
+  validateTermsAgree() {
+    this.agreeflag = this.agreeTarget.checked
+  }
+
 // ***** flagを確認してsubmit buttonの状態を変える *****
 
   submitButtonChange() {
     switch (this.formTypeValue) {
       case 'userCreate':
-        if(this.inputflag && this.emailflag && this.passwordflag && this.passwordConfirmationflag) {
+        if(this.inputflag && this.emailflag && this.passwordflag && this.passwordConfirmationflag && this.agreeflag) {
           this.submitButtonTarget.disabled = false
         } else {
           this.submitButtonTarget.disabled = true

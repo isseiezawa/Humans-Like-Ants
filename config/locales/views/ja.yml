@@ -4,6 +4,7 @@ ja:
     delete: '削除'
     delete_confirm: "「%{text}」を削除しますか?"
     register: '登録'
+    agree: '利用規約に同意'
     create: '作成'
     add: '追加'
     search: '検索'
@@ -29,7 +30,7 @@ ja:
     description: '3Dモデルを作成して、アバターとして登録しましょう!'
   time:
     formats:
-      short: "%m月%m日(%a)"
+      short: "%m月%d日(%a)"
       long: "%Y年%m月%d日(%a) %H時%M分%S秒"
   views:
     pagination:
@@ -87,6 +88,8 @@ ja:
         <span class="text-success">プロフィール編集画面</span>でアバターやユーザー自身の<span class="text-danger">推しポイントのタグ付け</span>ができます。
         アプリ上部にある推しポイントタグ検索を行うと紐づいたユーザー一覧が表示されます。
         積極的にタグ付けを行いましょう！
+    inquiry:
+      title: 'お問合せ'
   information:
     index:
       title: 'お知らせ'

@@ -6,6 +6,9 @@ html
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
+    = favicon_link_tag 'favicon.ico' 
+    = favicon_link_tag 'app-icon.png', rel: 'apple-touch-icon', sizes: '180x180', type: 'image/png'
+    = favicon_link_tag 'app-icon.png', rel: 'android-touch-icon', sizes: '192x192', type: 'image/png'
     = display_meta_tags(default_meta_tags)
     - if Rails.env.production?
       == render 'shared/google_analytics'

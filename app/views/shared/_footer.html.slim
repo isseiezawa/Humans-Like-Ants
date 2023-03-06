@@ -16,11 +16,11 @@ footer.footer.pt-3.pb-3.bg-success.bg-gradient
       .col-sm-6.col-12
         .d-flex.flex-column
           .pt-1.pb-1
-            = link_to '利用規約', '#', class: 'text-decoration-none text-black'
+            = link_to t('static_pages.terms_of_service.title'), terms_of_service_path, class: 'text-decoration-none text-black'
           .pt-1.pb-1
-            = link_to 'プライバシーポリシー', '#', class: 'text-decoration-none text-black'
+            = link_to t('static_pages.privacy_policy.title'), privacy_policy_path, class: 'text-decoration-none text-black'
           .pt-1.pb-1
-            = link_to 'お問合せ', '#', class: 'text-decoration-none text-black'
+            = link_to t('static_pages.inquiry.title'), inquiry_path, class: 'text-decoration-none text-black'
       .pt-1.pb-1
         small
           | Copyright © 2022 issei(e) All Rights Reserved.
