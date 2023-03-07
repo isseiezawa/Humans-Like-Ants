@@ -6,6 +6,8 @@
 #                                     root GET    /                                                                                                 static_pages#top
 #                                    guide GET    /guide(.:format)                                                                                  static_pages#guide
 #                         terms_of_service GET    /terms_of_service(.:format)                                                                       static_pages#terms_of_service
+#                           privacy_policy GET    /privacy_policy(.:format)                                                                         static_pages#privacy_policy
+#                                  inquiry GET    /inquiry(.:format)                                                                                static_pages#inquiry
 #                                    login GET    /login(.:format)                                                                                  user_sessions#new
 #                                          POST   /login(.:format)                                                                                  user_sessions#create
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
