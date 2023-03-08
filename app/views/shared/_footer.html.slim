@@ -4,7 +4,8 @@ footer.footer.pt-3.pb-3.bg-success.bg-gradient
       .col-sm-6.col-12
         .d-flex.flex-column
           .h3
-            | Humans Like Ants
+            = link_to root_path, class: 'text-decoration-none text-black' do
+              | Humans Like Ants
           .pt-1.pb-1
             = link_to worlds_path, class: 'text-decoration-none text-black' do
               i.fa-solid.fa-earth-asia.me-1
