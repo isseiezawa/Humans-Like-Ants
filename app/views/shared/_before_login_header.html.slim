@@ -7,6 +7,10 @@ header
       #navbarNavDropdown.collapse.navbar-collapse.flex-row-reverse
         ul.navbar-nav
           li.nav-item
+            = link_to guide_path, class: 'nav-link' do
+              i.fa-solid.fa-circle-question.me-1
+              = t('static_pages.guide.title')
+          li.nav-item
             = link_to new_user_path, class: 'nav-link' do
               i.fa-solid.fa-user-plus.me-1
               = t('users.new.title')
