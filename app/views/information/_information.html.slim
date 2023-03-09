@@ -2,11 +2,12 @@
   h2.text-warning
     = information.title
   hr
-  - if information.image.attached?
-    .container-fluid.text-center
-      == render 'shared/image_modal_button', { src: url_for(information.image), custom_class: 'w-75 mb-3 tweet-image' }
-  p
-    = information.text
+  .d-flex.flex-column
+    - if information.image.attached?
+      .text-center
+        == render 'shared/image_modal_button', { src: url_for(information.image), custom_class: 'w-75 mb-3 tweet-image' }
+    div style='line-height: 2rem;'
+      = simple_format(information.text)
   hr
   .text-secondary.d-flex.justify-content-between
     p
