@@ -18,3 +18,12 @@
           i.fa-solid.fa-earth-asia.me-1
           = t('worlds.index.title')
       = simple_format(t('.text_2'))
+  .border.border-dark.rounded.shadow.p-2.mt-2
+    .h1.fw-bolder.text-center
+      i.fa-solid.fa-eye.me-1
+      = t('.headline_3')
+    .description.h6
+      = simple_format(t('.text_3'))
+      = link_to random_room_path, class: 'btn btn-success' do
+        i.fa-solid.fa-shuffle.me-1
+        = t('defaults.random_room_button')

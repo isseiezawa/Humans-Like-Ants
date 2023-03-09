@@ -1,5 +1,5 @@
 class WorldRoomsController < ApplicationController
-  skip_before_action :require_login, only: %i[show search]
+  skip_before_action :require_login, only: %i[show search random]
   before_action :set_world_room, only: %i[show]
   before_action :set_world, only: %i[search]
 
@@ -23,6 +23,13 @@ class WorldRoomsController < ApplicationController
     end
   end
 
+  def destroy
+    world_room = current_user.world_rooms.find(params[:id])
+    world_room.destroy!
+
+    render turbo_stream: turbo_stream.remove(world_room)
+  end
+
   def search
     @search_world_rooms = @world.world_rooms.where('name LIKE ?', "%#{params[:world_room_name]}%").order(id: :desc)
 
@@ -32,11 +39,10 @@ class WorldRoomsController < ApplicationController
                           turbo_stream.remove('pagenate')]
   end
 
-  def destroy
-    world_room = current_user.world_rooms.find(params[:id])
-    world_room.destroy!
+  def random
+    world_room = WorldRoom.random_one
 
-    render turbo_stream: turbo_stream.remove(world_room)
+    redirect_to world_room_path(world_room)
   end
 
   private

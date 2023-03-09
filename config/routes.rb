@@ -11,6 +11,7 @@
 #                                    login GET    /login(.:format)                                                                                  user_sessions#new
 #                                          POST   /login(.:format)                                                                                  user_sessions#create
 #                                   logout DELETE /logout(.:format)                                                                                 user_sessions#destroy
+#                              random_room GET    /random_room(.:format)                                                                            world_rooms#random
 #                        information_index GET    /information(.:format)                                                                            information#index
 #                               likes_user GET    /users/:id/likes(.:format)                                                                        users#likes
 #                                    users POST   /users(.:format)                                                                                  users#create
@@ -135,6 +136,8 @@ Rails.application.routes.draw do
   get 'login', to: 'user_sessions#new'
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
+
+  get 'random_room', to: 'world_rooms#random'
 
   resources :information, only: %i[index]
 

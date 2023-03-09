@@ -18,6 +18,10 @@ header
             = link_to login_path, class: 'nav-link' do
               i.fa-solid.fa-right-to-bracket.me-1
               = t('user_sessions.new.title')
+          li.nav-item
+            = link_to random_room_path, class: 'nav-link' do
+              i.fa-solid.fa-shuffle.me-1
+              = t('defaults.random_room_button')
           li.nav-item.dropdown
             = link_to '', href: '#', id: 'navbarDropdownMenuLink', class: 'nav-link dropdown-toggle', role: 'button', 'data-bs-toggle': :dropdown, 'aria-expanded': :'false'
               i.fa-solid.fa-earth-asia.me-1
