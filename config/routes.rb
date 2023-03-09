@@ -136,6 +136,8 @@ Rails.application.routes.draw do
   post 'login', to: 'user_sessions#create'
   delete 'logout', to: 'user_sessions#destroy'
 
+  get 'random_room', to: 'world_rooms#random'
+
   resources :information, only: %i[index]
 
   resources :users, only: %i[show new create] do

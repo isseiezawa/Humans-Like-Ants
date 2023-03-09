@@ -28,6 +28,8 @@ class WorldRoom < ApplicationRecord
   validates :user_id, presence: true
   validates :world_id, presence: true
 
+  scope :random_one, -> { find(WorldRoom.pluck(:id).sample) }
+
   def tweets_length(page_number)
     tweets.joins(:user).select(:post, :name).page(page_number).per(5).length
   end

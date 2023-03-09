@@ -19,6 +19,10 @@ header
               i.fa-solid.fa-heart.me-1
               = t('users.likes.title')
           li.nav-item
+            = link_to random_room_path, class: 'nav-link' do
+              i.fa-solid.fa-shuffle.me-1
+              = t('defaults.random_room_button')
+          li.nav-item
             = link_to logout_path, class: 'nav-link', data: { turbo_method: :delete, turbo_confirm: t('defaults.logout_confirm') } do
               i.fa-solid.fa-right-from-bracket.me-1
               = t('defaults.logout')
