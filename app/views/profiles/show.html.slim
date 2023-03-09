@@ -79,7 +79,9 @@
                 class: 'd-block btn btn-success w-25 mx-auto mb-3' do
         i.fa-solid.fa-pen-to-square.me-1
         = t('defaults.edit')
-      .d-flex.justify-content-center.border.rounded.shadow.my-3
+      .text-center.mb-1
+        = share_button(current_user.name, user_url(current_user.id))
+      .d-flex.justify-content-center.border.rounded.shadow.my-3.py-3
         = link_to likes_user_path(current_user), class: 'default-link' do
           i.fa-solid.fa-heart.like-button.me-1
           = t('users.likes.title')

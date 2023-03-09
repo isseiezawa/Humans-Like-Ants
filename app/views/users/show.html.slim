@@ -3,7 +3,9 @@
   .row
     .col-md-10.offset-md-1.text-center
       == render @user
-      .d-flex.justify-content-center.border.rounded.shadow.my-3
+      .text-center.mb-1
+        = share_button(@user.name)
+      .d-flex.justify-content-center.border.rounded.shadow.my-3.py-3
         = link_to likes_user_path(@user), class: 'default-link' do
           i.fa-solid.fa-heart.like-button.me-1
           = t('users.likes.title')

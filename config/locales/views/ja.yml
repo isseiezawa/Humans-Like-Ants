@@ -26,6 +26,8 @@ ja:
     loading: '読み込み中'
     random_room_button: 'ランダム入室'
     sorry: 'すみません'
+    share: 'シェア'
+    share_text: "「%{name}」の部屋を見に来てね！"
   meta_tags:
     default_title: '3Dモデラー向けSNS'
     description: '3Dモデルを作成して、アバターとして登録しましょう!'
