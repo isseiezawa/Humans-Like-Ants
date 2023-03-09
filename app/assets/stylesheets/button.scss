@@ -45,3 +45,14 @@
 .reload-button:hover svg {
   transform: rotateZ(360deg);
 }
+
+.twitter-share-button {
+  display: inline-block;
+  text-align: center;
+  background-color: #00acee;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 10px;
+  width: 5rem;
+}

@@ -91,3 +91,5 @@ h1.text-center.mt-3.mb-3
 / id属性tweet-from
 = turbo_frame_tag 'tweet-form' do
   == render 'tweets/form', { world_room: @world_room, tweet: @tweet }
+.text-center.mb-1
+  = share_button(@world_room.name)
