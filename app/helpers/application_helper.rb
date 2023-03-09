@@ -28,8 +28,8 @@ module ApplicationHelper
     }
   end
 
-  def share_button(name, url=request.url)
-    content_tag(:a, href: "https://twitter.com/share?url=#{ url }&text=#{ t('defaults.share_text', name: name ) }", target: '_blank', rel: 'noopener noreferrer', class: 'twitter-share-button') do
+  def share_button(name, url = request.url)
+    content_tag(:a, href: "https://twitter.com/share?url=#{url}&text=#{t('defaults.share_text', name:)}", target: '_blank', rel: 'noopener noreferrer', class: 'twitter-share-button') do
       concat content_tag(:i, '', class: 'fa-brands fa-twitter me-1')
       concat content_tag(:span, t('defaults.share'))
     end
