@@ -1,5 +1,8 @@
 # Humans Like Ants
 
+URL
+https://humans-like-ants.com/
+
 ## 🐜 サービス概要 🐜
 - 3Dデザイナー向けのSNSです
 
