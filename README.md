@@ -80,3 +80,11 @@ https://humans-like-ants.com/
   - MySQL2
 - その他
   - Google Analytis 4
+
+## for development
+```aidl
+docker-compose build
+docker-compose up -d
+docker-compose exec app bash
+bundle exec rails s -b 0.0.0.0
+```
