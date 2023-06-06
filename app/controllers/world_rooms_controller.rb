@@ -43,6 +43,8 @@ class WorldRoomsController < ApplicationController
     world_room = WorldRoom.random_one
 
     redirect_to world_room_path(world_room)
+  rescue ActiveRecord::RecordNotFound
+    redirect_to worlds_path, danger: '部屋がありません'
   end
 
   private

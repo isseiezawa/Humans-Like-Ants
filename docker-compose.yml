@@ -1,0 +1,36 @@
+version: '3.4'
+
+x-app_base: &app_base
+  build:
+    context: .
+  volumes:
+    - .:/app
+  depends_on:
+    - db
+  tmpfs:
+    - /tmp
+  tty: true
+  stdin_open: true
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    <<: *app_base
+    #command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash
+    ports:
+      - "3000:3000"
+
+  mailcatcher:
+    image: schickling/mailcatcher
+
+volumes:
+  rails_cache:
+  mysql-data:
+    driver: local
